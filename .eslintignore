@@ -1,0 +1,10 @@
+*.test.tsx
+package.json
+build/
+dist/
+scripts/
+e2e
+packages/maskbook/src/plugins/Wallet/contracts
+packages/maskbook/src/contracts
+public/
+*.d.ts

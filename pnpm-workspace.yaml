@@ -1,0 +1,8 @@
+packages:
+  - 'packages/cli'
+  - 'packages/dashboard'
+  - 'packages/maskbook'
+  - 'packages/shared'
+  - 'packages/storybook-shared'
+  - 'packages/theme'
+  - 'packages/icons'

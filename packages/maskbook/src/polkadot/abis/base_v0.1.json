@@ -1,0 +1,291 @@
+{
+    "metadataVersion": "0.1.0",
+    "source": {
+        "hash": "0xa3abb0c83aaa9b44ca43ad3c31fa6efdd5942786be13f3ea7d0ba4d2db4b8cb5",
+        "language": "ink! 3.0.0-rc1",
+        "compiler": "rustc 1.53.0-nightly"
+    },
+    "contract": {
+        "name": "base",
+        "version": "0.1.0",
+        "authors": ["[your_name] <[your_email]>"]
+    },
+    "spec": {
+        "constructors": [
+            {
+                "args": [],
+                "docs": [],
+                "name": ["new"],
+                "selector": "0xd183512b"
+            },
+            {
+                "args": [],
+                "docs": [],
+                "name": ["default"],
+                "selector": "0x6a3712e2"
+            }
+        ],
+        "docs": [],
+        "events": [],
+        "messages": [
+            {
+                "args": [
+                    {
+                        "name": "name",
+                        "type": {
+                            "displayName": ["String"],
+                            "type": 4
+                        }
+                    },
+                    {
+                        "name": "logo",
+                        "type": {
+                            "displayName": ["String"],
+                            "type": 4
+                        }
+                    },
+                    {
+                        "name": "desc",
+                        "type": {
+                            "displayName": ["String"],
+                            "type": 4
+                        }
+                    }
+                ],
+                "docs": [],
+                "mutates": true,
+                "name": ["init_base"],
+                "payable": false,
+                "returnType": null,
+                "selector": "0xb26659eb"
+            },
+            {
+                "args": [
+                    {
+                        "name": "name",
+                        "type": {
+                            "displayName": ["String"],
+                            "type": 4
+                        }
+                    }
+                ],
+                "docs": [],
+                "mutates": true,
+                "name": ["set_name"],
+                "payable": false,
+                "returnType": null,
+                "selector": "0x6aaa7f82"
+            },
+            {
+                "args": [],
+                "docs": [],
+                "mutates": false,
+                "name": ["get_name"],
+                "payable": false,
+                "returnType": {
+                    "displayName": ["String"],
+                    "type": 4
+                },
+                "selector": "0xa15ab5e0"
+            },
+            {
+                "args": [
+                    {
+                        "name": "logo",
+                        "type": {
+                            "displayName": ["String"],
+                            "type": 4
+                        }
+                    }
+                ],
+                "docs": [],
+                "mutates": true,
+                "name": ["set_logo"],
+                "payable": false,
+                "returnType": null,
+                "selector": "0xe3ebdd88"
+            },
+            {
+                "args": [],
+                "docs": [],
+                "mutates": false,
+                "name": ["get_logo"],
+                "payable": false,
+                "returnType": {
+                    "displayName": ["String"],
+                    "type": 4
+                },
+                "selector": "0x8b0c9e43"
+            },
+            {
+                "args": [
+                    {
+                        "name": "desc",
+                        "type": {
+                            "displayName": ["String"],
+                            "type": 4
+                        }
+                    }
+                ],
+                "docs": [],
+                "mutates": true,
+                "name": ["set_desc"],
+                "payable": false,
+                "returnType": null,
+                "selector": "0x9ad37616"
+            },
+            {
+                "args": [],
+                "docs": [],
+                "mutates": false,
+                "name": ["get_desc"],
+                "payable": false,
+                "returnType": {
+                    "displayName": ["String"],
+                    "type": 4
+                },
+                "selector": "0x16b26064"
+            },
+            {
+                "args": [
+                    {
+                        "name": "owner",
+                        "type": {
+                            "displayName": ["AccountId"],
+                            "type": 1
+                        }
+                    }
+                ],
+                "docs": [],
+                "mutates": true,
+                "name": ["set_owner"],
+                "payable": false,
+                "returnType": null,
+                "selector": "0x47c28005"
+            },
+            {
+                "args": [],
+                "docs": [],
+                "mutates": false,
+                "name": ["get_owner"],
+                "payable": false,
+                "returnType": {
+                    "displayName": ["AccountId"],
+                    "type": 1
+                },
+                "selector": "0x58e3162e"
+            },
+            {
+                "args": [],
+                "docs": [],
+                "mutates": false,
+                "name": ["get_base"],
+                "payable": false,
+                "returnType": {
+                    "displayName": ["DisplayBase"],
+                    "type": 5
+                },
+                "selector": "0xc56e8540"
+            }
+        ]
+    },
+    "storage": {
+        "struct": {
+            "fields": [
+                {
+                    "layout": {
+                        "cell": {
+                            "key": "0x0000000000000000000000000000000000000000000000000000000000000000",
+                            "ty": 1
+                        }
+                    },
+                    "name": "owner"
+                },
+                {
+                    "layout": {
+                        "cell": {
+                            "key": "0x0100000000000000000000000000000000000000000000000000000000000000",
+                            "ty": 4
+                        }
+                    },
+                    "name": "name"
+                },
+                {
+                    "layout": {
+                        "cell": {
+                            "key": "0x0200000000000000000000000000000000000000000000000000000000000000",
+                            "ty": 4
+                        }
+                    },
+                    "name": "logo"
+                },
+                {
+                    "layout": {
+                        "cell": {
+                            "key": "0x0300000000000000000000000000000000000000000000000000000000000000",
+                            "ty": 4
+                        }
+                    },
+                    "name": "desc"
+                }
+            ]
+        }
+    },
+    "types": [
+        {
+            "def": {
+                "composite": {
+                    "fields": [
+                        {
+                            "type": 2
+                        }
+                    ]
+                }
+            },
+            "path": ["ink_env", "types", "AccountId"]
+        },
+        {
+            "def": {
+                "array": {
+                    "len": 32,
+                    "type": 3
+                }
+            }
+        },
+        {
+            "def": {
+                "primitive": "u8"
+            }
+        },
+        {
+            "def": {
+                "primitive": "str"
+            }
+        },
+        {
+            "def": {
+                "composite": {
+                    "fields": [
+                        {
+                            "name": "owner",
+                            "type": 1
+                        },
+                        {
+                            "name": "name",
+                            "type": 4
+                        },
+                        {
+                            "name": "logo",
+                            "type": 4
+                        },
+                        {
+                            "name": "desc",
+                            "type": 4
+                        }
+                    ]
+                }
+            },
+            "path": ["base", "base", "DisplayBase"]
+        }
+    ]
+}

@@ -1,0 +1,27 @@
+{
+  "name": "@subdao/maskbook-theme",
+  "private": true,
+  "description": "@material-ui/core theme of design system of SubDAO",
+  "typings": "./dist/src/theme.d.ts",
+  "main": "./dist/src/theme.js",
+  "scripts": {
+    "build-storybook": "build -- build-storybook",
+    "start": "dev -- start-storybook -p 6006"
+  },
+  "dependencies": {
+    "@subdao/maskbook-shared": "workspace:*",
+    "@subdao/maskbook-storybook-shared": "workspace:*",
+    "lodash-es": "^4.17.20"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.13.15",
+    "@storybook/addon-actions": "^6.2.7",
+    "@storybook/addon-essentials": "^6.2.7",
+    "@storybook/addon-links": "^6.2.7",
+    "@storybook/addons": "^6.2.7",
+    "@storybook/react": "^6.2.7",
+    "@storybook/theming": "^6.2.7",
+    "babel-loader": "^8.2.2",
+    "storybook-addon-matrix": "^1.6.0"
+  }
+}

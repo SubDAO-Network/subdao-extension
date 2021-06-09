@@ -1,0 +1,837 @@
+{
+    "metadataVersion": "0.1.0",
+    "source": {
+        "hash": "0x5cc62b7f343ac8335f408950317e7766218bd01caf4d78e2a3140bb7eb4cb417",
+        "language": "ink! 3.0.0-rc1",
+        "compiler": "rustc 1.53.0-nightly"
+    },
+    "contract": {
+        "name": "dao_manager",
+        "version": "0.1.0",
+        "authors": ["[your_name] <[your_email]>"]
+    },
+    "spec": {
+        "constructors": [
+            {
+                "args": [
+                    {
+                        "name": "controller",
+                        "type": {
+                            "displayName": ["AccountId"],
+                            "type": 2
+                        }
+                    },
+                    {
+                        "name": "org_id",
+                        "type": {
+                            "displayName": ["u64"],
+                            "type": 5
+                        }
+                    },
+                    {
+                        "name": "template",
+                        "type": {
+                            "displayName": ["DAOTemplate"],
+                            "type": 11
+                        }
+                    }
+                ],
+                "docs": [" Constructor that initializes the `bool` value to the given `init_value`."],
+                "name": ["new"],
+                "selector": "0xd183512b"
+            }
+        ],
+        "docs": [],
+        "events": [],
+        "messages": [
+            {
+                "args": [
+                    {
+                        "name": "base_name",
+                        "type": {
+                            "displayName": ["String"],
+                            "type": 6
+                        }
+                    },
+                    {
+                        "name": "base_logo",
+                        "type": {
+                            "displayName": ["String"],
+                            "type": 6
+                        }
+                    },
+                    {
+                        "name": "base_desc",
+                        "type": {
+                            "displayName": ["String"],
+                            "type": 6
+                        }
+                    },
+                    {
+                        "name": "erc20_name",
+                        "type": {
+                            "displayName": ["String"],
+                            "type": 6
+                        }
+                    },
+                    {
+                        "name": "erc20_symbol",
+                        "type": {
+                            "displayName": ["String"],
+                            "type": 6
+                        }
+                    },
+                    {
+                        "name": "erc20_initial_supply",
+                        "type": {
+                            "displayName": ["u64"],
+                            "type": 5
+                        }
+                    },
+                    {
+                        "name": "erc20_decimals",
+                        "type": {
+                            "displayName": ["u8"],
+                            "type": 4
+                        }
+                    }
+                ],
+                "docs": [],
+                "mutates": true,
+                "name": ["init"],
+                "payable": false,
+                "returnType": {
+                    "displayName": ["bool"],
+                    "type": 1
+                },
+                "selector": "0xa1ec5918"
+            },
+            {
+                "args": [],
+                "docs": [],
+                "mutates": false,
+                "name": ["query_component_addrs"],
+                "payable": false,
+                "returnType": {
+                    "displayName": ["DAOComponentAddrs"],
+                    "type": 12
+                },
+                "selector": "0x0db17698"
+            },
+            {
+                "args": [
+                    {
+                        "name": "to",
+                        "type": {
+                            "displayName": ["AccountId"],
+                            "type": 2
+                        }
+                    },
+                    {
+                        "name": "value",
+                        "type": {
+                            "displayName": ["u64"],
+                            "type": 5
+                        }
+                    }
+                ],
+                "docs": [],
+                "mutates": true,
+                "name": ["transfer"],
+                "payable": false,
+                "returnType": {
+                    "displayName": ["bool"],
+                    "type": 1
+                },
+                "selector": "0xfae3a09d"
+            },
+            {
+                "args": [
+                    {
+                        "name": "to",
+                        "type": {
+                            "displayName": ["AccountId"],
+                            "type": 2
+                        }
+                    },
+                    {
+                        "name": "value",
+                        "type": {
+                            "displayName": ["u64"],
+                            "type": 5
+                        }
+                    }
+                ],
+                "docs": [],
+                "mutates": true,
+                "name": ["mint_token_by_owner"],
+                "payable": false,
+                "returnType": {
+                    "displayName": ["bool"],
+                    "type": 1
+                },
+                "selector": "0x66612e04"
+            },
+            {
+                "args": [
+                    {
+                        "name": "from",
+                        "type": {
+                            "displayName": ["AccountId"],
+                            "type": 2
+                        }
+                    },
+                    {
+                        "name": "value",
+                        "type": {
+                            "displayName": ["u64"],
+                            "type": 5
+                        }
+                    }
+                ],
+                "docs": [],
+                "mutates": true,
+                "name": ["destroy_token_by_owner"],
+                "payable": false,
+                "returnType": {
+                    "displayName": ["bool"],
+                    "type": 1
+                },
+                "selector": "0x8b31777e"
+            }
+        ]
+    },
+    "storage": {
+        "struct": {
+            "fields": [
+                {
+                    "layout": {
+                        "cell": {
+                            "key": "0x0000000000000000000000000000000000000000000000000000000000000000",
+                            "ty": 1
+                        }
+                    },
+                    "name": "init"
+                },
+                {
+                    "layout": {
+                        "cell": {
+                            "key": "0x0100000000000000000000000000000000000000000000000000000000000000",
+                            "ty": 2
+                        }
+                    },
+                    "name": "controller"
+                },
+                {
+                    "layout": {
+                        "cell": {
+                            "key": "0x0200000000000000000000000000000000000000000000000000000000000000",
+                            "ty": 5
+                        }
+                    },
+                    "name": "org_id"
+                },
+                {
+                    "layout": {
+                        "struct": {
+                            "fields": [
+                                {
+                                    "layout": {
+                                        "cell": {
+                                            "key": "0x0300000000000000000000000000000000000000000000000000000000000000",
+                                            "ty": 5
+                                        }
+                                    },
+                                    "name": "id"
+                                },
+                                {
+                                    "layout": {
+                                        "cell": {
+                                            "key": "0x0400000000000000000000000000000000000000000000000000000000000000",
+                                            "ty": 2
+                                        }
+                                    },
+                                    "name": "owner"
+                                },
+                                {
+                                    "layout": {
+                                        "cell": {
+                                            "key": "0x0500000000000000000000000000000000000000000000000000000000000000",
+                                            "ty": 6
+                                        }
+                                    },
+                                    "name": "name"
+                                },
+                                {
+                                    "layout": {
+                                        "cell": {
+                                            "key": "0x0600000000000000000000000000000000000000000000000000000000000000",
+                                            "ty": 7
+                                        }
+                                    },
+                                    "name": "dao_manager_code_hash"
+                                },
+                                {
+                                    "layout": {
+                                        "cell": {
+                                            "key": "0x0700000000000000000000000000000000000000000000000000000000000000",
+                                            "ty": 8
+                                        }
+                                    },
+                                    "name": "components"
+                                }
+                            ]
+                        }
+                    },
+                    "name": "template"
+                },
+                {
+                    "layout": {
+                        "struct": {
+                            "fields": [
+                                {
+                                    "layout": {
+                                        "enum": {
+                                            "dispatchKey": "0x0800000000000000000000000000000000000000000000000000000000000000",
+                                            "variants": {
+                                                "0": {
+                                                    "fields": [
+                                                        {
+                                                            "layout": {
+                                                                "struct": {
+                                                                    "fields": [
+                                                                        {
+                                                                            "layout": {
+                                                                                "cell": {
+                                                                                    "key": "0x0900000000000000000000000000000000000000000000000000000000000000",
+                                                                                    "ty": 2
+                                                                                }
+                                                                            },
+                                                                            "name": "account_id"
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            "name": null
+                                                        }
+                                                    ]
+                                                },
+                                                "1": {
+                                                    "fields": []
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "name": "base"
+                                },
+                                {
+                                    "layout": {
+                                        "enum": {
+                                            "dispatchKey": "0x0900000000000000000000000000000000000000000000000000000000000000",
+                                            "variants": {
+                                                "0": {
+                                                    "fields": [
+                                                        {
+                                                            "layout": {
+                                                                "struct": {
+                                                                    "fields": [
+                                                                        {
+                                                                            "layout": {
+                                                                                "cell": {
+                                                                                    "key": "0x0a00000000000000000000000000000000000000000000000000000000000000",
+                                                                                    "ty": 2
+                                                                                }
+                                                                            },
+                                                                            "name": "account_id"
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            "name": null
+                                                        }
+                                                    ]
+                                                },
+                                                "1": {
+                                                    "fields": []
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "name": "erc20"
+                                },
+                                {
+                                    "layout": {
+                                        "enum": {
+                                            "dispatchKey": "0x0a00000000000000000000000000000000000000000000000000000000000000",
+                                            "variants": {
+                                                "0": {
+                                                    "fields": [
+                                                        {
+                                                            "layout": {
+                                                                "struct": {
+                                                                    "fields": [
+                                                                        {
+                                                                            "layout": {
+                                                                                "cell": {
+                                                                                    "key": "0x0b00000000000000000000000000000000000000000000000000000000000000",
+                                                                                    "ty": 2
+                                                                                }
+                                                                            },
+                                                                            "name": "account_id"
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            "name": null
+                                                        }
+                                                    ]
+                                                },
+                                                "1": {
+                                                    "fields": []
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "name": "org"
+                                },
+                                {
+                                    "layout": {
+                                        "enum": {
+                                            "dispatchKey": "0x0b00000000000000000000000000000000000000000000000000000000000000",
+                                            "variants": {
+                                                "0": {
+                                                    "fields": [
+                                                        {
+                                                            "layout": {
+                                                                "struct": {
+                                                                    "fields": [
+                                                                        {
+                                                                            "layout": {
+                                                                                "cell": {
+                                                                                    "key": "0x0c00000000000000000000000000000000000000000000000000000000000000",
+                                                                                    "ty": 2
+                                                                                }
+                                                                            },
+                                                                            "name": "account_id"
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            "name": null
+                                                        }
+                                                    ]
+                                                },
+                                                "1": {
+                                                    "fields": []
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "name": "vault"
+                                },
+                                {
+                                    "layout": {
+                                        "enum": {
+                                            "dispatchKey": "0x0c00000000000000000000000000000000000000000000000000000000000000",
+                                            "variants": {
+                                                "0": {
+                                                    "fields": [
+                                                        {
+                                                            "layout": {
+                                                                "struct": {
+                                                                    "fields": [
+                                                                        {
+                                                                            "layout": {
+                                                                                "cell": {
+                                                                                    "key": "0x0d00000000000000000000000000000000000000000000000000000000000000",
+                                                                                    "ty": 2
+                                                                                }
+                                                                            },
+                                                                            "name": "account_id"
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            "name": null
+                                                        }
+                                                    ]
+                                                },
+                                                "1": {
+                                                    "fields": []
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "name": "vote"
+                                },
+                                {
+                                    "layout": {
+                                        "enum": {
+                                            "dispatchKey": "0x0d00000000000000000000000000000000000000000000000000000000000000",
+                                            "variants": {
+                                                "0": {
+                                                    "fields": [
+                                                        {
+                                                            "layout": {
+                                                                "struct": {
+                                                                    "fields": [
+                                                                        {
+                                                                            "layout": {
+                                                                                "cell": {
+                                                                                    "key": "0x0e00000000000000000000000000000000000000000000000000000000000000",
+                                                                                    "ty": 2
+                                                                                }
+                                                                            },
+                                                                            "name": "account_id"
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            "name": null
+                                                        }
+                                                    ]
+                                                },
+                                                "1": {
+                                                    "fields": []
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "name": "github"
+                                }
+                            ]
+                        }
+                    },
+                    "name": "components"
+                },
+                {
+                    "layout": {
+                        "struct": {
+                            "fields": [
+                                {
+                                    "layout": {
+                                        "enum": {
+                                            "dispatchKey": "0x0e00000000000000000000000000000000000000000000000000000000000000",
+                                            "variants": {
+                                                "0": {
+                                                    "fields": [
+                                                        {
+                                                            "layout": {
+                                                                "cell": {
+                                                                    "key": "0x0f00000000000000000000000000000000000000000000000000000000000000",
+                                                                    "ty": 2
+                                                                }
+                                                            },
+                                                            "name": null
+                                                        }
+                                                    ]
+                                                },
+                                                "1": {
+                                                    "fields": []
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "name": "base_addr"
+                                },
+                                {
+                                    "layout": {
+                                        "enum": {
+                                            "dispatchKey": "0x0f00000000000000000000000000000000000000000000000000000000000000",
+                                            "variants": {
+                                                "0": {
+                                                    "fields": [
+                                                        {
+                                                            "layout": {
+                                                                "cell": {
+                                                                    "key": "0x1000000000000000000000000000000000000000000000000000000000000000",
+                                                                    "ty": 2
+                                                                }
+                                                            },
+                                                            "name": null
+                                                        }
+                                                    ]
+                                                },
+                                                "1": {
+                                                    "fields": []
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "name": "erc20_addr"
+                                },
+                                {
+                                    "layout": {
+                                        "enum": {
+                                            "dispatchKey": "0x1000000000000000000000000000000000000000000000000000000000000000",
+                                            "variants": {
+                                                "0": {
+                                                    "fields": [
+                                                        {
+                                                            "layout": {
+                                                                "cell": {
+                                                                    "key": "0x1100000000000000000000000000000000000000000000000000000000000000",
+                                                                    "ty": 2
+                                                                }
+                                                            },
+                                                            "name": null
+                                                        }
+                                                    ]
+                                                },
+                                                "1": {
+                                                    "fields": []
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "name": "org_addr"
+                                },
+                                {
+                                    "layout": {
+                                        "enum": {
+                                            "dispatchKey": "0x1100000000000000000000000000000000000000000000000000000000000000",
+                                            "variants": {
+                                                "0": {
+                                                    "fields": [
+                                                        {
+                                                            "layout": {
+                                                                "cell": {
+                                                                    "key": "0x1200000000000000000000000000000000000000000000000000000000000000",
+                                                                    "ty": 2
+                                                                }
+                                                            },
+                                                            "name": null
+                                                        }
+                                                    ]
+                                                },
+                                                "1": {
+                                                    "fields": []
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "name": "vault_addr"
+                                },
+                                {
+                                    "layout": {
+                                        "enum": {
+                                            "dispatchKey": "0x1200000000000000000000000000000000000000000000000000000000000000",
+                                            "variants": {
+                                                "0": {
+                                                    "fields": [
+                                                        {
+                                                            "layout": {
+                                                                "cell": {
+                                                                    "key": "0x1300000000000000000000000000000000000000000000000000000000000000",
+                                                                    "ty": 2
+                                                                }
+                                                            },
+                                                            "name": null
+                                                        }
+                                                    ]
+                                                },
+                                                "1": {
+                                                    "fields": []
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "name": "vote_addr"
+                                },
+                                {
+                                    "layout": {
+                                        "enum": {
+                                            "dispatchKey": "0x1300000000000000000000000000000000000000000000000000000000000000",
+                                            "variants": {
+                                                "0": {
+                                                    "fields": [
+                                                        {
+                                                            "layout": {
+                                                                "cell": {
+                                                                    "key": "0x1400000000000000000000000000000000000000000000000000000000000000",
+                                                                    "ty": 2
+                                                                }
+                                                            },
+                                                            "name": null
+                                                        }
+                                                    ]
+                                                },
+                                                "1": {
+                                                    "fields": []
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "name": "github_addr"
+                                }
+                            ]
+                        }
+                    },
+                    "name": "component_addrs"
+                }
+            ]
+        }
+    },
+    "types": [
+        {
+            "def": {
+                "primitive": "bool"
+            }
+        },
+        {
+            "def": {
+                "composite": {
+                    "fields": [
+                        {
+                            "type": 3
+                        }
+                    ]
+                }
+            },
+            "path": ["ink_env", "types", "AccountId"]
+        },
+        {
+            "def": {
+                "array": {
+                    "len": 32,
+                    "type": 4
+                }
+            }
+        },
+        {
+            "def": {
+                "primitive": "u8"
+            }
+        },
+        {
+            "def": {
+                "primitive": "u64"
+            }
+        },
+        {
+            "def": {
+                "primitive": "str"
+            }
+        },
+        {
+            "def": {
+                "composite": {
+                    "fields": [
+                        {
+                            "type": 3
+                        }
+                    ]
+                }
+            },
+            "path": ["ink_env", "types", "Hash"]
+        },
+        {
+            "def": {
+                "composite": {
+                    "fields": [
+                        {
+                            "type": 10
+                        }
+                    ]
+                }
+            },
+            "params": [9],
+            "path": ["BTreeMap"]
+        },
+        {
+            "def": {
+                "tuple": [6, 7]
+            }
+        },
+        {
+            "def": {
+                "sequence": {
+                    "type": 9
+                }
+            }
+        },
+        {
+            "def": {
+                "composite": {
+                    "fields": [
+                        {
+                            "name": "id",
+                            "type": 5
+                        },
+                        {
+                            "name": "owner",
+                            "type": 2
+                        },
+                        {
+                            "name": "name",
+                            "type": 6
+                        },
+                        {
+                            "name": "dao_manager_code_hash",
+                            "type": 7
+                        },
+                        {
+                            "name": "components",
+                            "type": 8
+                        }
+                    ]
+                }
+            },
+            "path": ["template_manager", "template_manager", "DAOTemplate"]
+        },
+        {
+            "def": {
+                "composite": {
+                    "fields": [
+                        {
+                            "name": "base_addr",
+                            "type": 13
+                        },
+                        {
+                            "name": "erc20_addr",
+                            "type": 13
+                        },
+                        {
+                            "name": "org_addr",
+                            "type": 13
+                        },
+                        {
+                            "name": "vault_addr",
+                            "type": 13
+                        },
+                        {
+                            "name": "vote_addr",
+                            "type": 13
+                        },
+                        {
+                            "name": "github_addr",
+                            "type": 13
+                        }
+                    ]
+                }
+            },
+            "path": ["dao_manager", "dao_manager", "DAOComponentAddrs"]
+        },
+        {
+            "def": {
+                "variant": {
+                    "variants": [
+                        {
+                            "name": "None"
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "type": 2
+                                }
+                            ],
+                            "name": "Some"
+                        }
+                    ]
+                }
+            },
+            "params": [2],
+            "path": ["Option"]
+        }
+    ]
+}

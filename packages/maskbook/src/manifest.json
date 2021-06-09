@@ -1,0 +1,15 @@
+{
+    "name": "SubDAO",
+    "version": "1.0.6",
+    "manifest_version": 2,
+    "permissions": ["storage", "downloads", "webNavigation", "activeTab"],
+    "optional_permissions": ["<all_urls>", "notifications"],
+    "background": { "page": "background.html" },
+    "content_security_policy": "script-src 'self' 'wasm-eval'; object-src 'self'",
+    "options_ui": { "page": "index.html", "open_in_tab": true },
+    "icons": { "16": "16x16.png", "48": "48x48.png", "128": "128x128.png", "256": "256x256.png" },
+    "browser_action": { "default_popup": "popup.html" },
+    "homepage_url": "https://subdao.network",
+    "description": "Participate DAO governance easily outside of dapps. Injects the accounts, allows signing transaction and send encrypted message.",
+    "web_accessible_resources": ["js/*"]
+}

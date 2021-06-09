@@ -1,0 +1,46 @@
+{
+    "type": "object",
+    "additionalProperties": true,
+    "properties": {
+        "question": {
+            "type": "string",
+            "title": "question"
+        },
+        "key": {
+            "type": "string",
+            "title": "key"
+        },
+        "start_time": {
+            "type": "number",
+            "title": "start_time"
+        },
+        "end_time": {
+            "type": "number",
+            "title": "end_time"
+        },
+        "options": {
+            "type": "array",
+            "title": "options"
+        },
+        "results": {
+            "type": "array",
+            "title": "results"
+        },
+        "sender": {
+            "type": "string",
+            "title": "sender"
+        },
+        "vote_id": {
+            "type": "string"
+        },
+        "id": {
+            "type": "string",
+            "title": "id"
+        },
+        "vote_address": {
+            "type": "string",
+            "title": "id"
+        }
+    },
+    "required": ["question", "key", "start_time", "end_time", "options", "results", "sender", "id"]
+}

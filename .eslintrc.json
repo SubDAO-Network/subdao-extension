@@ -1,0 +1,35 @@
+{
+    "parserOptions": {
+        "ecmaVersion": 2020,
+        "sourceType": "module"
+    },
+    "extends": ["plugin:prettier/recommended"],
+    "env": {
+        "node": true
+    },
+    "plugins": ["unused-imports", "lodash"],
+    "rules": {
+        "constructor-super": "error",
+        "dot-notation": "error",
+        "eqeqeq": "error",
+        "no-bitwise": "error",
+        "no-debugger": "error",
+        "no-eval": "error",
+        "no-extra-bind": "error",
+        "no-fallthrough": "error",
+        "no-new-wrappers": "error",
+        "no-plusplus": "error",
+        "no-restricted-globals": ["error", "event", "name", "length", "closed"],
+        "no-restricted-imports": [
+            "error",
+            { "paths": [{ "name": "lodash", "message": "Please use lodash-es instead." }] }
+        ],
+        "no-return-await": "error",
+        "no-sparse-arrays": "error",
+        "no-template-curly-in-string": "error",
+        "prefer-const": "warn",
+        "use-isnan": "error",
+        "unused-imports/no-unused-imports-ts": "error",
+        "lodash/import-scope": ["error", "member"]
+    }
+}

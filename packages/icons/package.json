@@ -1,0 +1,14 @@
+{
+  "name": "@subdao/icons",
+  "private": true,
+  "types": "./dist/index.d.ts",
+  "main": "./dist/index.js",
+  "sideEffects": false,
+  "devDependencies": {
+    "snowpack": "^3.2.2"
+  },
+  "scripts": {
+    "start": "snowpack dev",
+    "build": "ts-node ./utils/ssr.tsx"
+  }
+}
