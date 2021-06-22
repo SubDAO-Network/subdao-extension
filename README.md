@@ -23,7 +23,7 @@ NODE_ENV=production pnpm build
 
 ## Useful Links
 
-- [Report Bug](https://github.com/SubDAO-Network/daowallet/issues)
+- [Report Bug](https://github.com/SubDAO-Network/subdao-extension/issues)
 - [Twitter](https://twitter.com/subdao_network)
 - [Medium](https://medium.com/@subdao)
 - [Telegram](https://t.me/subdao)
