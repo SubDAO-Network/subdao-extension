@@ -9,7 +9,7 @@ export interface SubdaoTokenDetailed {
     address: string
 }
 
-export const ws_server = 'ws://39.101.70.206:9944'
+export const ws_server = 'wss://alpha.subdao.org'
 
 export const mainAddress = {
     // main: '5GJ4SURhRyyGS4cZwwMi4x5L2xskb4364DuvPCQrBmnfwshB',
