@@ -8,6 +8,13 @@ SubDAO serves as the Polkadot DAO infrastructure, which allows any decentralized
 
 [Chrome Web Store](https://chrome.google.com/webstore/detail/subdao/mdjleeiifigofkgmmandpmfejhpaaaee)
 
+
+## Dependency
+
+```bash
+npm install webpack webpack-cli --save-dev -w
+```
+
 ## Development
 
 ```bash
