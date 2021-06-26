@@ -31,8 +31,8 @@ export async function initMainContract() {
     const api = await ApiPromise.create({
         provider: wsProvider,
         types: {
-            Address: 'AccountId',
-            LookupSource: 'AccountId',
+            Address: 'MultiAddress',
+            LookupSource: 'MultiAddress',
         },
     })
     if (api.isConnected) {
