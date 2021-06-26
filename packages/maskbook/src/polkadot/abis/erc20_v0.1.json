@@ -1,8 +1,8 @@
 {
     "metadataVersion": "0.1.0",
     "source": {
-        "hash": "0xcd265c94f7f5cabcb9f93328bb489e72c6ae04dad2be09845b4d78b16df85f53",
-        "language": "ink! 3.0.0-rc1",
+        "hash": "0xf93eb9f7bd97c68bfb2518f1f46a8ea9cbbe2e1fe646e5d4910f41c4e34b07ed",
+        "language": "ink! 3.0.0-rc3",
         "compiler": "rustc 1.53.0-nightly"
     },
     "contract": {
@@ -46,13 +46,13 @@
                         "name": "controller",
                         "type": {
                             "displayName": ["AccountId"],
-                            "type": 7
+                            "type": 4
                         }
                     }
                 ],
                 "docs": [],
                 "name": ["new"],
-                "selector": "0xd183512b"
+                "selector": "0x9bae9d5e"
             }
         ],
         "docs": [],
@@ -98,7 +98,7 @@
                         "name": "owner",
                         "type": {
                             "displayName": ["AccountId"],
-                            "type": 7
+                            "type": 4
                         }
                     },
                     {
@@ -107,7 +107,7 @@
                         "name": "spender",
                         "type": {
                             "displayName": ["AccountId"],
-                            "type": 7
+                            "type": 4
                         }
                     },
                     {
@@ -135,7 +135,7 @@
                     "displayName": ["String"],
                     "type": 1
                 },
-                "selector": "0xa0a95494"
+                "selector": "0x3adaf70d"
             },
             {
                 "args": [],
@@ -147,7 +147,7 @@
                     "displayName": ["String"],
                     "type": 1
                 },
-                "selector": "0x57178a4a"
+                "selector": "0x9bd1933e"
             },
             {
                 "args": [],
@@ -159,7 +159,7 @@
                     "displayName": ["u64"],
                     "type": 2
                 },
-                "selector": "0xdcb736b5"
+                "selector": "0xdb6375a8"
             },
             {
                 "args": [],
@@ -171,7 +171,7 @@
                     "displayName": ["u8"],
                     "type": 3
                 },
-                "selector": "0x9f700f55"
+                "selector": "0x81c09d87"
             },
             {
                 "args": [],
@@ -181,9 +181,9 @@
                 "payable": false,
                 "returnType": {
                     "displayName": ["AccountId"],
-                    "type": 7
+                    "type": 4
                 },
-                "selector": "0x66154539"
+                "selector": "0xfeaea4fa"
             },
             {
                 "args": [
@@ -191,7 +191,7 @@
                         "name": "owner",
                         "type": {
                             "displayName": ["AccountId"],
-                            "type": 7
+                            "type": 4
                         }
                     }
                 ],
@@ -203,7 +203,7 @@
                     "displayName": ["u64"],
                     "type": 2
                 },
-                "selector": "0x56e929b2"
+                "selector": "0x0f755a56"
             },
             {
                 "args": [
@@ -211,14 +211,14 @@
                         "name": "owner",
                         "type": {
                             "displayName": ["AccountId"],
-                            "type": 7
+                            "type": 4
                         }
                     },
                     {
                         "name": "spender",
                         "type": {
                             "displayName": ["AccountId"],
-                            "type": 7
+                            "type": 4
                         }
                     }
                 ],
@@ -230,7 +230,7 @@
                     "displayName": ["u64"],
                     "type": 2
                 },
-                "selector": "0xf3cfff66"
+                "selector": "0x6a00165e"
             },
             {
                 "args": [
@@ -238,7 +238,7 @@
                         "name": "to",
                         "type": {
                             "displayName": ["AccountId"],
-                            "type": 7
+                            "type": 4
                         }
                     },
                     {
@@ -257,7 +257,7 @@
                     "displayName": ["bool"],
                     "type": 13
                 },
-                "selector": "0xfae3a09d"
+                "selector": "0x84a15da1"
             },
             {
                 "args": [
@@ -265,7 +265,7 @@
                         "name": "spender",
                         "type": {
                             "displayName": ["AccountId"],
-                            "type": 7
+                            "type": 4
                         }
                     },
                     {
@@ -284,7 +284,7 @@
                     "displayName": ["bool"],
                     "type": 13
                 },
-                "selector": "0x03d0e114"
+                "selector": "0x681266a0"
             },
             {
                 "args": [
@@ -292,14 +292,14 @@
                         "name": "from",
                         "type": {
                             "displayName": ["AccountId"],
-                            "type": 7
+                            "type": 4
                         }
                     },
                     {
                         "name": "to",
                         "type": {
                             "displayName": ["AccountId"],
-                            "type": 7
+                            "type": 4
                         }
                     },
                     {
@@ -318,7 +318,7 @@
                     "displayName": ["bool"],
                     "type": 13
                 },
-                "selector": "0xfcfb2ccd"
+                "selector": "0x0b396f18"
             },
             {
                 "args": [
@@ -326,7 +326,27 @@
                         "name": "to",
                         "type": {
                             "displayName": ["AccountId"],
-                            "type": 7
+                            "type": 4
+                        }
+                    }
+                ],
+                "docs": [],
+                "mutates": true,
+                "name": ["transfer_owner"],
+                "payable": false,
+                "returnType": {
+                    "displayName": ["bool"],
+                    "type": 13
+                },
+                "selector": "0xb412fc0c"
+            },
+            {
+                "args": [
+                    {
+                        "name": "to",
+                        "type": {
+                            "displayName": ["AccountId"],
+                            "type": 4
                         }
                     },
                     {
@@ -345,7 +365,7 @@
                     "displayName": ["bool"],
                     "type": 13
                 },
-                "selector": "0x66612e04"
+                "selector": "0xa9b6f1b0"
             },
             {
                 "args": [
@@ -353,7 +373,7 @@
                         "name": "from",
                         "type": {
                             "displayName": ["AccountId"],
-                            "type": 7
+                            "type": 4
                         }
                     },
                     {
@@ -372,7 +392,7 @@
                     "displayName": ["bool"],
                     "type": 13
                 },
-                "selector": "0x8b31777e"
+                "selector": "0x61143ff8"
             }
         ]
     },
@@ -417,6 +437,15 @@
                 },
                 {
                     "layout": {
+                        "cell": {
+                            "key": "0x0400000000000000000000000000000000000000000000000000000000000000",
+                            "ty": 4
+                        }
+                    },
+                    "name": "owner"
+                },
+                {
+                    "layout": {
                         "struct": {
                             "fields": [
                                 {
@@ -426,8 +455,8 @@
                                                 {
                                                     "layout": {
                                                         "cell": {
-                                                            "key": "0x0400000000000000000000000000000000000000000000000000000000000000",
-                                                            "ty": 4
+                                                            "key": "0x0500000000000000000000000000000000000000000000000000000000000000",
+                                                            "ty": 6
                                                         }
                                                     },
                                                     "name": "header"
@@ -439,8 +468,8 @@
                                                                 {
                                                                     "layout": {
                                                                         "cell": {
-                                                                            "key": "0x0500000000000000000000000000000000000000000000000000000000000000",
-                                                                            "ty": 5
+                                                                            "key": "0x0600000000000000000000000000000000000000000000000000000000000000",
+                                                                            "ty": 7
                                                                         }
                                                                     },
                                                                     "name": "len"
@@ -451,12 +480,12 @@
                                                                             "cellsPerElem": 1,
                                                                             "layout": {
                                                                                 "cell": {
-                                                                                    "key": "0x0500000001000000000000000000000000000000000000000000000000000000",
-                                                                                    "ty": 6
+                                                                                    "key": "0x0600000001000000000000000000000000000000000000000000000000000000",
+                                                                                    "ty": 8
                                                                                 }
                                                                             },
                                                                             "len": 4294967295,
-                                                                            "offset": "0x0600000000000000000000000000000000000000000000000000000000000000"
+                                                                            "offset": "0x0700000000000000000000000000000000000000000000000000000000000000"
                                                                         }
                                                                     },
                                                                     "name": "elems"
@@ -476,11 +505,11 @@
                                         "hash": {
                                             "layout": {
                                                 "cell": {
-                                                    "key": "0x0600000001000000000000000000000000000000000000000000000000000000",
+                                                    "key": "0x0700000001000000000000000000000000000000000000000000000000000000",
                                                     "ty": 10
                                                 }
                                             },
-                                            "offset": "0x0500000001000000000000000000000000000000000000000000000000000000",
+                                            "offset": "0x0600000001000000000000000000000000000000000000000000000000000000",
                                             "strategy": {
                                                 "hasher": "Blake2x256",
                                                 "postfix": "",
@@ -506,8 +535,8 @@
                                                 {
                                                     "layout": {
                                                         "cell": {
-                                                            "key": "0x0600000001000000000000000000000000000000000000000000000000000000",
-                                                            "ty": 4
+                                                            "key": "0x0700000001000000000000000000000000000000000000000000000000000000",
+                                                            "ty": 6
                                                         }
                                                     },
                                                     "name": "header"
@@ -519,8 +548,8 @@
                                                                 {
                                                                     "layout": {
                                                                         "cell": {
-                                                                            "key": "0x0700000001000000000000000000000000000000000000000000000000000000",
-                                                                            "ty": 5
+                                                                            "key": "0x0800000001000000000000000000000000000000000000000000000000000000",
+                                                                            "ty": 7
                                                                         }
                                                                     },
                                                                     "name": "len"
@@ -531,12 +560,12 @@
                                                                             "cellsPerElem": 1,
                                                                             "layout": {
                                                                                 "cell": {
-                                                                                    "key": "0x0700000002000000000000000000000000000000000000000000000000000000",
+                                                                                    "key": "0x0800000002000000000000000000000000000000000000000000000000000000",
                                                                                     "ty": 11
                                                                                 }
                                                                             },
                                                                             "len": 4294967295,
-                                                                            "offset": "0x0800000001000000000000000000000000000000000000000000000000000000"
+                                                                            "offset": "0x0900000001000000000000000000000000000000000000000000000000000000"
                                                                         }
                                                                     },
                                                                     "name": "elems"
@@ -556,11 +585,11 @@
                                         "hash": {
                                             "layout": {
                                                 "cell": {
-                                                    "key": "0x0800000002000000000000000000000000000000000000000000000000000000",
+                                                    "key": "0x0900000002000000000000000000000000000000000000000000000000000000",
                                                     "ty": 10
                                                 }
                                             },
-                                            "offset": "0x0700000002000000000000000000000000000000000000000000000000000000",
+                                            "offset": "0x0800000002000000000000000000000000000000000000000000000000000000",
                                             "strategy": {
                                                 "hasher": "Blake2x256",
                                                 "postfix": "",
@@ -574,15 +603,6 @@
                         }
                     },
                     "name": "allowances"
-                },
-                {
-                    "layout": {
-                        "cell": {
-                            "key": "0x0800000002000000000000000000000000000000000000000000000000000000",
-                            "ty": 7
-                        }
-                    },
-                    "name": "owner"
                 }
             ]
         }
@@ -608,59 +628,8 @@
                 "composite": {
                     "fields": [
                         {
-                            "name": "last_vacant",
-                            "type": 5
-                        },
-                        {
-                            "name": "len",
-                            "type": 5
-                        },
-                        {
-                            "name": "len_entries",
-                            "type": 5
-                        }
-                    ]
-                }
-            },
-            "path": ["ink_storage", "collections", "stash", "Header"]
-        },
-        {
-            "def": {
-                "primitive": "u32"
-            }
-        },
-        {
-            "def": {
-                "variant": {
-                    "variants": [
-                        {
-                            "fields": [
-                                {
-                                    "type": 9
-                                }
-                            ],
-                            "name": "Vacant"
-                        },
-                        {
-                            "fields": [
-                                {
-                                    "type": 7
-                                }
-                            ],
-                            "name": "Occupied"
-                        }
-                    ]
-                }
-            },
-            "params": [7],
-            "path": ["ink_storage", "collections", "stash", "Entry"]
-        },
-        {
-            "def": {
-                "composite": {
-                    "fields": [
-                        {
-                            "type": 8
+                            "type": 5,
+                            "typeName": "[u8; 32]"
                         }
                     ]
                 }
@@ -680,12 +649,71 @@
                 "composite": {
                     "fields": [
                         {
+                            "name": "last_vacant",
+                            "type": 7,
+                            "typeName": "Index"
+                        },
+                        {
+                            "name": "len",
+                            "type": 7,
+                            "typeName": "u32"
+                        },
+                        {
+                            "name": "len_entries",
+                            "type": 7,
+                            "typeName": "u32"
+                        }
+                    ]
+                }
+            },
+            "path": ["ink_storage", "collections", "stash", "Header"]
+        },
+        {
+            "def": {
+                "primitive": "u32"
+            }
+        },
+        {
+            "def": {
+                "variant": {
+                    "variants": [
+                        {
+                            "fields": [
+                                {
+                                    "type": 9,
+                                    "typeName": "VacantEntry"
+                                }
+                            ],
+                            "name": "Vacant"
+                        },
+                        {
+                            "fields": [
+                                {
+                                    "type": 4,
+                                    "typeName": "T"
+                                }
+                            ],
+                            "name": "Occupied"
+                        }
+                    ]
+                }
+            },
+            "params": [4],
+            "path": ["ink_storage", "collections", "stash", "Entry"]
+        },
+        {
+            "def": {
+                "composite": {
+                    "fields": [
+                        {
                             "name": "next",
-                            "type": 5
+                            "type": 7,
+                            "typeName": "Index"
                         },
                         {
                             "name": "prev",
-                            "type": 5
+                            "type": 7,
+                            "typeName": "Index"
                         }
                     ]
                 }
@@ -698,11 +726,13 @@
                     "fields": [
                         {
                             "name": "value",
-                            "type": 2
+                            "type": 2,
+                            "typeName": "V"
                         },
                         {
                             "name": "key_index",
-                            "type": 5
+                            "type": 7,
+                            "typeName": "KeyIndex"
                         }
                     ]
                 }
@@ -717,7 +747,8 @@
                         {
                             "fields": [
                                 {
-                                    "type": 9
+                                    "type": 9,
+                                    "typeName": "VacantEntry"
                                 }
                             ],
                             "name": "Vacant"
@@ -725,7 +756,8 @@
                         {
                             "fields": [
                                 {
-                                    "type": 12
+                                    "type": 12,
+                                    "typeName": "T"
                                 }
                             ],
                             "name": "Occupied"
@@ -738,7 +770,7 @@
         },
         {
             "def": {
-                "tuple": [7, 7]
+                "tuple": [4, 4]
             }
         },
         {
@@ -756,7 +788,8 @@
                         {
                             "fields": [
                                 {
-                                    "type": 7
+                                    "type": 4,
+                                    "typeName": "T"
                                 }
                             ],
                             "name": "Some"
@@ -764,7 +797,7 @@
                     ]
                 }
             },
-            "params": [7],
+            "params": [4],
             "path": ["Option"]
         }
     ]

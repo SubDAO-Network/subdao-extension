@@ -1,8 +1,8 @@
 {
     "metadataVersion": "0.1.0",
     "source": {
-        "hash": "0xa3abb0c83aaa9b44ca43ad3c31fa6efdd5942786be13f3ea7d0ba4d2db4b8cb5",
-        "language": "ink! 3.0.0-rc1",
+        "hash": "0xce977cb585180afc59e121d5f3ac11f656b38987031dd85c924e01d077ca3878",
+        "language": "ink! 3.0.0-rc3",
         "compiler": "rustc 1.53.0-nightly"
     },
     "contract": {
@@ -16,13 +16,13 @@
                 "args": [],
                 "docs": [],
                 "name": ["new"],
-                "selector": "0xd183512b"
+                "selector": "0x9bae9d5e"
             },
             {
                 "args": [],
                 "docs": [],
                 "name": ["default"],
-                "selector": "0x6a3712e2"
+                "selector": "0xed4b9d1b"
             }
         ],
         "docs": [],
@@ -57,7 +57,7 @@
                 "name": ["init_base"],
                 "payable": false,
                 "returnType": null,
-                "selector": "0xb26659eb"
+                "selector": "0x7cade53a"
             },
             {
                 "args": [
@@ -74,7 +74,7 @@
                 "name": ["set_name"],
                 "payable": false,
                 "returnType": null,
-                "selector": "0x6aaa7f82"
+                "selector": "0x24d2da30"
             },
             {
                 "args": [],
@@ -86,7 +86,7 @@
                     "displayName": ["String"],
                     "type": 4
                 },
-                "selector": "0xa15ab5e0"
+                "selector": "0xa148a32a"
             },
             {
                 "args": [
@@ -103,7 +103,7 @@
                 "name": ["set_logo"],
                 "payable": false,
                 "returnType": null,
-                "selector": "0xe3ebdd88"
+                "selector": "0x4b74fa40"
             },
             {
                 "args": [],
@@ -115,7 +115,7 @@
                     "displayName": ["String"],
                     "type": 4
                 },
-                "selector": "0x8b0c9e43"
+                "selector": "0x26c98f47"
             },
             {
                 "args": [
@@ -132,7 +132,7 @@
                 "name": ["set_desc"],
                 "payable": false,
                 "returnType": null,
-                "selector": "0x9ad37616"
+                "selector": "0x95407827"
             },
             {
                 "args": [],
@@ -144,7 +144,7 @@
                     "displayName": ["String"],
                     "type": 4
                 },
-                "selector": "0x16b26064"
+                "selector": "0x26277d2b"
             },
             {
                 "args": [
@@ -161,7 +161,7 @@
                 "name": ["set_owner"],
                 "payable": false,
                 "returnType": null,
-                "selector": "0x47c28005"
+                "selector": "0x367facd6"
             },
             {
                 "args": [],
@@ -173,7 +173,7 @@
                     "displayName": ["AccountId"],
                     "type": 1
                 },
-                "selector": "0x58e3162e"
+                "selector": "0x07fcd0b1"
             },
             {
                 "args": [],
@@ -185,7 +185,7 @@
                     "displayName": ["DisplayBase"],
                     "type": 5
                 },
-                "selector": "0xc56e8540"
+                "selector": "0x76e236fd"
             }
         ]
     },
@@ -237,7 +237,8 @@
                 "composite": {
                     "fields": [
                         {
-                            "type": 2
+                            "type": 2,
+                            "typeName": "[u8; 32]"
                         }
                     ]
                 }
@@ -268,19 +269,23 @@
                     "fields": [
                         {
                             "name": "owner",
-                            "type": 1
+                            "type": 1,
+                            "typeName": "AccountId"
                         },
                         {
                             "name": "name",
-                            "type": 4
+                            "type": 4,
+                            "typeName": "String"
                         },
                         {
                             "name": "logo",
-                            "type": 4
+                            "type": 4,
+                            "typeName": "String"
                         },
                         {
                             "name": "desc",
-                            "type": 4
+                            "type": 4,
+                            "typeName": "String"
                         }
                     ]
                 }

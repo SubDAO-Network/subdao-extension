@@ -1,7 +1,7 @@
 {
     "metadataVersion": "0.1.0",
     "source": {
-        "hash": "0x78c2dd75167582d7a8239940d9ab47c7a73c089c06debaeabe2651207766ecd4",
+        "hash": "0xc70f2ca8e9c95afcf4ea6a3d1328b01499e1d633505d031a644b9b93351cc1ef",
         "language": "ink! 3.0.0-rc3",
         "compiler": "rustc 1.53.0-nightly"
     },
@@ -16,13 +16,6 @@
                 "args": [
                     {
                         "name": "org_contract_address",
-                        "type": {
-                            "displayName": ["AccountId"],
-                            "type": 4
-                        }
-                    },
-                    {
-                        "name": "auth_contract_address",
                         "type": {
                             "displayName": ["AccountId"],
                             "type": 4
@@ -158,6 +151,26 @@
             }
         ],
         "messages": [
+            {
+                "args": [
+                    {
+                        "name": "caller",
+                        "type": {
+                            "displayName": ["AccountId"],
+                            "type": 4
+                        }
+                    }
+                ],
+                "docs": [],
+                "mutates": false,
+                "name": ["check_authority"],
+                "payable": false,
+                "returnType": {
+                    "displayName": ["bool"],
+                    "type": 14
+                },
+                "selector": "0x2e7c1f44"
+            },
             {
                 "args": [
                     {
@@ -572,15 +585,6 @@
                         }
                     },
                     "name": "vault_contract_address"
-                },
-                {
-                    "layout": {
-                        "cell": {
-                            "key": "0x0800000003000000000000000000000000000000000000000000000000000000",
-                            "ty": 4
-                        }
-                    },
-                    "name": "auth_contract_address"
                 }
             ]
         }
