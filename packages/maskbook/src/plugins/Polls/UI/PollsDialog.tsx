@@ -374,7 +374,7 @@ function ExistingPollsUI(props: PollsDialogProps & ExistingPollsProps) {
             {loading ? (
                 <CircularProgress size={35} classes={{ root: classes.loading }} />
             ) : (
-                polls.map((p) => <PollCardUI onClick={() => insertPoll(p)} poll={p} key={p.key as string} hideVote />)
+                polls.map((p) => <PollCardUI onClick={() => insertPoll(p)} poll={p} key={p.key as string} />)
             )}
         </div>
     )

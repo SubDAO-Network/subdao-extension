@@ -8,6 +8,7 @@ import { languageSettings } from '../../../settings/settings'
 import type { PollGunDB } from '../Services'
 import { PollStatus } from '../types'
 import { useVoteData } from '../hooks/useVoteData'
+import { useVoterVoteOne } from '../hooks/useVoterVoteOne'
 import VoteChoiseDialog from './VoteChoiseDialog'
 import ExectueVoteDialog from './ExectueVoteDialog'
 import Services from '../../../extension/service'
@@ -80,6 +81,7 @@ export function PollCardUI(props: PollCardProps) {
     const isClosed = Date.now() > poll.end_time ? true : false
     const { t } = useI18N()
     const { value: voteData, retry } = useVoteData(poll, isClosed, hideVote)
+    const { value: isVoted } = useVoterVoteOne(poll.vote_address, poll.vote_id)
     const [open, setOpen] = useState<boolean>(false)
     const hasData = !!voteData
     const [openExcuteDialog, setOpenExcuteDialog] = useState<boolean>(false)
@@ -124,6 +126,7 @@ export function PollCardUI(props: PollCardProps) {
     }
 
     const handleVote = async () => {
+        if (isVoted || status === PollStatus.Voted) return
         retry()
         setOpen(true)
     }
@@ -133,8 +136,7 @@ export function PollCardUI(props: PollCardProps) {
         setOpenExcuteDialog(true)
     }
 
-    const onClickVote = status === PollStatus.Voted ? undefined : () => handleVote()
-
+    const onClickVote = () => handleVote()
     return (
         <Card className={classes.card} onClick={() => onClick?.()}>
             <Typography variant="h5" className={classes.line}>
