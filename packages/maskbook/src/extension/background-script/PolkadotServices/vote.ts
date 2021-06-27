@@ -120,7 +120,7 @@ const queryWaitVote = async (voteAddress: string) => {
 
     if (!voteContract || !_address) return
 
-    const data = await (voteContract as any)?.query?.queryWaitVote(_address, { value, gasLimit })
+    const data = await (voteContract as any)?.query?.queryPendingVote(_address, { value, gasLimit })
     return formatResult(data)
 }
 
@@ -130,8 +130,19 @@ const queryOpenVote = async (voteAddress: string, voteId: string) => {
 
     if (!voteContract || !_address) return
 
-    const data = await (voteContract as any)?.query?.queryOpenVote(_address, { value, gasLimit }, voteId)
+    const data = await (voteContract as any)?.query?.queryActiveVote(_address, { value, gasLimit }, voteId)
     return formatResult(data)
+}
+
+export const queryVoterVoteOne = async (voteAddress: string, voteId: string) => {
+    const voteContract = await getVoteContract(voteAddress)
+    const _address = currentSelectedWalletAddressSettings.value
+
+    if (!voteContract || !_address) return
+
+    const data = await (voteContract as any)?.query?.queryVoterVoteOne(_address, { value, gasLimit }, voteId, _address)
+    const formattedResult = formatResult(data)
+    return typeof formattedResult.isTrue === 'boolean' ? formattedResult.isTrue : formattedResult
 }
 
 const queryExecutedVote = async (voteAddress: string) => {
