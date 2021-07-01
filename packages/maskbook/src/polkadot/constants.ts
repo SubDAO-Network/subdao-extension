@@ -9,11 +9,10 @@ export interface SubdaoTokenDetailed {
     address: string
 }
 
-export const ws_server = 'ws://39.101.70.206:39944'
-// export const ws_server = 'wss://alpha.subdao.org'
+export const ws_server = 'wss://alpha.subdao.org'
 
 export const mainAddress = {
-    main: '5CqmRXbwc8bSRQEsmQxfNm3QSPyEBW9j6X44Jb3HjwXuHXEt',
+    main: '5DZMXtTDHVXgwDuH7zbiFFcQ9KAkU9UeSPXXBkrnPoZ9k95S',
 }
 export const ERC20_TOKEN_LISTS = ['https://raw.githubusercontent.com/SubDAO-Network/token-list/main/subdao.json']
 
@@ -24,7 +23,7 @@ export const voteAddress = {
 
 export const redPacketAddress = {
     // main: '5HD1edgAbVurBi2Drn1jZjoWrNBtfqWCvCXeETNvc5JWmy6A',
-    main: '5HqDJ6ssyvjZHpdU4ikvuFynRxhJaw929UULrAVDckMPc6EM',
+    main: '5Fsb7HMNHis4gNWUKhB397NXLRS39QLk7SMs5YcaqsRTvpLD',
 }
 
 export const erc20Address = {
