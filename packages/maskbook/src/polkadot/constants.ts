@@ -12,7 +12,7 @@ export interface SubdaoTokenDetailed {
 export const ws_server = 'wss://alpha.subdao.org'
 
 export const mainAddress = {
-    main: '5CEtZvkk9paJorCaoud1YkaUco15gFF5EA7WUroDbHDisrzw',
+    main: '5HWSeWo5psXw72Huaq2vvw9XG1QoihgBFXGpDaDcpdboaBYg',
 }
 export const ERC20_TOKEN_LISTS = ['https://raw.githubusercontent.com/SubDAO-Network/token-list/main/subdao.json']
 
@@ -22,13 +22,10 @@ export const voteAddress = {
 }
 
 export const redPacketAddress = {
-    // main: '5HD1edgAbVurBi2Drn1jZjoWrNBtfqWCvCXeETNvc5JWmy6A',
-    main: '5Fsb7HMNHis4gNWUKhB397NXLRS39QLk7SMs5YcaqsRTvpLD',
+    main: '5HRpVAKhuFyFbZLJBmGDrQ8uBqzBJLggWhFpxrQWcbgzYn6U',
 }
 
 export const erc20Address = {
-    // Test Address
-    // test: '5HS33aRib3zndQKTe22nnfqsjE4QCBYa8jTioxNU3ExqUHkT',
     test: '5DCyzSLBMpYMeFpVHDKjPEVh3vuu2D3Ku4VMqaDUz3VtZ87N',
 }
 
