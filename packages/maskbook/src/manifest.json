@@ -1,6 +1,6 @@
 {
     "name": "SubDAO",
-    "version": "1.0.11",
+    "version": "1.0.12",
     "manifest_version": 2,
     "permissions": ["storage", "downloads", "webNavigation", "activeTab"],
     "optional_permissions": ["<all_urls>", "notifications"],
