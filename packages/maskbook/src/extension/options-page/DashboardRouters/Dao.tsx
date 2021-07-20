@@ -194,7 +194,7 @@ export function DashboardDaoRouterItem() {
         setTabIndex(newTabIndex)
     }, [])
     return (
-        <DashboardRouterContainer navHeight={104} title={title} empty={votes?.length === 0}>
+        <DashboardRouterContainer navHeight={150} title={title} empty={votes?.length === 0}>
             <ContainerLoading loading={loading}>
                 <Box
                     className={classes.caption}
@@ -308,7 +308,7 @@ export default function DashboardDaoRouter() {
     const isEmpty = items.length === 0
 
     return (
-        <DashboardRouterContainer title={t('dao')} empty={!loading && items.length === 0}>
+        <DashboardRouterContainer navHeight={150} title={t('dao')} empty={!loading && items.length === 0}>
             <ContainerLoading loading={loading}>
                 <Typography className={classes.title} variant="body2">
                     {t('dao_in_org')}
