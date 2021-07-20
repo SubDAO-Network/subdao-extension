@@ -308,10 +308,7 @@ export function WalletAssetsTable(props: WalletAssetsTableProps) {
 
     useEffect(() => {
         if (transferState?.type === StateType.UNKNOWN) return
-        if (transferState?.type === StateType.IS_IN_BLOCK) {
-            enqueueSnackbar(t('transfer_in_block'))
-        }
-        if (transferState?.type === StateType.CONFIRMED) {
+        if (transferState?.type === StateType.IS_IN_BLOCK || transferState?.type === StateType.CONFIRMED) {
             enqueueSnackbar(t('transfer_in_finalized'), {
                 variant: 'success',
             })
