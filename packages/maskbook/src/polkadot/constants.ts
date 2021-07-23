@@ -12,7 +12,7 @@ export interface SubdaoTokenDetailed {
 export const ws_server = 'wss://alpha.subdao.org'
 
 export const mainAddress = {
-    main: '5HWSeWo5psXw72Huaq2vvw9XG1QoihgBFXGpDaDcpdboaBYg',
+    main: '5CmSZKPeEsZ32uJm1Gs3eZ7xckQoMZrQA4oprTe39wGiKfdG',
 }
 export const ERC20_TOKEN_LISTS = ['https://raw.githubusercontent.com/SubDAO-Network/token-list/main/subdao.json']
 
