@@ -35,3 +35,8 @@ NODE_ENV=production pnpm build
 - [Medium](https://medium.com/@subdao)
 - [Telegram](https://t.me/subdao)
 - [Discord](https://discord.com/invite/Z8jtYqWbbN)
+
+
+## Thanks
+
+Thanks to [Dimension](https://github.com/dimension/) for creating such a tool [MaskBook](https://github.com/DimensionDev/Maskbook).
