@@ -15,6 +15,12 @@ pnpm install
 pnpm start
 ```
 
+## Test
+
+```bash
+yarn test
+```
+
 ## Build
 
 ```bash
@@ -28,7 +34,6 @@ NODE_ENV=production pnpm build
 - [Medium](https://medium.com/@subdao)
 - [Telegram](https://t.me/subdao)
 - [Discord](https://discord.com/invite/Z8jtYqWbbN)
-
 
 ## Thanks
 
