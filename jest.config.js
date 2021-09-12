@@ -3,7 +3,7 @@ const path = require('path')
 module.exports = {
     testRegex: ['/__tests__/.*\\.[jt]sx?$'],
     preset: 'ts-jest',
-    testEnvironment: 'jest-environment-jsdom-fourteen',
+    testEnvironment: 'jest-environment-jsdom',
     globals: {
         'ts-jest': {
             isolatedModules: true,
@@ -16,9 +16,11 @@ module.exports = {
         path.join(__dirname, './scripts/jest-setup.js'),
     ],
     // skip packages other than 'holoflows/kit'
-    transformIgnorePatterns: [],
+    transformIgnorePatterns: ['[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$', '^.+\\.module\\.(css|sass|scss)$'],
+    modulePathIgnorePatterns: ['packages/theme/dist'],
     transform: {
         'node_modules.+(holoflows).+.js$': 'jest-esm-transformer',
+        '^.+\\.[jt]sx?$': 'ts-jest',
     },
     moduleNameMapper: {
         'lodash-es': require.resolve('lodash'),
