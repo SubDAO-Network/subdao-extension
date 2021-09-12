@@ -17,7 +17,7 @@ module.exports = {
     ],
     // skip packages other than 'holoflows/kit'
     transformIgnorePatterns: ['[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$', '^.+\\.module\\.(css|sass|scss)$'],
-    modulePathIgnorePatterns: ['packages/theme/dist'],
+    modulePathIgnorePatterns: ['packages/theme/dist', 'packages/maskbook/dist'],
     transform: {
         'node_modules.+(holoflows).+.js$': 'jest-esm-transformer',
         '^.+\\.[jt]sx?$': 'ts-jest',

@@ -15,7 +15,7 @@
     "build:ios:webpack": "build iOS",
     "lint": "eslint -c packages/.eslintrc.json packages --ext .ts,.tsx,.js --cache --fix",
     "lint:ci": "eslint -c packages/.eslintrc.json packages --ext .ts,.tsx,.js --cache",
-    "test": "jest --verbose --watch --runInBand",
+    "test": "jest --verbose --watch --runInBand --coverage",
     "test:ci": "jest --verbose --ci --collectCoverage=true --reporters=default --reporters=jest-junit -w 1 --forceExit",
     "test:e2e": "jest --verbose --runInBand --config=jest-e2e.config.js",
     "preinstall": "npx only-allow pnpm",
