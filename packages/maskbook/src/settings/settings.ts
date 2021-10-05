@@ -4,6 +4,16 @@ import i18nNextInstance, { i18n } from '../utils/i18n-next'
 import { sideEffect } from '../utils/side-effects'
 import { ChainId } from '../web3/types'
 import { Appearance, Language, LaunchPage } from './types'
+import { SubstrateNetwork } from '../polkadot/constants'
+
+export const currentSubstrateNetworkSettings = createGlobalSettings<SubstrateNetwork>(
+    'SubstrateNetwork',
+    SubstrateNetwork.SubDAO,
+    {
+        primary: () => i18n.t('settings_substrate_network'),
+        secondary: () => i18n.t('settings_substrate_network_desc'),
+    },
+)
 
 /**
  * Does the debug mode on

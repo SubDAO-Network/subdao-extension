@@ -5,6 +5,10 @@ export function resolveProviderName(providerType: ProviderType) {
     switch (providerType) {
         case ProviderType.SubDAO:
             return 'SubDAO'
+        case ProviderType.Polkadot:
+            return 'Polkadot'
+        case ProviderType.Kusama:
+            return 'Kusama'
         case ProviderType.MetaMask:
             return 'MetaMask'
         case ProviderType.WalletConnect:

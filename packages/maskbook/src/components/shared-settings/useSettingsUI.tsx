@@ -131,6 +131,7 @@ export function SettingsUIEnum<T extends object>(
     const classes = useStyles()
     const { value, enumObject, getText, SelectProps } = props
     const [startTransition] = unstable_useTransition()
+    console.log(`value.......`, value)
     const ui = useEnumSettings(startTransition, value, enumObject, getText, SelectProps)
     return (
         <SharedListItem

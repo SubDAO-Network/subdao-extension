@@ -17,9 +17,13 @@ import { useI18N } from '../../../utils/i18n-next-ui'
 import { useStylesExtends } from '../../../components/custom-ui-helper'
 import { Provider } from './Provider'
 import { MetaMaskIcon } from '../../../resources/MetaMaskIcon'
-import { MaskbookIcon } from '../../../resources/MaskbookIcon'
+// import { MaskbookIcon } from '../../../resources/MaskbookIcon'
+
+import { SubDAOIcon } from '../../../resources/MaskbookIcon'
 import { PolkadotIcon } from '../../../resources/PolkadotIcon'
-import { WalletConnectIcon } from '../../../resources/WalletConnectIcon'
+import { KusamaIcon } from '../../../resources/KusamaIcon'
+
+// import { WalletConnectIcon } from '../../../resources/WalletConnectIcon'
 import Services from '../../../extension/service'
 import { useRemoteControlledDialog } from '../../../utils/hooks/useRemoteControlledDialog'
 import { WalletMessages } from '../messages'
@@ -30,6 +34,11 @@ import { unreachable } from '../../../utils/utils'
 import { Flags } from '../../../utils/flags'
 import { InjectedDialog } from '../../../components/shared/InjectedDialog'
 import { useWallets } from '../hooks/useWallet'
+import { SubstrateNetwork } from '../../../polkadot/constants'
+
+import { createGlobalSettings } from '../../../settings/createSettings'
+import { MaskMessage } from '../../../utils/messages'
+import { currentSubstrateNetworkSettings } from '../../../settings/settings'
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -91,12 +100,26 @@ function SelectProviderDialogUI(props: SelectProviderDialogUIProps) {
             onClose()
             switch (providerType) {
                 case ProviderType.SubDAO:
+                case ProviderType.Polkadot:
+                case ProviderType.Kusama:
+                    // const id = Date.now()
+                    // console.log(`SubstrateNetwork....`, SubstrateNetwork[providerType])
+
+                    currentSubstrateNetworkSettings.value = SubstrateNetwork[providerType]
+                    // MaskMessage.events.createInternalSettingsChanged.sendToAll({
+                    //     id,
+                    //     key: 'settings+SubstrateNetwork',
+                    //     value: SubstrateNetwork[providerType],
+                    //     initial: true,
+                    // })
+
                     if (wallets.length > 0) {
                         selectWalletDialogOpen({
                             open: true,
                         })
                         return
                     }
+
                     if (isEnvironment(Environment.ManifestOptions))
                         history.push(`${DashboardRoute.Wallets}?create=${Date.now()}`)
                     else await Services.Welcome.openOptionsPage(DashboardRoute.Wallets, `create=${Date.now()}`)
@@ -123,10 +146,26 @@ function SelectProviderDialogUI(props: SelectProviderDialogUIProps) {
                 <ImageList className={classes.grid} gap={16} rowHeight={183}>
                     <ImageListItem>
                         <Provider
-                            logo={<MaskbookIcon className={classes.icon} viewBox="0 0 45 45" />}
+                            logo={<SubDAOIcon className={classes.icon} viewBox="0 0 45 45" />}
                             name="SubDAO"
-                            description={t('plugin_wallet_connect_to_mask')}
+                            description={t('plugin_wallet_connect_to_subdao')}
                             onClick={() => onConnect(ProviderType.SubDAO)}
+                        />
+                    </ImageListItem>
+                    <ImageListItem>
+                        <Provider
+                            logo={<PolkadotIcon className={classes.icon} viewBox="0 0 45 45" />}
+                            name="Polkadot"
+                            description={t('plugin_wallet_connect_to_polkadot')}
+                            onClick={() => onConnect(ProviderType.Polkadot)}
+                        />
+                    </ImageListItem>
+                    <ImageListItem>
+                        <Provider
+                            logo={<KusamaIcon className={classes.icon} viewBox="0 0 45 45" />}
+                            name="Kusama"
+                            description={t('plugin_wallet_connect_to_kusama')}
+                            onClick={() => onConnect(ProviderType.Kusama)}
                         />
                     </ImageListItem>
                     {Flags.metamask_support_enabled ? (

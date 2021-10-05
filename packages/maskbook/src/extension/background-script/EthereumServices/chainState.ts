@@ -92,6 +92,8 @@ export async function getUnsafeChainId(address?: string) {
         first(wallets)
     if (!wallet) return currentMaskbookChainIdSettings.value
     if (provider === ProviderType.SubDAO) return currentMaskbookChainIdSettings.value
+    if (provider === ProviderType.Polkadot) return currentMaskbookChainIdSettings.value
+    if (provider === ProviderType.Kusama) return currentMaskbookChainIdSettings.value
     if (provider === ProviderType.MetaMask) return currentMetaMaskChainIdSettings.value
     if (provider === ProviderType.WalletConnect) return currentWalletConnectChainIdSettings.value
     unreachable(provider)

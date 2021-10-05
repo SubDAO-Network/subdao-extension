@@ -78,6 +78,10 @@ export function MaskbookTextIcon(props: SvgIconProps) {
     return <SvgIcon {...props}>{MaskbookSmileFaceSVG}</SvgIcon>
 }
 
+export function SubDAOIcon(props: SvgIconProps) {
+    return <SvgIcon {...props}>{MaskbookSmileFaceSVG}</SvgIcon>
+}
+
 export function MaskbookIcon(props: SvgIconProps) {
     return <SvgIcon {...props}>{MaskbookSmileFaceSVG}</SvgIcon>
 }

@@ -12,6 +12,7 @@ import {
     // currentMaskbookChainIdSettings,
     enableGroupSharingSettings,
     launchPageSettings,
+    currentSubstrateNetworkSettings,
 } from '../../../settings/settings'
 import { Appearance, LaunchPage, Language } from '../../../settings/types'
 import { useMatchXS } from '../../../utils/hooks/useMatchXS'
@@ -26,7 +27,7 @@ import FlipToFrontIcon from '@material-ui/icons/FlipToFront'
 import TabIcon from '@material-ui/icons/Tab'
 import PaletteIcon from '@material-ui/icons/Palette'
 import LanguageIcon from '@material-ui/icons/Language'
-// import WifiIcon from '@material-ui/icons/Wifi'
+import WifiIcon from '@material-ui/icons/Wifi'
 import LaunchIcon from '@material-ui/icons/Launch'
 import DashboardRouterContainer from './Container'
 import { useI18N } from '../../../utils/i18n-next-ui'
@@ -38,6 +39,7 @@ import { Flags } from '../../../utils/flags'
 // import { DataProvider, TradeProvider } from '../../../plugins/Trader/types'
 // import { ChainId } from '../../../web3/types'
 import { extendsTheme } from '../../../utils/theme'
+import { SubstrateNetwork } from '../../../polkadot/constants'
 
 const useStyles = makeStyles((theme) =>
     createStyles({
@@ -178,15 +180,12 @@ export default function DashboardSettingsRouter() {
                                     icon={<PaletteIcon />}
                                     value={appearanceSettings}
                                 />
-                                {/* {Flags.support_eth_network_switch ? (
-                                    <SettingsUIEnum
-                                        classes={listStyle}
-                                        enumObject={ChainId}
-                                        icon={<WifiIcon />}
-                                        value={currentMaskbookChainIdSettings}
-                                    />
-                                ) : null} */}
-                                {/* TODO: A singe 'Plugins' tab should be added for listing plugin bio and settings. */}
+                                <SettingsUIEnum
+                                    classes={listStyle}
+                                    enumObject={SubstrateNetwork}
+                                    icon={<WifiIcon />}
+                                    value={currentSubstrateNetworkSettings}
+                                />
                             </List>
                         </Card>
                     </Paper>

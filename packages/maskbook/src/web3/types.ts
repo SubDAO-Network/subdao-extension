@@ -2,6 +2,8 @@ import type createMetaMaskProvider from '@dimensiondev/metamask-extension-provid
 
 export enum ProviderType {
     SubDAO = 'SubDAO',
+    Polkadot = 'Polkadot',
+    Kusama = 'Kusama',
     MetaMask = 'MetaMask',
     WalletConnect = 'WalletConnect',
 }

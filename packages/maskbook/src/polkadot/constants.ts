@@ -40,3 +40,21 @@ export const tokenDetail = {
 
 export const ss58Format = 42
 export const keypairType: KeypairType = 'sr25519'
+
+export enum SubstrateNetwork {
+    SubDAO = 'SubDAO',
+    Polkadot = 'Polkadot',
+    Kusama = 'Kusama',
+}
+
+export enum SubstrateNetworkWsProvider {
+    SubDAO = 'wss://alpha.subdao.org',
+    Polkadot = 'wss://rpc.polkadot.io',
+    Kusama = 'wss://kusama-rpc.polkadot.io/',
+}
+
+export enum SubstrateNetworkPrefix {
+    SubDAO = 42,
+    Polkadot = 0,
+    Kusama = 2,
+}

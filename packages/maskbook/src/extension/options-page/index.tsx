@@ -54,6 +54,7 @@ import { SubstrateContextProvider } from '../../polkadot/provider'
 import keyring from '@polkadot/ui-keyring'
 import { cryptoWaitReady } from '@polkadot/util-crypto'
 import { ss58Format, keypairType } from '../../polkadot/constants'
+import { useSubstrateNetworkProvider } from '../../polkadot/hooks/useSubstrateNetworkProvider'
 
 cryptoWaitReady().then(() => {
     // load all available addresses and accounts
@@ -279,7 +280,7 @@ export function Dashboard() {
     return MaskbookUIRoot(
         <StylesProvider injectFirst>
             <ThemeProvider theme={useMaskbookTheme()}>
-                <SubstrateContextProvider>
+                <SubstrateContextProvider provider={useSubstrateNetworkProvider()}>
                     <DashboardSnackbarProvider>
                         <NoSsr>
                             <Router>

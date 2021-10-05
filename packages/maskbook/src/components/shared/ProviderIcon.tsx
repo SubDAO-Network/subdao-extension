@@ -1,4 +1,4 @@
-import { MaskbookIcon } from '../../resources/MaskbookIcon'
+import { SubDAOIcon } from '../../resources/MaskbookIcon'
 import { MetaMaskIcon } from '../../resources/MetaMaskIcon'
 import { WalletConnectIcon } from '../../resources/WalletConnectIcon'
 import { makeStyles, Theme } from '@material-ui/core'
@@ -24,7 +24,7 @@ export function ProviderIcon(props: ProviderIconProps) {
 
     switch (providerType) {
         case ProviderType.SubDAO:
-            return <MaskbookIcon classes={{ root: classes.icon }} viewBox={`0 0 ${size} ${size}`} />
+            return <SubDAOIcon classes={{ root: classes.icon }} viewBox={`0 0 ${size} ${size}`} />
         case ProviderType.MetaMask:
             return <MetaMaskIcon classes={{ root: classes.icon }} viewBox={`0 0 ${size} ${size}`} />
         case ProviderType.WalletConnect:

@@ -10,11 +10,13 @@ import {
     mnemonicToMiniSecret,
     randomAsU8a,
 } from '@polkadot/util-crypto'
+import { currentSubstrateNetworkSettings } from '../../../settings/settings'
 
 const ETH_DEFAULT_PATH = "m/44'/60'/0'/0/0"
 
 import { DEV_PHRASE } from '@polkadot/keyring/defaults'
-import { keypairType, ss58Format } from '../../../polkadot/constants'
+import { keypairType, ss58Format, SubstrateNetwork, SubstrateNetworkPrefix } from '../../../polkadot/constants'
+
 const DEFAULT_PAIR_TYPE = keypairType
 
 export type PairType = 'ecdsa' | 'ed25519' | 'ed25519-ledger' | 'ethereum' | 'sr25519'
@@ -74,11 +76,12 @@ export function generateSeed(
     const seed = newSeed(_seed, seedType)
     const suri = addressFromSeed(seed, derivePath, pairType)
     const address = keyring.encodeAddress(suri, ss58)
-    console.log(suri, address)
+    const network = currentSubstrateNetworkSettings.value
+    const endpointAddr = keyring.encodeAddress(keyring.decodeAddress(address), SubstrateNetworkPrefix[network])
 
     return {
         suri,
-        address,
+        address: endpointAddr,
         derivePath,
         deriveValidation: undefined,
         isSeedValid: true,
@@ -96,6 +99,8 @@ export function updateAddress(seed: string, derivePath: string, seedType: SeedTy
     if (!deriveValidation?.error && isSeedValid) {
         try {
             address = addressFromSeed(seed, derivePath, pairType)
+            const network = currentSubstrateNetworkSettings.value
+            address = keyring.encodeAddress(keyring.decodeAddress(address), SubstrateNetworkPrefix[network])
         } catch (error) {
             console.error(error)
             deriveValidation = {
