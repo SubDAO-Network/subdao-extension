@@ -36,8 +36,6 @@ import { InjectedDialog } from '../../../components/shared/InjectedDialog'
 import { useWallets } from '../hooks/useWallet'
 import { SubstrateNetwork } from '../../../polkadot/constants'
 
-import { createGlobalSettings } from '../../../settings/createSettings'
-import { MaskMessage } from '../../../utils/messages'
 import { currentSubstrateNetworkSettings } from '../../../settings/settings'
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -102,24 +100,13 @@ function SelectProviderDialogUI(props: SelectProviderDialogUIProps) {
                 case ProviderType.SubDAO:
                 case ProviderType.Polkadot:
                 case ProviderType.Kusama:
-                    // const id = Date.now()
-                    // console.log(`SubstrateNetwork....`, SubstrateNetwork[providerType])
-
                     currentSubstrateNetworkSettings.value = SubstrateNetwork[providerType]
-                    // MaskMessage.events.createInternalSettingsChanged.sendToAll({
-                    //     id,
-                    //     key: 'settings+SubstrateNetwork',
-                    //     value: SubstrateNetwork[providerType],
-                    //     initial: true,
-                    // })
-
                     if (wallets.length > 0) {
                         selectWalletDialogOpen({
                             open: true,
                         })
                         return
                     }
-
                     if (isEnvironment(Environment.ManifestOptions))
                         history.push(`${DashboardRoute.Wallets}?create=${Date.now()}`)
                     else await Services.Welcome.openOptionsPage(DashboardRoute.Wallets, `create=${Date.now()}`)
