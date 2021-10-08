@@ -81,6 +81,7 @@ export interface WalletRecord {
     _private_key_?: string
     createdAt: Date
     updatedAt: Date
+    networkPrefix?: number
 }
 
 export interface PhraseRecord {

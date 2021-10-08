@@ -10,10 +10,12 @@ import { formatChecksumAddress } from '../formatter'
 import { getWalletByAddress, WalletRecordIntoDB, WalletRecordOutDB } from './helpers'
 import { isSameAddress } from '../../../web3/helpers'
 import { currentSelectedWalletAddressSettings, currentSelectedWalletProviderSettings } from '../settings'
+import { currentSubstrateNetworkSettings } from '../../../settings/settings'
 import { selectMaskbookWallet } from '../helpers'
 import { generateSeed, addressFromSeed, rawValidate } from './keyring'
 import { mnemonicToMiniSecret, mnemonicGenerate } from '@polkadot/util-crypto'
 import { isHex, u8aToHex } from '@polkadot/util'
+import { SubstrateNetwork, SubstrateNetworkPrefix } from '../../../polkadot/constants'
 
 // Private key at m/44'/coinType'/account'/change/addressIndex
 // coinType = ether
@@ -54,10 +56,16 @@ export async function getWallets(provider?: ProviderType) {
             }),
         )
     ).sort(sortWallet)
-    if (provider === ProviderType.SubDAO) return wallets.filter((x) => x._private_key_ || x.mnemonic.length)
-    if (provider === currentSelectedWalletProviderSettings.value) {
-        const address_ = currentSelectedWalletAddressSettings.value
-        return wallets.filter((x) => isSameAddress(x.address, address_))
+    if (provider === ProviderType.SubDAO) {
+        return wallets.filter((x) => !x.networkPrefix && x.networkPrefix === SubstrateNetworkPrefix.SubDAO)
+    }
+
+    if (provider === ProviderType.Polkadot) {
+        return wallets.filter((x) => !x.networkPrefix && x.networkPrefix === SubstrateNetworkPrefix.Polkadot)
+    }
+
+    if (provider === ProviderType.Kusama) {
+        return wallets.filter((x) => !x.networkPrefix && x.networkPrefix === SubstrateNetworkPrefix.Kusama)
     }
     return wallets
 }
@@ -133,6 +141,8 @@ export async function importNewWallet(
     const address = await getWalletAddress()
     if (!address) throw new Error('cannot get the wallet address')
     if (rec.name === null) rec.name = address.slice(0, 6)
+    const network = currentSubstrateNetworkSettings.value
+    const networkPrefix = SubstrateNetworkPrefix[network]
     const record: WalletRecord = {
         name,
         mnemonic,
@@ -143,6 +153,7 @@ export async function importNewWallet(
         erc20_token_blacklist: new Set(),
         createdAt: new Date(),
         updatedAt: new Date(),
+        networkPrefix,
     }
     if (rec._private_key_) record._private_key_ = rec._private_key_
     {

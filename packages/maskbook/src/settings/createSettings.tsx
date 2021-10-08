@@ -80,7 +80,6 @@ export function createInternalSettings<T extends browser.storage.StorageValue>(
             initial: false,
         })
     })
-    console.log(`settings....`, settings)
     return settings
 }
 
