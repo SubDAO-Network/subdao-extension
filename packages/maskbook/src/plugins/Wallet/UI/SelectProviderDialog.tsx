@@ -1,5 +1,4 @@
 import { useCallback } from 'react'
-import { MoreHorizontal } from 'react-feather'
 import {
     makeStyles,
     Theme,
@@ -7,8 +6,6 @@ import {
     DialogContent,
     ImageList,
     ImageListItem,
-    Typography,
-    Link,
     DialogActions,
 } from '@material-ui/core'
 import { isEnvironment, Environment } from '@dimensiondev/holoflows-kit'
@@ -17,26 +14,23 @@ import { useI18N } from '../../../utils/i18n-next-ui'
 import { useStylesExtends } from '../../../components/custom-ui-helper'
 import { Provider } from './Provider'
 import { MetaMaskIcon } from '../../../resources/MetaMaskIcon'
-// import { MaskbookIcon } from '../../../resources/MaskbookIcon'
 
 import { SubDAOIcon } from '../../../resources/MaskbookIcon'
 import { PolkadotIcon } from '../../../resources/PolkadotIcon'
 import { KusamaIcon } from '../../../resources/KusamaIcon'
 
-// import { WalletConnectIcon } from '../../../resources/WalletConnectIcon'
 import Services from '../../../extension/service'
 import { useRemoteControlledDialog } from '../../../utils/hooks/useRemoteControlledDialog'
-import { WalletMessages } from '../messages'
+import { WalletMessages, WalletRPC } from '../messages'
 import { useBlurContext } from '../../../extension/options-page/DashboardContexts/BlurContext'
 import { DashboardRoute } from '../../../extension/options-page/Route'
 import { ProviderType } from '../../../web3/types'
 import { unreachable } from '../../../utils/utils'
 import { Flags } from '../../../utils/flags'
 import { InjectedDialog } from '../../../components/shared/InjectedDialog'
-import { useWallets } from '../hooks/useWallet'
-import { SubstrateNetwork } from '../../../polkadot/constants'
 
-import { currentSubstrateNetworkSettings } from '../../../settings/settings'
+import { currentSelectedWalletProviderSettings } from '../settings'
+import { getWallets } from '../helpers'
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -91,8 +85,6 @@ function SelectProviderDialogUI(props: SelectProviderDialogUIProps) {
 
     // render in dashboard
     useBlurContext(open)
-
-    const wallets = useWallets(ProviderType.SubDAO)
     const onConnect = useCallback(
         async (providerType: ProviderType) => {
             onClose()
@@ -100,7 +92,8 @@ function SelectProviderDialogUI(props: SelectProviderDialogUIProps) {
                 case ProviderType.SubDAO:
                 case ProviderType.Polkadot:
                 case ProviderType.Kusama:
-                    currentSubstrateNetworkSettings.value = SubstrateNetwork[providerType]
+                    const wallets = await getWallets(providerType)
+                    currentSelectedWalletProviderSettings.value = providerType
                     if (wallets.length > 0) {
                         selectWalletDialogOpen({
                             open: true,
@@ -124,7 +117,7 @@ function SelectProviderDialogUI(props: SelectProviderDialogUIProps) {
                     unreachable(providerType)
             }
         },
-        [wallets, history, onClose, selectWalletDialogOpen, setWalletConnectDialogOpen],
+        [history, onClose, selectWalletDialogOpen, setWalletConnectDialogOpen],
     )
 
     return (

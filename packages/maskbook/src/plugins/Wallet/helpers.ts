@@ -1,9 +1,11 @@
 import stringify from 'json-stable-stringify'
 import type { WalletRecord, ERC20TokenRecord } from './database/types'
-import { currentSelectedWalletAddressSettings, currentSelectedWalletProviderSettings } from './settings'
+import { currentSelectedWalletAddressSettings } from './settings'
+import { currentSubstrateNetworkSettings } from '../../settings/settings'
 import { isSameAddress } from '../../web3/helpers'
 import { ProviderType } from '../../web3/types'
-import { WalletMessages } from './messages'
+import { WalletMessages, WalletRPC } from './messages'
+import { SubstrateNetwork, SubstrateNetworkPrefix } from '../../polkadot/constants'
 
 function serializeWalletRecord(record: WalletRecord) {
     return stringify({
@@ -33,6 +35,30 @@ export function TokenArrayComparer(a: ERC20TokenRecord[], b: ERC20TokenRecord[])
 
 export function selectMaskbookWallet(wallet: WalletRecord) {
     currentSelectedWalletAddressSettings.value = wallet.address
-    currentSelectedWalletProviderSettings.value = ProviderType.SubDAO
+    let network = SubstrateNetwork.SubDAO
+    if (wallet.networkPrefix === SubstrateNetworkPrefix.Polkadot) {
+        network = SubstrateNetwork.Polkadot
+    }
+    if (wallet.networkPrefix === SubstrateNetworkPrefix.Kusama) {
+        network = SubstrateNetwork.Kusama
+    }
+    currentSubstrateNetworkSettings.value = network
     WalletMessages.events.walletsUpdated.sendToAll(undefined)
+}
+
+export async function getWallets(provider: ProviderType = ProviderType.SubDAO) {
+    const wallets = await WalletRPC.getWallets()
+    if (provider === ProviderType.SubDAO) {
+        return wallets.filter((x) => x.networkPrefix === undefined || x.networkPrefix === SubstrateNetworkPrefix.SubDAO)
+    }
+
+    if (provider === ProviderType.Polkadot) {
+        return wallets.filter((x) => x.networkPrefix === SubstrateNetworkPrefix.Polkadot)
+    }
+
+    if (provider === ProviderType.Kusama) {
+        return wallets.filter((x) => x.networkPrefix === SubstrateNetworkPrefix.Kusama)
+    }
+
+    return wallets
 }

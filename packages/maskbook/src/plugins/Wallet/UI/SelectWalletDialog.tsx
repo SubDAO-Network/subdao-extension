@@ -12,7 +12,7 @@ import Services from '../../../extension/service'
 import { DashboardRoute } from '../../../extension/options-page/Route'
 import { delay } from '../../../utils/utils'
 import { isEnvironment, Environment } from '@dimensiondev/holoflows-kit'
-import { currentSelectedWalletAddressSettings, currentSelectedWalletProviderSettings } from '../settings'
+import { currentSelectedWalletProviderSettings } from '../settings'
 import { InjectedDialog } from '../../../components/shared/InjectedDialog'
 import { ProviderType } from '../../../web3/types'
 import { useValueRef } from '../../../utils/hooks/useValueRef'
@@ -32,10 +32,10 @@ interface SelectWalletDialogUIProps extends withClasses<never> {}
 function SelectWalletDialogUI(props: SelectWalletDialogUIProps) {
     const { t } = useI18N()
     const classes = useStylesExtends(useStyles(), props)
-
-    const wallets = useWallets(ProviderType.SubDAO)
-    const selectedWallet = useWallet()
     const selectedWalletProvider = useValueRef(currentSelectedWalletProviderSettings)
+
+    const wallets = useWallets(selectedWalletProvider)
+    const selectedWallet = useWallet()
 
     //#region remote controlled dialog logic
     const [open, setOpen] = useRemoteControlledDialog(WalletMessages.events.selectWalletDialogUpdated)
@@ -86,9 +86,7 @@ function SelectWalletDialogUI(props: SelectWalletDialogUIProps) {
                     <WalletInList
                         key={wallet.address}
                         wallet={wallet}
-                        disabled={
-                            selectedWallet?.address === wallet.address && selectedWalletProvider === ProviderType.SubDAO
-                        }
+                        disabled={selectedWallet?.address === wallet.address}
                         onClick={() => onSelect(wallet)}
                     />
                 ))}

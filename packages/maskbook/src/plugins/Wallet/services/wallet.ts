@@ -1,21 +1,19 @@
-import * as bip39 from 'bip39'
 import { createTransaction } from '../../../database/helpers/openDB'
 import { createWalletDBAccess } from '../database/Wallet.db'
 import type { WalletRecord } from '../database/types'
 import { WalletMessages } from '../messages'
-import { buf2hex, hex2buf, assert } from '../../../utils/utils'
+import { assert } from '../../../utils/utils'
 import { ProviderType } from '../../../web3/types'
 import { resolveProviderName } from '../../../web3/pipes'
 import { formatChecksumAddress } from '../formatter'
 import { getWalletByAddress, WalletRecordIntoDB, WalletRecordOutDB } from './helpers'
 import { isSameAddress } from '../../../web3/helpers'
-import { currentSelectedWalletAddressSettings, currentSelectedWalletProviderSettings } from '../settings'
+import { currentSelectedWalletAddressSettings } from '../settings'
 import { currentSubstrateNetworkSettings } from '../../../settings/settings'
 import { selectMaskbookWallet } from '../helpers'
-import { generateSeed, addressFromSeed, rawValidate } from './keyring'
-import { mnemonicToMiniSecret, mnemonicGenerate } from '@polkadot/util-crypto'
-import { isHex, u8aToHex } from '@polkadot/util'
-import { SubstrateNetwork, SubstrateNetworkPrefix } from '../../../polkadot/constants'
+import { generateSeed, addressFromSeed } from './keyring'
+import { mnemonicGenerate } from '@polkadot/util-crypto'
+import { SubstrateNetworkPrefix } from '../../../polkadot/constants'
 
 // Private key at m/44'/coinType'/account'/change/addressIndex
 // coinType = ether
@@ -57,15 +55,15 @@ export async function getWallets(provider?: ProviderType) {
         )
     ).sort(sortWallet)
     if (provider === ProviderType.SubDAO) {
-        return wallets.filter((x) => !x.networkPrefix && x.networkPrefix === SubstrateNetworkPrefix.SubDAO)
+        return wallets.filter((x) => x.networkPrefix === undefined || x.networkPrefix === SubstrateNetworkPrefix.SubDAO)
     }
 
     if (provider === ProviderType.Polkadot) {
-        return wallets.filter((x) => !x.networkPrefix && x.networkPrefix === SubstrateNetworkPrefix.Polkadot)
+        return wallets.filter((x) => x.networkPrefix === SubstrateNetworkPrefix.Polkadot)
     }
 
     if (provider === ProviderType.Kusama) {
-        return wallets.filter((x) => !x.networkPrefix && x.networkPrefix === SubstrateNetworkPrefix.Kusama)
+        return wallets.filter((x) => x.networkPrefix === SubstrateNetworkPrefix.Kusama)
     }
     return wallets
 }
