@@ -1,11 +1,8 @@
-import { forwardRef, useCallback, useState, useEffect } from 'react'
-import { truncate } from 'lodash-es'
-import { Button, Box, IconButton, MenuItem, Tabs, Tab, Typography, Avatar, Alert } from '@material-ui/core'
+import { forwardRef, useCallback, useState } from 'react'
+import { Button, Box, IconButton, MenuItem, Tabs, Tab } from '@material-ui/core'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 import AddIcon from '@material-ui/icons/Add'
-import MonetizationOnOutlinedIcon from '@material-ui/icons/MonetizationOnOutlined'
 import MoreVertOutlinedIcon from '@material-ui/icons/MoreVertOutlined'
-import HistoryIcon from '@material-ui/icons/History'
 import { useModal } from '../DashboardDialogs/Base'
 import {
     DashboardWalletHistoryDialog,
@@ -21,9 +18,7 @@ import { useColorStyles } from '../../../utils/theme'
 import { useMatchXS } from '../../../utils/hooks/useMatchXS'
 import type { WalletRecord } from '../../../plugins/Wallet/database/types'
 import { WalletAssetsTable } from './WalletAssetsTable'
-import { Flags } from '../../../utils/flags'
 import { useSubstrate } from '../../../polkadot/provider'
-import { StateType } from '../../../polkadot/types'
 
 const useStyles = makeStyles((theme) =>
     createStyles({

@@ -1,5 +1,4 @@
-import { useState, useMemo, useCallback } from 'react'
-import { useAsync } from 'react-use'
+import { useState, useCallback } from 'react'
 import { DashboardDialogCore, DashboardDialogWrapper, WrappedDialogProps, useSnackbarCallback } from '../Base'
 import {
     CreditCard as CreditCardIcon,
@@ -8,19 +7,7 @@ import {
     Info as InfoIcon,
     Trash2 as TrashIcon,
 } from 'react-feather'
-import {
-    Button,
-    TextField,
-    Typography,
-    makeStyles,
-    createStyles,
-    Box,
-    FormControlLabel,
-    Checkbox,
-    Theme,
-    Chip,
-} from '@material-ui/core'
-import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined'
+import { Button, TextField, Typography, makeStyles, createStyles, Box, Theme, Chip } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
 import AbstractTab, { AbstractTabProps } from '../../DashboardComponents/AbstractTab'
 import { useI18N } from '../../../../utils/i18n-next-ui'
@@ -41,7 +28,6 @@ import { useRedPacketFromDB } from '../../../../plugins/RedPacket/hooks/useRedPa
 import WalletLine from '../WalletLine'
 import { isETH, isSameAddress } from '../../../../web3/helpers'
 import { useAccount } from '../../../../web3/hooks/useAccount'
-import { currentSelectedWalletAddressSettings } from '../../../../plugins/Wallet/settings'
 import { WalletRPC } from '../../../../plugins/Wallet/messages'
 
 //#region predefined token selector
@@ -287,16 +273,6 @@ export function DashboardWalletErrorDialog(props: WrappedDialogProps<object>) {
     )
 }
 //#endregion
-
-//#region wallet history dialog
-const useHistoryDialogStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        list: {
-            width: '100%',
-            overflow: 'auto',
-        },
-    }),
-)
 
 export function DashboardWalletHistoryDialog(
     props: WrappedDialogProps<WalletProps & { onRedPacketClicked: (payload: RedPacketJSONPayload) => void }>,
