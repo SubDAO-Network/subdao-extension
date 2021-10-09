@@ -16,7 +16,8 @@ import { currentSelectedWalletProviderSettings } from '../settings'
 import { InjectedDialog } from '../../../components/shared/InjectedDialog'
 import { ProviderType } from '../../../web3/types'
 import { useValueRef } from '../../../utils/hooks/useValueRef'
-import { selectMaskbookWallet } from '../helpers'
+import { selectSubDAOWallet, getProvider } from '../helpers'
+import { currentSubstrateNetworkSettings } from '../../../settings/settings'
 
 const useStyles = makeStyles((theme) =>
     createStyles({
@@ -40,6 +41,8 @@ function SelectWalletDialogUI(props: SelectWalletDialogUIProps) {
     //#region remote controlled dialog logic
     const [open, setOpen] = useRemoteControlledDialog(WalletMessages.events.selectWalletDialogUpdated)
     const onClose = useCallback(() => {
+        const network = currentSubstrateNetworkSettings.value
+        currentSelectedWalletProviderSettings.value = getProvider(network)
         setOpen({
             open: false,
         })
@@ -49,7 +52,7 @@ function SelectWalletDialogUI(props: SelectWalletDialogUIProps) {
     const onSelect = useCallback(
         (wallet: WalletRecord) => {
             onClose()
-            selectMaskbookWallet(wallet)
+            selectSubDAOWallet(wallet)
         },
         [onClose],
     )

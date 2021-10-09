@@ -10,7 +10,7 @@ import { getWalletByAddress, WalletRecordIntoDB, WalletRecordOutDB } from './hel
 import { isSameAddress } from '../../../web3/helpers'
 import { currentSelectedWalletAddressSettings } from '../settings'
 import { currentSubstrateNetworkSettings } from '../../../settings/settings'
-import { selectMaskbookWallet } from '../helpers'
+import { selectSubDAOWallet } from '../helpers'
 import { generateSeed, addressFromSeed } from './keyring'
 import { mnemonicGenerate } from '@polkadot/util-crypto'
 import { SubstrateNetworkPrefix } from '../../../polkadot/constants'
@@ -162,7 +162,7 @@ export async function importNewWallet(
             await t.objectStore('Wallet').put(WalletRecordIntoDB(record))
     }
     WalletMessages.events.walletsUpdated.sendToAll(undefined)
-    selectMaskbookWallet(record)
+    selectSubDAOWallet(record)
     return address
     async function getWalletAddress() {
         if (rec.address) return rec.address
