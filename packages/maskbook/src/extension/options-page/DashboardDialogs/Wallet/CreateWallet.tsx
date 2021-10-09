@@ -43,8 +43,10 @@ import { generateSeed, AddressState, updateAddress, rawValidate } from '../../..
 import type { SeedType, PairType } from '../../../../plugins/Wallet/services/keyring'
 import { mnemonicValidate } from '@polkadot/util-crypto'
 import { currentSubstrateNetworkSettings } from '../../../../settings/settings'
-import { getProvider } from '../../../../polkadot/utils/helpers'
+import { getProvider, getNetworkPrefix } from '../../../../polkadot/utils/helpers'
+import { keypairType } from '../../../../polkadot/constants'
 import { currentSelectedWalletProviderSettings } from '../../../../plugins/Wallet/settings'
+import { useValueRef } from '../../../../utils/hooks/useValueRef'
 
 const useWalletCreateDialogStyle = makeStyles((theme: Theme) =>
     createStyles({
@@ -105,8 +107,11 @@ export function WalletCreateDialog(props: WrappedDialogProps<object>) {
     const [name, setName] = useState('')
     const [checkSave, setCheckSave] = useState(false)
     const [seedType, setSeedType] = useState<SeedType>('bip')
+    const provider = useValueRef(currentSelectedWalletProviderSettings)
+    const networkPrefix = getNetworkPrefix(provider)
+    const ss58Format = 42
     const [{ address, derivePath, deriveValidation, isSeedValid, pairType, seed }, setAddress] = useState<AddressState>(
-        () => generateSeed(null, '', seedType),
+        () => generateSeed(null, '', seedType, keypairType, ss58Format, networkPrefix),
     )
     const [, copyToClipboard] = useCopyToClipboard()
     const onChangeSeed = useCallback(

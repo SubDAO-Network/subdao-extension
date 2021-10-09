@@ -72,12 +72,14 @@ export function generateSeed(
     seedType: SeedType = 'bip',
     pairType: PairType = DEFAULT_PAIR_TYPE,
     ss58: number = ss58Format,
+    networkPrefix?: number,
 ): AddressState {
     const seed = newSeed(_seed, seedType)
     const suri = addressFromSeed(seed, derivePath, pairType)
     const address = keyring.encodeAddress(suri, ss58)
     const network = currentSubstrateNetworkSettings.value
-    const endpointAddr = keyring.encodeAddress(keyring.decodeAddress(address), SubstrateNetworkPrefix[network])
+    const prefix = networkPrefix ? networkPrefix : SubstrateNetworkPrefix[network]
+    const endpointAddr = keyring.encodeAddress(keyring.decodeAddress(address), prefix)
 
     return {
         suri,
