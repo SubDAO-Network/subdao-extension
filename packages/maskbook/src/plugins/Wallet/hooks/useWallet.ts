@@ -5,9 +5,9 @@ import { useValueRef } from '../../../utils/hooks/useValueRef'
 import type { WalletRecord } from '../database/types'
 import { WalletArrayComparer } from '../helpers'
 import { isSameAddress } from '../../../web3/helpers'
-import { currentSelectedWalletAddressSettings } from '../settings'
-
+import { currentSelectedWalletAddressSettings, currentSelectedWalletProviderSettings } from '../settings'
 import { SubstrateNetworkPrefix } from '../../../polkadot/constants'
+import { getNetworkPrefix } from '../../../polkadot/utils/helpers'
 
 //#region tracking wallets
 const walletsRef = new ValueRef<WalletRecord[]>([], WalletArrayComparer)
@@ -20,8 +20,14 @@ revalidate()
 
 export function useWallet(address?: string) {
     const address_ = useValueRef(currentSelectedWalletAddressSettings)
+    const provider = useValueRef(currentSelectedWalletProviderSettings)
+    const networkPrefix = getNetworkPrefix(provider)
     const wallets = useWallets()
-    return wallets.find((x) => isSameAddress(x.address, address ?? address_))
+    return wallets.find((x: any) => {
+        const isSame = isSameAddress(x.address, address ?? address_)
+        const isOldWallet = x.networkPrefix === undefined && networkPrefix === SubstrateNetworkPrefix.SubDAO
+        return isSame && (isOldWallet || networkPrefix === x.networkPrefix)
+    })
 }
 
 export function useWallets(provider?: ProviderType) {

@@ -66,13 +66,3 @@ export async function getWallets(provider: ProviderType = ProviderType.SubDAO) {
 
     return wallets
 }
-
-export function getProvider(network?: SubstrateNetwork) {
-    if (network === SubstrateNetwork.Polkadot) {
-        return ProviderType.Polkadot
-    }
-    if (network === SubstrateNetwork.Kusama) {
-        return ProviderType.Kusama
-    }
-    return ProviderType.SubDAO
-}

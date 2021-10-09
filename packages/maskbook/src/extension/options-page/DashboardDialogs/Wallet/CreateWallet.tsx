@@ -42,6 +42,9 @@ import { WalletRPC } from '../../../../plugins/Wallet/messages'
 import { generateSeed, AddressState, updateAddress, rawValidate } from '../../../../plugins/Wallet/services/keyring'
 import type { SeedType, PairType } from '../../../../plugins/Wallet/services/keyring'
 import { mnemonicValidate } from '@polkadot/util-crypto'
+import { currentSubstrateNetworkSettings } from '../../../../settings/settings'
+import { getProvider } from '../../../../polkadot/utils/helpers'
+import { currentSelectedWalletProviderSettings } from '../../../../plugins/Wallet/settings'
 
 const useWalletCreateDialogStyle = makeStyles((theme: Theme) =>
     createStyles({
@@ -116,6 +119,13 @@ export function WalletCreateDialog(props: WrappedDialogProps<object>) {
         if (seedType !== newSeedType) {
             setAddress(generateSeed(null, derivePath, newSeedType, pairType))
             setSeedType(newSeedType)
+        }
+        return () => {
+            const network = currentSubstrateNetworkSettings.value
+            const provider = getProvider(network)
+            if (network.toString() !== currentSelectedWalletProviderSettings.value.toString()) {
+                currentSelectedWalletProviderSettings.value = provider
+            }
         }
     }, [state, derivePath, pairType, seedType])
 

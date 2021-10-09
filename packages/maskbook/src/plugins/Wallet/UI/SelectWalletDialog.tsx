@@ -14,9 +14,9 @@ import { delay } from '../../../utils/utils'
 import { isEnvironment, Environment } from '@dimensiondev/holoflows-kit'
 import { currentSelectedWalletProviderSettings } from '../settings'
 import { InjectedDialog } from '../../../components/shared/InjectedDialog'
-import { ProviderType } from '../../../web3/types'
 import { useValueRef } from '../../../utils/hooks/useValueRef'
-import { selectSubDAOWallet, getProvider } from '../helpers'
+import { selectSubDAOWallet } from '../helpers'
+import { getProvider } from '../../../polkadot/utils/helpers'
 import { currentSubstrateNetworkSettings } from '../../../settings/settings'
 
 const useStyles = makeStyles((theme) =>

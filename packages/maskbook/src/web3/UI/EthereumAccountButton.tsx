@@ -61,7 +61,6 @@ export function EthereumAccountButton(props: EthereumAccountButtonProps) {
     const classes = useStylesExtends(useStyles(), props)
 
     const chainId = useChainId()
-    const account = useAccount()
 
     const selectedWallet = useWallet()
     const selectedWalletProvider = useValueRef(currentSelectedWalletProviderSettings)

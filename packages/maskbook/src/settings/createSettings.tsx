@@ -2,6 +2,10 @@ import { ValueRef, isEnvironment, Environment } from '@dimensiondev/holoflows-ki
 import { MaskMessage } from '../utils/messages'
 import { defer } from '../utils/utils'
 import { getStorage, setStorage } from '../extension/background-script/StorageService'
+import { SubstrateNetwork } from '../polkadot/constants'
+import { getProvider } from '../plugins/Wallet/helpers'
+import { PLUGIN_IDENTIFIER } from '../plugins/Wallet/constants'
+import { ProviderType } from '../web3/types'
 
 export interface SettingsTexts {
     primary: () => string
@@ -79,6 +83,29 @@ export function createInternalSettings<T extends browser.storage.StorageValue>(
             value: newVal,
             initial: false,
         })
+    })
+    settings.addListener((newVal) => {
+        if (
+            newVal === SubstrateNetwork.Polkadot ||
+            newVal === SubstrateNetwork.Kusama ||
+            newVal === SubstrateNetwork.SubDAO
+        ) {
+            const id = Date.now()
+            const key = `settings+${PLUGIN_IDENTIFIER}+selectedWalletProvider`
+            lastEventId.set(key, id)
+            let provider = ProviderType.SubDAO
+            if (newVal === SubstrateNetwork.Polkadot) {
+                provider = ProviderType.Polkadot
+            } else if (newVal === SubstrateNetwork.Kusama) {
+                provider = ProviderType.Kusama
+            }
+            MaskMessage.events.createInternalSettingsChanged.sendToAll({
+                id: id,
+                key: key,
+                value: provider,
+                initial: false,
+            })
+        }
     })
     return settings
 }
