@@ -77,13 +77,13 @@ export function generateSeed(
     const seed = newSeed(_seed, seedType)
     const suri = addressFromSeed(seed, derivePath, pairType)
     const address = keyring.encodeAddress(suri, ss58)
-    const network = currentSubstrateNetworkSettings.value
-    const prefix = networkPrefix ? networkPrefix : SubstrateNetworkPrefix[network]
-    const endpointAddr = keyring.encodeAddress(keyring.decodeAddress(address), prefix)
+
+    // const network = currentSubstrateNetworkSettings.value
+    // const prefix = networkPrefix ?? SubstrateNetworkPrefix[network]
 
     return {
         suri,
-        address: endpointAddr,
+        address,
         derivePath,
         deriveValidation: undefined,
         isSeedValid: true,
@@ -101,8 +101,6 @@ export function updateAddress(seed: string, derivePath: string, seedType: SeedTy
     if (!deriveValidation?.error && isSeedValid) {
         try {
             address = addressFromSeed(seed, derivePath, pairType)
-            const network = currentSubstrateNetworkSettings.value
-            address = keyring.encodeAddress(keyring.decodeAddress(address), SubstrateNetworkPrefix[network])
         } catch (error) {
             console.error(error)
             deriveValidation = {

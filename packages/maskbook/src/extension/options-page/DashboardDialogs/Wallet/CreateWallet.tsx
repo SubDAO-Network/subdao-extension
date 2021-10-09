@@ -88,9 +88,8 @@ export function WalletCreateDialog(props: WrappedDialogProps<object>) {
     const [seedType, setSeedType] = useState<SeedType>('bip')
     const provider = useValueRef(currentSelectedWalletProviderSettings)
     const networkPrefix = getNetworkPrefix(provider)
-    const ss58Format = 42
     const [{ address, derivePath, pairType, seed }, setAddress] = useState<AddressState>(() =>
-        generateSeed(null, '', seedType, keypairType, ss58Format, networkPrefix),
+        generateSeed(null, '', seedType, keypairType, networkPrefix),
     )
     const [, copyToClipboard] = useCopyToClipboard()
     const onChangeSeed = useCallback(
