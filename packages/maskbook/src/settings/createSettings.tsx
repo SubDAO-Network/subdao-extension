@@ -3,7 +3,6 @@ import { MaskMessage } from '../utils/messages'
 import { defer } from '../utils/utils'
 import { getStorage, setStorage } from '../extension/background-script/StorageService'
 import { SubstrateNetwork } from '../polkadot/constants'
-import { getProvider } from '../plugins/Wallet/helpers'
 import { PLUGIN_IDENTIFIER } from '../plugins/Wallet/constants'
 import { ProviderType } from '../web3/types'
 

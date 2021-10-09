@@ -1,52 +1,31 @@
 import { useCopyToClipboard } from 'react-use'
 import { useState, useCallback, useEffect } from 'react'
-import { DashboardDialogCore, DashboardDialogWrapper, WrappedDialogProps, useSnackbarCallback } from '../Base'
 import { CreditCard as CreditCardIcon } from 'react-feather'
-import {
-    Button,
-    TextField,
-    TextareaAutosize,
-    Typography,
-    makeStyles,
-    createStyles,
-    Box,
-    FormControlLabel,
-    Checkbox,
-    Theme,
-    Chip,
-    Stepper,
-    Step,
-    StepLabel,
-    InputLabel,
-    InputAdornment,
-    FormLabel,
-    RadioGroup,
-} from '@material-ui/core'
-import ArrowBack from '@material-ui/icons/ArrowBack'
+import { TextField, makeStyles, createStyles, FormControlLabel, Checkbox, Theme } from '@material-ui/core'
 import FileCopyIcon from '@material-ui/icons/FileCopy'
 import IconButton from '@material-ui/core/IconButton'
-import OutlinedInput from '@material-ui/core/OutlinedInput'
-import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined'
-import FormHelperText from '@material-ui/core/FormHelperText'
-import FormControl from '@material-ui/core/FormControl'
-import Visibility from '@material-ui/icons/Visibility'
-import VisibilityOff from '@material-ui/icons/VisibilityOff'
+import { mnemonicValidate } from '@polkadot/util-crypto'
 
-import { useI18N } from '../../../../utils/i18n-next-ui'
+import { DashboardDialogCore, DashboardDialogWrapper, WrappedDialogProps, useSnackbarCallback } from '../Base'
+
 import { DebounceButton } from '../../DashboardComponents/ActionButton'
 import AbstractTab, { AbstractTabProps } from '../../DashboardComponents/AbstractTab'
 import ShowcaseBox from '../../DashboardComponents/ShowcaseBox'
 import { checkInputLengthExceed } from '../../../../utils/utils'
 import { WALLET_OR_PERSONA_NAME_MAX_LEN } from '../../../../utils/constants'
+
 import { WalletRPC } from '../../../../plugins/Wallet/messages'
 import { generateSeed, AddressState, updateAddress, rawValidate } from '../../../../plugins/Wallet/services/keyring'
-import type { SeedType, PairType } from '../../../../plugins/Wallet/services/keyring'
-import { mnemonicValidate } from '@polkadot/util-crypto'
-import { currentSubstrateNetworkSettings } from '../../../../settings/settings'
+import { currentSelectedWalletProviderSettings } from '../../../../plugins/Wallet/settings'
+import type { SeedType } from '../../../../plugins/Wallet/services/keyring'
+
 import { getProvider, getNetworkPrefix } from '../../../../polkadot/utils/helpers'
 import { keypairType } from '../../../../polkadot/constants'
-import { currentSelectedWalletProviderSettings } from '../../../../plugins/Wallet/settings'
+
 import { useValueRef } from '../../../../utils/hooks/useValueRef'
+import { useI18N } from '../../../../utils/i18n-next-ui'
+
+import { currentSubstrateNetworkSettings } from '../../../../settings/settings'
 
 const useWalletCreateDialogStyle = makeStyles((theme: Theme) =>
     createStyles({
@@ -110,8 +89,8 @@ export function WalletCreateDialog(props: WrappedDialogProps<object>) {
     const provider = useValueRef(currentSelectedWalletProviderSettings)
     const networkPrefix = getNetworkPrefix(provider)
     const ss58Format = 42
-    const [{ address, derivePath, deriveValidation, isSeedValid, pairType, seed }, setAddress] = useState<AddressState>(
-        () => generateSeed(null, '', seedType, keypairType, ss58Format, networkPrefix),
+    const [{ address, derivePath, pairType, seed }, setAddress] = useState<AddressState>(() =>
+        generateSeed(null, '', seedType, keypairType, ss58Format, networkPrefix),
     )
     const [, copyToClipboard] = useCopyToClipboard()
     const onChangeSeed = useCallback(
