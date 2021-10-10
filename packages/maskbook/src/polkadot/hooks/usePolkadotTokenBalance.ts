@@ -1,14 +1,13 @@
 import { useAsyncRetry } from 'react-use'
 import { useAccount } from './useAccount'
 import { useSubstrate } from '../provider'
-import type { State, TokenDetailedType } from '../types'
+import type { TokenDetailedType } from '../types'
 import { tokenDetail as token } from '../constants'
-import { formatBalance } from '@polkadot/util'
 
 export function usePolkadotTokenBalance() {
     const ADDR: string = useAccount()
     const { state } = useSubstrate()
-    const { api } = state
+    const api = state?.api
     const {
         value: balanceAll,
         loading: polkadotTokenDetailedLoading,

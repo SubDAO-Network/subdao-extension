@@ -2,8 +2,6 @@ import React, { useEffect, useMemo } from 'react'
 import {
     Box,
     Button,
-    Card,
-    CardContent,
     IconButton,
     makeStyles,
     Skeleton,
@@ -25,7 +23,6 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 import { useSnackbar } from 'notistack'
 import { useStylesExtends } from '../../../components/custom-ui-helper'
 import { useI18N } from '../../../utils/i18n-next-ui'
-import type { TokenDetailedType } from '../../../polkadot/types'
 import { formatPolkadotAddress } from '../../../plugins/Wallet/formatter'
 import type { WalletRecord } from '../../../plugins/Wallet/database/types'
 import { TokenIcon } from './TokenIcon'
@@ -51,9 +48,6 @@ import { useMenu } from '../../../utils/hooks/useMenu'
 import { useColorStyles } from '../../../utils/theme'
 import { formatBalance } from '@polkadot/util'
 import { useSnackbarCallback } from '../DashboardDialogs/Base'
-
-const MAX_TOKENS_LENGTH = 5
-const MIN_VALUE = 5
 
 const circleIcon = <CircularProgress color="inherit" size={12} />
 const sendIcon = <SendIcon size={12} />
