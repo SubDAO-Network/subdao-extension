@@ -6,6 +6,7 @@ import type { ERC20Token } from '../web3/types'
 
 export type State = {
     api: ApiPromise | null
+    apiProvider: string | null
     apiError: string | null
     apiState: string | null
     transferState: PolkadotTransactionStateType | null

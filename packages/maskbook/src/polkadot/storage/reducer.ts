@@ -11,7 +11,12 @@ const reducer = (state: State, action: Action): State => {
             }
 
         case ActionType.CONNECT:
-            return { ...state, api: action.payload, apiState: StateType.CONNECTING }
+            return {
+                ...state,
+                api: action.payload.api,
+                apiState: StateType.CONNECTING,
+                apiProvider: action.payload.provider,
+            }
 
         case ActionType.CONNECT_SUCCESS:
             return { ...state, apiState: StateType.READY }

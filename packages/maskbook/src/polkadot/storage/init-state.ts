@@ -1,6 +1,7 @@
 import type { State } from '../types'
 
 const initialState: State = {
+    apiProvider: null,
     api: null,
     apiError: null,
     apiState: null,

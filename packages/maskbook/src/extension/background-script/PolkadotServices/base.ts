@@ -1,14 +1,14 @@
 import { ApiPromise, WsProvider } from '@polkadot/api'
 import ConnectContract from '../../../polkadot/connect'
-import { ws_server, mainAddress } from '../../../polkadot/constants'
+import { SubstrateNetworkWsProvider } from '../../../polkadot/constants'
 import { ContractType } from '../../../polkadot/types'
 import { currentSelectedWalletAddressSettings } from '../../../plugins/Wallet/settings'
 import { formatResult } from './helper'
 import type { DaoAddresses } from '../../../polkadot/types'
+import { currentSubstrateNetworkSettings } from '../../../settings/settings'
 
 const value = 0
 const gasLimit = -1
-const ContractCache = new Map<string, any>()
 
 let API: ApiPromise | undefined
 
@@ -20,8 +20,9 @@ export async function getApi(): Promise<ApiPromise> {
 
 export async function initApi() {
     if (API) return API
-
-    const wsProvider = new WsProvider(ws_server)
+    const network = currentSubstrateNetworkSettings.value
+    const provider = SubstrateNetworkWsProvider[network]
+    const wsProvider = new WsProvider(provider)
     const api = await ApiPromise.create({
         provider: wsProvider,
         types: {

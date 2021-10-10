@@ -1,12 +1,11 @@
-import React, { useEffect, useReducer, useContext, Reducer } from 'react'
-import { ActionType, State, ContractContextType } from './types'
+import React, { useReducer, useContext, useMemo } from 'react'
+import { ActionType, ContractContextType } from './types'
 import { reducer, INIT_STATE } from './storage'
 import { ApiPromise, WsProvider } from '@polkadot/api'
 
 const connectApi = async (state: any, dispatch: any, provider: string) => {
-    const { apiState } = state
-
-    if (apiState) return
+    const { apiState, apiProvider } = state
+    if (apiState && apiProvider === provider) return
 
     dispatch({ type: ActionType.CONNECT_INIT })
     const wsProvider = new WsProvider(provider)
@@ -20,7 +19,7 @@ const connectApi = async (state: any, dispatch: any, provider: string) => {
     if (api.isConnected) {
         dispatch({
             type: ActionType.CONNECT,
-            payload: api,
+            payload: { api, provider },
         })
     }
     await api.isReady.then(() => dispatch({ type: ActionType.CONNECT_SUCCESS }))
@@ -36,7 +35,7 @@ interface Props {
 
 export const SubstrateContextProvider = (props: Props) => {
     const [state, dispatch] = useReducer(reducer, initState)
-    connectApi(state, dispatch, props.provider)
+    useMemo(() => connectApi(state, dispatch, props.provider), [props.provider])
 
     return <SubstrateContext.Provider value={{ state, dispatch }}>{props.children}</SubstrateContext.Provider>
 }
