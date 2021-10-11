@@ -36,7 +36,6 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import type { DeriveBalancesAll } from '@polkadot/api-derive/types'
 
 import FormatBalance from '../../../polkadot/components/FormatBalance'
-import { useTransferTokenCallback } from '../../../polkadot/hooks/useTransferTokenCallback'
 import { PolkadotTransactionStateType as StateType } from '../../../polkadot/hooks/useTransactionState'
 import { ActionType } from '../../../polkadot/types'
 import { useToggle } from '../../../utils/hooks/useToogle'
@@ -288,7 +287,7 @@ export function WalletAssetsTable(props: WalletAssetsTableProps) {
     const { t } = useI18N()
     const { wallet, state, dispatch } = props
     const { detailedToken, detailedTokensLoading, detailedTokensRetry } = useContext(DashboardWalletsContext)
-    console.log(`detailedToken`, detailedToken)
+
     const classes = useStylesExtends(useStyles(), props)
     const LABELS = [t('wallet_assets'), t('wallet_balance'), ''] as const
 
