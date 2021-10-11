@@ -1,11 +1,8 @@
 import BN from 'bn.js'
-import type { SiDef } from '@polkadot/util/types'
-import { BN_ONE, BN_TEN, BN_TWO, BN_ZERO, formatBalance, isBn } from '@polkadot/util'
+import { BN_TEN, BN_ZERO, isBn } from '@polkadot/util'
 import { tokenDetail } from '../constants'
-// import { usePolkadotTokenBalance } from '../hooks/useAccount'
 import { isNumber, first } from 'lodash-es'
 import type { TokenDetailed } from '../types'
-import { useApi } from '../provider'
 
 export const formatResult = (result: any) => {
     let str

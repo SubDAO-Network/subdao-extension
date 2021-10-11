@@ -288,7 +288,7 @@ export function WalletAssetsTable(props: WalletAssetsTableProps) {
     const { t } = useI18N()
     const { wallet, state, dispatch } = props
     const { detailedToken, detailedTokensLoading, detailedTokensRetry } = useContext(DashboardWalletsContext)
-
+    console.log(`detailedToken`, detailedToken)
     const classes = useStylesExtends(useStyles(), props)
     const LABELS = [t('wallet_assets'), t('wallet_balance'), ''] as const
 

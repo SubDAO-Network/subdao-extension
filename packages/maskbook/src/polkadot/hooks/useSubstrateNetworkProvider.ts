@@ -6,5 +6,5 @@ import { currentSubstrateNetworkSettings } from '../../settings/settings'
 export function useSubstrateNetworkProvider() {
     const network = useValueRef(currentSubstrateNetworkSettings)
     const wsProvider = SubstrateNetworkWsProvider[network]
-    return useMemo(() => wsProvider, [wsProvider])
+    return useMemo(() => [network, wsProvider], [wsProvider, network])
 }

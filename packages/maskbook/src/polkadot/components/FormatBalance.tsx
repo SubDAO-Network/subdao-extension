@@ -8,6 +8,7 @@ import { useI18N } from '../../utils/i18n-next-ui'
 
 import { useSubstrate } from '../provider'
 import { formatBalance } from '@polkadot/util'
+import { networkNativeTokens } from '../constants'
 
 interface Props {
     children?: React.ReactNode
@@ -27,11 +28,18 @@ interface Props {
 const M_LENGTH = 6 + 1
 const K_LENGTH = 3 + 1
 
-import { tokenDetail } from '../constants'
-
-function getFormat(registry?: Registry, formatIndex = 0, useRegistry: boolean = false): [number, string] {
+function getFormat(
+    registry?: Registry,
+    formatIndex = 0,
+    useRegistry: boolean = false,
+    provider?: string | undefined | null,
+): [number, string] | undefined {
     if (!useRegistry || !registry) {
-        return [tokenDetail.decimals, tokenDetail.symbol]
+        const token = provider && networkNativeTokens[provider]
+        if (token) {
+            return [token.decimals, token.symbol]
+        }
+        return
     }
 
     const decimals = registry.chainDecimals
@@ -108,12 +116,13 @@ function FormatBalance({
 }: Props): React.ReactElement<Props> {
     const { t } = useI18N()
     const { state } = useSubstrate()
-    const { api } = state
-
-    const formatInfo = useMemo(() => getFormat(api?.registry, formatIndex, useRegistry), [
+    const api = state?.api
+    const provider = state?.apiProvider
+    const formatInfo = useMemo(() => getFormat(api?.registry, formatIndex, useRegistry, provider), [
         api,
         formatIndex,
         useRegistry,
+        provider,
     ])
 
     // labelPost here looks messy, however we ensure we have one less text node
@@ -126,7 +135,7 @@ function FormatBalance({
                     : Boolean(value)
                     ? value === 'all'
                         ? t('everything_labelpost', { labelPost })
-                        : format(value as any, formatInfo, withCurrency, withSi, isShort, labelPost)
+                        : formatInfo && format(value as any, formatInfo, withCurrency, withSi, isShort, labelPost)
                     : `-${labelPost || ''}`}
             </span>
             {children}

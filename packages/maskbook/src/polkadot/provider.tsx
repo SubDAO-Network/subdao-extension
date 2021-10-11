@@ -3,7 +3,7 @@ import { ActionType, ContractContextType } from './types'
 import { reducer, INIT_STATE } from './storage'
 import { ApiPromise, WsProvider } from '@polkadot/api'
 
-const connectApi = async (state: any, dispatch: any, provider: string) => {
+const connectApi = async (state: any, dispatch: any, provider: string, network: string) => {
     const { apiState, apiProvider } = state
     if (apiState && apiProvider === provider) return
 
@@ -19,7 +19,7 @@ const connectApi = async (state: any, dispatch: any, provider: string) => {
     if (api.isConnected) {
         dispatch({
             type: ActionType.CONNECT,
-            payload: { api, provider },
+            payload: { api, provider: network },
         })
     }
     await api.isReady.then(() => dispatch({ type: ActionType.CONNECT_SUCCESS }))
@@ -31,11 +31,12 @@ const SubstrateContext = React.createContext<ContractContextType | undefined>(un
 interface Props {
     children?: React.ReactElement
     provider: string
+    network: string
 }
 
 export const SubstrateContextProvider = (props: Props) => {
     const [state, dispatch] = useReducer(reducer, initState)
-    useMemo(() => connectApi(state, dispatch, props.provider), [props.provider])
+    useMemo(() => connectApi(state, dispatch, props.provider, props.network), [props.provider])
 
     return <SubstrateContext.Provider value={{ state, dispatch }}>{props.children}</SubstrateContext.Provider>
 }

@@ -16,7 +16,6 @@ import {
 import { ThemeProvider, makeStyles, createStyles } from '@material-ui/core/styles'
 
 import { DAONotSquareIcon, WalletIcon, RoleNotSquareIcon, SettingNotSquareIcon, ContactIcon } from '@subdao/icons'
-import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined'
 import { HashRouter as Router, Route, Switch, Redirect, useHistory } from 'react-router-dom'
 
 import { useI18N } from '../../utils/i18n-next-ui'
@@ -59,8 +58,6 @@ import { useSubstrateNetworkProvider } from '../../polkadot/hooks/useSubstrateNe
 cryptoWaitReady().then(() => {
     // load all available addresses and accounts
     keyring.loadAll({ ss58Format, type: keypairType })
-
-    console.log('polkadot cryptoWaitReady')
 })
 
 const useStyles = makeStyles((theme) => {
@@ -133,14 +130,6 @@ const useStyles = makeStyles((theme) => {
         },
     })
 })
-
-const DrawerMenu = styled('div')`
-    svg {
-        path {
-            fill: blue;
-        }
-    }
-`
 
 function DashboardUI() {
     const { t } = useI18N()
@@ -277,10 +266,11 @@ function DashboardPluginUI() {
 //#endregion
 
 export function Dashboard() {
+    const [network, wsProvider] = useSubstrateNetworkProvider()
     return MaskbookUIRoot(
         <StylesProvider injectFirst>
             <ThemeProvider theme={useMaskbookTheme()}>
-                <SubstrateContextProvider provider={useSubstrateNetworkProvider()}>
+                <SubstrateContextProvider provider={wsProvider} network={network}>
                     <DashboardSnackbarProvider>
                         <NoSsr>
                             <Router>

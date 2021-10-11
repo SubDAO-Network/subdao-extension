@@ -58,3 +58,27 @@ export enum SubstrateNetworkPrefix {
     Polkadot = 0,
     Kusama = 2,
 }
+
+export const networkNativeTokens: {
+    [network: string]: {
+        symbol: string
+        decimals: number
+        name?: string
+    }
+} = {
+    SubDAO: {
+        symbol: 'UNIT',
+        decimals: 15,
+        name: '',
+    },
+    Polkadot: {
+        symbol: 'DOT',
+        decimals: 10,
+        name: '',
+    },
+    Kusama: {
+        symbol: 'KSM',
+        decimals: 12,
+        name: '',
+    },
+}
