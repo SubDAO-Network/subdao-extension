@@ -6,6 +6,13 @@ export function isSameAddress(addrA: string, addrB: string) {
 }
 
 export function isSubdaoAddress(address: string) {
+    const firstLetter = address.substr(0, 1)
+    if (parseInt(firstLetter) === 1) {
+        return true
+    }
+    if ('ABCDEFGHIJKLMNOPQRSTUVWXYZ'.includes(firstLetter)) {
+        return true
+    }
     return isSameAddress(address, mainAddress.main)
 }
 

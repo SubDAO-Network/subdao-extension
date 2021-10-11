@@ -2,8 +2,6 @@ import { unreachable } from '../../utils/utils'
 import { PolkadotTokenType } from '../types'
 import { useERC20TokenBalance } from './useERC20TokenBalance'
 import { usePolkadotFreeBalance } from './usePolkadotFreeBalance'
-import type { TokenDetailed } from '../types'
-import type { ERC20TokenDetailed } from '../../web3/types'
 
 export function useTokenBalance(type: PolkadotTokenType, address: string) {
     const r1 = usePolkadotFreeBalance(type === PolkadotTokenType.DOT ? address : '')

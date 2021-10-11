@@ -80,7 +80,7 @@ function TransferTab(props: TransferTabProps) {
     // const { detailedTokensRetry } = useContext(DashboardWalletsContext)
     const [amount, setAmount] = useState('')
     const [address, setAddress] = useState('')
-    const isERC20 = !isSubdaoAddress(token.address)
+    const isERC20 = !isSubdaoAddress(token.address ? token.address : wallet.address)
     const [validationMessage, setValidationMessage] = useState<string>('')
     const tokenType = isERC20 ? PolkadotTokenType.ERC20 : PolkadotTokenType.DOT
 

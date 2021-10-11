@@ -25,7 +25,7 @@ function resolveTokenIconURL(address: string, trustWalletAssets: string) {
         '0x14de81C71B3F73874659082b971433514E201B27': 'https://etherscan.io/token/images/ykyctoken_32.png', // Yes KYC
     }
     const checksummedAddress = formatChecksumAddress(address)
-    if (isSameAddress(checksummedAddress, getConstant(CONSTANTS, 'ETH_ADDRESS')))
+    if (checksummedAddress && isSameAddress(checksummedAddress, getConstant(CONSTANTS, 'ETH_ADDRESS')))
         return 'https://rawcdn.githack.com/trustwallet/assets/master/blockchains/ethereum/info/logo.png'
     if (iconMap[checksummedAddress]) return iconMap[checksummedAddress]
     return `${trustWalletAssets}/assets/${checksummedAddress}/logo.png`
