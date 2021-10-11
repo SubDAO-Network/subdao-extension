@@ -1,7 +1,10 @@
 import { checkAddress, checkAddressChecksum } from '@polkadot/util-crypto'
-import { ss58Format } from '../../../polkadot/constants'
+import { currentSelectedWalletProviderSettings } from '../../Wallet/settings'
+import { getNetworkPrefix } from '../../../polkadot/utils/helpers'
 
 export function isValidAddress(address: string): boolean {
+    const provider = currentSelectedWalletProviderSettings.value
+    const ss58Format = getNetworkPrefix(provider)
     return checkAddress(address, ss58Format)[0]
 }
 
