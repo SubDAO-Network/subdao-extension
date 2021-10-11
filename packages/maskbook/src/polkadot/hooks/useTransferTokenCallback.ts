@@ -11,19 +11,18 @@ import { formatAmount } from '../utils/format'
 import { ActionType, PolkadotTokenType } from '../types'
 import ConnectContract from '../connect'
 import { ContractType, TokenDetailed } from '../types'
-import Services from '../../extension/service'
 
 export function useTransferTokenCallback(type: PolkadotTokenType = PolkadotTokenType.DOT, token: TokenDetailed) {
     const account = useWallet()
     const { state, dispatch } = useSubstrate()
-    const { api } = state
+    const api = state?.api
     const [transferState, setTransferState] = useTransactionState()
 
     const transferCallback = useCallback(
         async (_amount: string, recipient: string) => {
             let [amount, isValid] = formatAmount(_amount, token)
             const keyring = new Keyring({ type: keypairType })
-            if (!api || !isValid || !amount) {
+            if (!api || !isValid || !amount || !dispatch) {
                 setTransferState({
                     type: StateType.UNKNOWN,
                 })
@@ -39,7 +38,7 @@ export function useTransferTokenCallback(type: PolkadotTokenType = PolkadotToken
             if (!api.isConnected) {
                 setTransferState({
                     type: StateType.FAILED,
-                    error: new Error(`Cann't connect polkadot api`),
+                    error: new Error(`Cann't connect api`),
                 })
                 return
             }
@@ -81,7 +80,7 @@ export function useTransferTokenCallback(type: PolkadotTokenType = PolkadotToken
                             .paymentInfo(account?.address)
                         const adjFee = partialFee.muln(110).div(BN_HUNDRED)
                         amount = amount.sub(adjFee)
-                    } catch (error) {
+                    } catch (error: any) {
                         console.error((error as Error).message)
                         setTransferState({
                             type: StateType.FAILED,
