@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { useAsyncRetry } from 'react-use'
 
 import { useAccount } from './useAccount'
@@ -29,10 +30,13 @@ export function usePolkadotTokenBalance() {
         address: ADDR,
     }
 
-    return {
-        value: data,
-        loading: polkadotTokenDetailedLoading,
-        error: polkadotTokenDetailedError,
-        retry: polkadotEtherTokenDetailed,
-    }
+    return useMemo(
+        () => ({
+            value: data,
+            loading: polkadotTokenDetailedLoading,
+            error: polkadotTokenDetailedError,
+            retry: polkadotEtherTokenDetailed,
+        }),
+        [api, balanceAll],
+    )
 }
