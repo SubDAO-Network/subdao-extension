@@ -140,7 +140,7 @@ export async function importNewWallet(
     if (!address) throw new Error('cannot get the wallet address')
     if (rec.name === null) rec.name = address.slice(0, 6)
     const network = currentSubstrateNetworkSettings.value
-    const networkPrefix = SubstrateNetworkPrefix[network]
+    const networkPrefix = rec.networkPrefix ?? SubstrateNetworkPrefix[network]
     const record: WalletRecord = {
         name,
         mnemonic,

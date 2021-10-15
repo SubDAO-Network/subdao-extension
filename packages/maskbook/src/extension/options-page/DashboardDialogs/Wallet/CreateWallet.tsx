@@ -19,13 +19,11 @@ import { generateSeed, AddressState, updateAddress, rawValidate } from '../../..
 import { currentSelectedWalletProviderSettings } from '../../../../plugins/Wallet/settings'
 import type { SeedType } from '../../../../plugins/Wallet/services/keyring'
 
-import { getProvider, getNetworkPrefix } from '../../../../polkadot/utils/helpers'
+import { getNetworkPrefix } from '../../../../polkadot/utils/helpers'
 import { keypairType } from '../../../../polkadot/constants'
 
 import { useValueRef } from '../../../../utils/hooks/useValueRef'
 import { useI18N } from '../../../../utils/i18n-next-ui'
-
-import { currentSubstrateNetworkSettings } from '../../../../settings/settings'
 
 const useWalletCreateDialogStyle = makeStyles((theme: Theme) =>
     createStyles({
@@ -105,13 +103,6 @@ export function WalletCreateDialog(props: WrappedDialogProps<object>) {
         if (seedType !== newSeedType) {
             setAddress(generateSeed(null, derivePath, newSeedType, pairType))
             setSeedType(newSeedType)
-        }
-        return () => {
-            const network = currentSubstrateNetworkSettings.value
-            const provider = getProvider(network)
-            if (network.toString() !== currentSelectedWalletProviderSettings.value.toString()) {
-                currentSelectedWalletProviderSettings.value = provider
-            }
         }
     }, [state, derivePath, pairType, seedType])
 
@@ -225,6 +216,7 @@ export function WalletCreateDialog(props: WrappedDialogProps<object>) {
                     passphrase: '',
                     name,
                     mnemonic: seed.split(' '),
+                    networkPrefix,
                 })
             }
             if (state[0] === 1) {
@@ -233,6 +225,7 @@ export function WalletCreateDialog(props: WrappedDialogProps<object>) {
                     name,
                     address: address || '',
                     _private_key_: seed,
+                    networkPrefix,
                 })
             }
         },

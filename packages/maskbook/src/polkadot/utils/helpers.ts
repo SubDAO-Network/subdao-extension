@@ -35,3 +35,13 @@ export function getNetworkPrefix(provider?: ProviderType) {
     }
     return SubstrateNetworkPrefix.SubDAO
 }
+
+export function getNetwork(provider?: ProviderType) {
+    if (provider === ProviderType.Polkadot) {
+        return SubstrateNetwork.Polkadot
+    }
+    if (provider === ProviderType.Kusama) {
+        return SubstrateNetwork.Kusama
+    }
+    return SubstrateNetwork.SubDAO
+}
