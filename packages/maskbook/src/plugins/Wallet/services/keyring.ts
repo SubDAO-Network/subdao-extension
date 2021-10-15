@@ -6,16 +6,12 @@ import {
     keyExtractSuri,
     mnemonicGenerate,
     mnemonicValidate,
-    mnemonicToEntropy,
     mnemonicToMiniSecret,
     randomAsU8a,
 } from '@polkadot/util-crypto'
-import { currentSubstrateNetworkSettings } from '../../../settings/settings'
-
-const ETH_DEFAULT_PATH = "m/44'/60'/0'/0/0"
 
 import { DEV_PHRASE } from '@polkadot/keyring/defaults'
-import { keypairType, ss58Format, SubstrateNetwork, SubstrateNetworkPrefix } from '../../../polkadot/constants'
+import { keypairType, ss58Format } from '../../../polkadot/constants'
 
 const DEFAULT_PAIR_TYPE = keypairType
 
@@ -72,14 +68,10 @@ export function generateSeed(
     seedType: SeedType = 'bip',
     pairType: PairType = DEFAULT_PAIR_TYPE,
     ss58: number = ss58Format,
-    networkPrefix?: number,
 ): AddressState {
     const seed = newSeed(_seed, seedType)
     const suri = addressFromSeed(seed, derivePath, pairType)
     const address = keyring.encodeAddress(suri, ss58)
-
-    // const network = currentSubstrateNetworkSettings.value
-    // const prefix = networkPrefix ?? SubstrateNetworkPrefix[network]
 
     return {
         suri,
@@ -93,14 +85,21 @@ export function generateSeed(
     }
 }
 
-export function updateAddress(seed: string, derivePath: string, seedType: SeedType, pairType: PairType): AddressState {
+export function updateAddress(
+    seed: string,
+    derivePath: string,
+    seedType: SeedType,
+    pairType: PairType,
+    ss58: number = ss58Format,
+): AddressState {
     let address: string = ''
     let deriveValidation: DeriveValidationOutput = deriveValidate(seed, seedType, derivePath, pairType)
     let isSeedValid = seedType === 'raw' ? rawValidate(seed) : mnemonicValidate(seed)
 
     if (!deriveValidation?.error && isSeedValid) {
         try {
-            address = addressFromSeed(seed, derivePath, pairType)
+            const suri = addressFromSeed(seed, derivePath, pairType)
+            address = keyring.encodeAddress(suri, ss58)
         } catch (error) {
             console.error(error)
             deriveValidation = {
