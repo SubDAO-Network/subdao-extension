@@ -93,7 +93,10 @@ export function WalletCreateDialog(props: WrappedDialogProps<object>) {
     )
     const [, copyToClipboard] = useCopyToClipboard()
     const onChangeSeed = useCallback(
-        (newSeed: string) => setAddress(updateAddress(newSeed, derivePath, seedType, pairType)),
+        (newSeed: string) => {
+            const address = updateAddress(newSeed, derivePath, seedType, pairType, networkPrefix)
+            setAddress(address)
+        },
         [derivePath, pairType, seedType],
     )
 
