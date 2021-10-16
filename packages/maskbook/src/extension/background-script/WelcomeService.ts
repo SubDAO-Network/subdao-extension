@@ -94,6 +94,10 @@ export async function openOptionsPage(route?: DashboardRoute, search?: string) {
     ).noop()
 }
 
+export async function updateTabUrl(route?: DashboardRoute) {
+    return browser.tabs.update(undefined, { url: `/index.html#${route}` })
+}
+
 export { createPersonaByMnemonic } from '../../database'
 export function queryPermission(permission: browser.permissions.Permissions) {
     return browser.permissions.contains(permission)

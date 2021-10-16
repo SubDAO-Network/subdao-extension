@@ -14,6 +14,8 @@ import { selectSubDAOWallet } from '../helpers'
 import { generateSeed, addressFromSeed } from './keyring'
 import { mnemonicGenerate } from '@polkadot/util-crypto'
 import { SubstrateNetworkPrefix } from '../../../polkadot/constants'
+import Services from '../../../extension/service'
+import { DashboardRoute } from '../../../extension/options-page/Route'
 
 // Private key at m/44'/coinType'/account'/change/addressIndex
 // coinType = ether
@@ -162,6 +164,7 @@ export async function importNewWallet(
             await t.objectStore('Wallet').put(WalletRecordIntoDB(record))
     }
     WalletMessages.events.walletsUpdated.sendToAll(undefined)
+    await Services.Welcome.updateTabUrl(DashboardRoute.Wallets)
     selectSubDAOWallet(record)
     return address
     async function getWalletAddress() {
