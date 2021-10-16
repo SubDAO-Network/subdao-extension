@@ -102,7 +102,7 @@ export function WalletCreateDialog(props: WrappedDialogProps<object>) {
     useEffect(() => {
         let newSeedType: SeedType = state[0] === 0 ? 'bip' : 'raw'
         if (seedType !== newSeedType) {
-            setAddress(generateSeed(null, derivePath, newSeedType, pairType))
+            setAddress(generateSeed(null, derivePath, newSeedType, pairType, networkPrefix))
             setSeedType(newSeedType)
         }
     }, [state, derivePath, pairType, seedType])
