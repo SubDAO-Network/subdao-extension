@@ -43,28 +43,29 @@ function SelectWalletDialogUI(props: SelectWalletDialogUIProps) {
     const onClose = useCallback(() => {
         const network = currentSubstrateNetworkSettings.value
         currentSelectedWalletProviderSettings.value = getProvider(network)
-        setOpen({
-            open: false,
-        })
+        setOpen({ open: false })
     }, [setOpen])
     //#endregion
 
     const onSelect = useCallback(
         (wallet: WalletRecord) => {
-            onClose()
+            setOpen({ open: false })
             selectSubDAOWallet(wallet)
         },
-        [onClose],
+        [setOpen],
     )
 
     //#region create new wallet
     const history = useHistory()
     const onCreate = useCallback(async () => {
-        onClose()
+        setOpen({ open: false })
         await delay(100)
-        if (isEnvironment(Environment.ManifestOptions)) history.push(`${DashboardRoute.Wallets}?create=${Date.now()}`)
-        else await Services.Welcome.openOptionsPage(DashboardRoute.Wallets, `create=${Date.now()}`)
-    }, [history, onClose])
+        if (isEnvironment(Environment.ManifestOptions)) {
+            history.push(`${DashboardRoute.Wallets}?create=${Date.now()}`)
+        } else {
+            await Services.Welcome.openOptionsPage(DashboardRoute.Wallets, `create=${Date.now()}`)
+        }
+    }, [history, setOpen])
     //#endregion
 
     //#region connect wallet
