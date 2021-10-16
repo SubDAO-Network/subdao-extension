@@ -19,11 +19,12 @@ import { generateSeed, AddressState, updateAddress, rawValidate } from '../../..
 import { currentSelectedWalletProviderSettings } from '../../../../plugins/Wallet/settings'
 import type { SeedType } from '../../../../plugins/Wallet/services/keyring'
 
-import { getNetworkPrefix } from '../../../../polkadot/utils/helpers'
+import { getNetworkPrefix, getProvider, getNetwork } from '../../../../polkadot/utils/helpers'
 import { keypairType } from '../../../../polkadot/constants'
 
 import { useValueRef } from '../../../../utils/hooks/useValueRef'
 import { useI18N } from '../../../../utils/i18n-next-ui'
+import { currentSubstrateNetworkSettings } from '../../../../settings/settings'
 
 const useWalletCreateDialogStyle = makeStyles((theme: Theme) =>
     createStyles({
@@ -105,6 +106,18 @@ export function WalletCreateDialog(props: WrappedDialogProps<object>) {
             setSeedType(newSeedType)
         }
     }, [state, derivePath, pairType, seedType])
+
+    useEffect(() => {
+        return () => {
+            const curNetwork = currentSubstrateNetworkSettings.value
+            const curProvider = getProvider(curNetwork)
+            const provider = currentSelectedWalletProviderSettings.value
+            const network = getNetwork(provider)
+            if (curNetwork !== network) {
+                currentSelectedWalletProviderSettings.value = curProvider
+            }
+        }
+    }, [])
 
     const onCopyMnemonic = useSnackbarCallback(
         async () => {
