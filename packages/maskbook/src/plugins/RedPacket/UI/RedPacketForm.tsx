@@ -16,32 +16,25 @@ import BigNumber from 'bignumber.js'
 import { useStylesExtends } from '../../../components/custom-ui-helper'
 import { useCurrentIdentity } from '../../../components/DataSource/useActivatedUI'
 import { formatBalance } from '../../Wallet/formatter'
-import {
-    RED_PACKET_MIN_SHARES,
-    RED_PACKET_MAX_SHARES,
-    RED_PACKET_CONSTANTS,
-    RED_PACKET_DEFAULT_SHARES,
-} from '../constants'
+import { RED_PACKET_MIN_SHARES, RED_PACKET_MAX_SHARES, RED_PACKET_DEFAULT_SHARES } from '../constants'
 import { useI18N } from '../../../utils/i18n-next-ui'
 import { SubdaoTokenType, ERC20TokenDetailed, EtherTokenDetailed } from '../../../web3/types'
 import { useAccount } from '../../../web3/hooks/useAccount'
-import { useChainId } from '../../../web3/hooks/useBlockNumber'
 import { TokenAmountPanel } from '../../../web3/UI/TokenAmountPanel'
-import { useConstant } from '../../../web3/hooks/useConstant'
 import { useCreateCallback } from '../hooks/useCreateCallback'
 import ActionButton from '../../../extension/options-page/DashboardComponents/ActionButton'
 import { TransactionStateType } from '../../../web3/hooks/useTransactionState'
 import type { RedPacketJSONPayload } from '../types'
 import { SelectTokenDialogEvent, WalletMessages } from '../../Wallet/messages'
 import { useRemoteControlledDialog } from '../../../utils/hooks/useRemoteControlledDialog'
-import { useSubDAOTokenDetailed } from '../../../web3/hooks/useSubDAOTokenDetailed'
 import { useCoinBalance } from '../../../web3/hooks/useCoinBalance'
 import { EthereumMessages } from '../../Ethereum/messages'
 import { SubdaoWalletConnectedBoundary } from '../../../web3/UI/SubdaoWalletConnectedBoundary'
 import { SubERC20TokenApprovedBoundary } from '../../../web3/UI/SubERC20TokenApprovedBoundary'
 import { redPacketAddress } from '../../../polkadot/constants'
 import { useERC20TokensDetailedFromTokenLists } from '../../../polkadot/hooks/useERC20TokensDetailedFromTokenLists'
-import { ERC20_TOKEN_LISTS } from '../../../polkadot/constants'
+import { ERC20_TOKEN_LISTS, networkNativeTokens } from '../../../polkadot/constants'
+import { currentSubstrateNetworkSettings } from '../../../settings/settings'
 
 const useStyles = makeStyles((theme) =>
     createStyles({
@@ -84,15 +77,15 @@ export function RedPacketForm(props: RedPacketFormProps) {
     // context
     // polkdot wallet address
     const account = useAccount()
-    // ethereum mainnet
-    const chainId = useChainId()
     const RED_PACKET_ADDRESS = redPacketAddress.main
 
+    const network = currentSubstrateNetworkSettings.value
+    const nativeToken = networkNativeTokens[network]
     //#region select token
     const { state, tokensDetailed } = useERC20TokensDetailedFromTokenLists(ERC20_TOKEN_LISTS)
     const sudaoTokenDetailed = tokensDetailed[0]
-    // const { value: sudaoTokenDetailed } = useSubDAOTokenDetailed()
     console.log({ sudaoTokenDetailed })
+
     const [token = sudaoTokenDetailed, setToken] = useState<EtherTokenDetailed | ERC20TokenDetailed | undefined>()
 
     const [id] = useState(uuid())

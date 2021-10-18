@@ -1,16 +1,14 @@
-import { ApiPromise, WsProvider } from '@polkadot/api'
+import { Keyring } from '@polkadot/api'
 import { ProviderType } from '../../../web3/types'
 import { getWallet } from '../../../plugins/Wallet/services'
 import {
     currentSelectedWalletProviderSettings,
     currentSelectedWalletAddressSettings,
 } from '../../../plugins/Wallet/settings'
-import { ws_server, voteAddress } from '../../../polkadot/constants'
 import { keypairType } from '../../../polkadot/constants'
-import { Keyring } from '@polkadot/api'
 import { getApi } from './base'
 
-export async function getSigner() {
+export async function getSigner(): Promise<any> {
     const wallet = await getWallet()
     if (!wallet) throw new Error('cannot find given wallet')
     switch (currentSelectedWalletProviderSettings.value) {

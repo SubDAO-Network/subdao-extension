@@ -1,15 +1,10 @@
-import { useMemo, useState } from 'react'
-import { useAsyncRetry } from 'react-use'
+import { useMemo } from 'react'
 import Fuse from 'fuse.js'
 import Services from '../../extension/service'
 import { useAsync } from 'react-use'
-import { EthereumAddress } from 'wallet.ts'
 import { isSameAddress } from '../../web3/helpers'
-import { useChainId } from '../../web3/hooks/useBlockNumber'
 import { SubdaoTokenType } from '../../web3/types'
 import { useERC20TokenDetailed } from '../../web3/hooks/useERC20TokenDetailed'
-import type { DaoInstanceDataMeta, DaoAddresses } from '../types'
-import type { ERC20TokenDetailed } from '../../web3/types'
 
 export enum TokenListsState {
     READY,
