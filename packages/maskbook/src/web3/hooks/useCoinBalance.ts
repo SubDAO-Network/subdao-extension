@@ -2,9 +2,11 @@ import { unreachable } from '../../utils/utils'
 import { SubdaoTokenType } from '../types'
 import { useSubERC20TokenBalance } from './useSubERC20TokenBalance'
 import { useSubdaoTokenBalance } from './useSubdaoTokenBalance'
+import { useAccount } from './useAccount'
 
 export function useCoinBalance(type: SubdaoTokenType, address: string) {
-    const r1 = useSubdaoTokenBalance(type === SubdaoTokenType.SubDAO ? address : '')
+    const account = useAccount()
+    const r1 = useSubdaoTokenBalance(account)
     const r2 = useSubERC20TokenBalance(type === SubdaoTokenType.ERC20 ? address : '')
     const type_ = type
     switch (type_) {
