@@ -60,11 +60,7 @@ export enum SubstrateNetworkPrefix {
 }
 
 export const networkNativeTokens: {
-    [network: string]: {
-        symbol: string
-        decimals: number
-        name?: string
-    }
+    [network: string]: any
 } = {
     SubDAO: {
         symbol: 'UNIT',

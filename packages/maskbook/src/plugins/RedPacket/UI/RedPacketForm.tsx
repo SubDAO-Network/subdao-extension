@@ -33,8 +33,7 @@ import { SubdaoWalletConnectedBoundary } from '../../../web3/UI/SubdaoWalletConn
 import { SubERC20TokenApprovedBoundary } from '../../../web3/UI/SubERC20TokenApprovedBoundary'
 import { redPacketAddress } from '../../../polkadot/constants'
 import { useERC20TokensDetailedFromTokenLists } from '../../../polkadot/hooks/useERC20TokensDetailedFromTokenLists'
-import { ERC20_TOKEN_LISTS, networkNativeTokens } from '../../../polkadot/constants'
-import { currentSubstrateNetworkSettings } from '../../../settings/settings'
+import { ERC20_TOKEN_LISTS } from '../../../polkadot/constants'
 
 const useStyles = makeStyles((theme) =>
     createStyles({
@@ -79,8 +78,6 @@ export function RedPacketForm(props: RedPacketFormProps) {
     const account = useAccount()
     const RED_PACKET_ADDRESS = redPacketAddress.main
 
-    const network = currentSubstrateNetworkSettings.value
-    const nativeToken = networkNativeTokens[network]
     //#region select token
     const { state, tokensDetailed } = useERC20TokensDetailedFromTokenLists(ERC20_TOKEN_LISTS)
     const sudaoTokenDetailed = tokensDetailed[0]

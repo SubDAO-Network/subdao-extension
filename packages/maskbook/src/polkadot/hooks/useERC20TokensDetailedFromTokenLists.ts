@@ -5,6 +5,8 @@ import { useAsync } from 'react-use'
 import { isSameAddress } from '../../web3/helpers'
 import { SubdaoTokenType } from '../../web3/types'
 import { useERC20TokenDetailed } from '../../web3/hooks/useERC20TokenDetailed'
+import { currentSubstrateNetworkSettings } from '../../settings/settings'
+import { networkNativeTokens, SubstrateNetwork } from '../../polkadot/constants'
 
 export enum TokenListsState {
     READY,
@@ -13,11 +15,15 @@ export enum TokenListsState {
 }
 
 export function useERC20TokensDetailedFromTokenLists(lists: string[], keyword: string = '') {
+    const network = currentSubstrateNetworkSettings.value
     //#region fetch token lists
-    const { value: allTokens = [], loading: loadingAllTokens } = useAsync(
-        async () => (lists.length === 0 ? [] : Services.Polkadot.fetchERC20TokensFromTokenLists(lists)),
-        [lists.sort().join()],
-    )
+    const { value: allTokens = [], loading: loadingAllTokens } = useAsync(async () => {
+        if (network !== SubstrateNetwork.SubDAO) {
+            const nativeToken = networkNativeTokens[network]
+            return [nativeToken]
+        }
+        return lists.length === 0 ? [] : Services.Polkadot.fetchERC20TokensFromTokenLists(lists)
+    }, [lists.sort().join()])
     //#endregion
 
     //#region fuse
@@ -39,6 +45,9 @@ export function useERC20TokensDetailedFromTokenLists(lists: string[], keyword: s
     //#region create searched tokens
     const searchedTokens = useMemo(() => {
         if (!keyword) return allTokens
+        if (network !== SubstrateNetwork.SubDAO) {
+            return allTokens
+        }
         return [
             ...allTokens.filter((token) => isSameAddress(token.address, keyword)),
             ...fuse.search(keyword).map((x) => x.item),
