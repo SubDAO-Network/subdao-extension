@@ -11,7 +11,7 @@ const gasLimit = -1
 export const getRedPacketContract = async () => {
     const api = await getApi()
     if (!api) return
-    return await ConnectContract(api, ContractType.redPacket, redPacketAddress.main)
+    return await ConnectContract(api, ContractType.redPacket, redPacketAddress.SubDAO)
 }
 
 export const createRedPacket = async (params: any) => {
@@ -25,7 +25,7 @@ export const createRedPacket = async (params: any) => {
 
     const { token_type, if_random, total_number, end_time, token_addr, total_tokens, password } = params
     return new Promise(async (resolve, reject) => {
-        await(redPacketContract as any)
+        await (redPacketContract as any)
             ?.exec(
                 'create_red_packet',
                 { value, gasLimit },

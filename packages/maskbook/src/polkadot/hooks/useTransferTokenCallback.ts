@@ -1,5 +1,4 @@
 import { useCallback } from 'react'
-import type BN from 'bn.js'
 import { Keyring } from '@polkadot/api'
 import { BN_HUNDRED } from '@polkadot/util'
 import { PolkadotTransactionStateType as StateType, useTransactionState } from './useTransactionState'

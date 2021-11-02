@@ -34,6 +34,7 @@ import { SubERC20TokenApprovedBoundary } from '../../../web3/UI/SubERC20TokenApp
 import { redPacketAddress } from '../../../polkadot/constants'
 import { useERC20TokensDetailedFromTokenLists } from '../../../polkadot/hooks/useERC20TokensDetailedFromTokenLists'
 import { ERC20_TOKEN_LISTS } from '../../../polkadot/constants'
+import { currentSubstrateNetworkSettings } from '../../../settings/settings'
 
 const useStyles = makeStyles((theme) =>
     createStyles({
@@ -70,13 +71,12 @@ export interface RedPacketFormProps extends withClasses<KeysInferFromUseStyles<t
 export function RedPacketForm(props: RedPacketFormProps) {
     const { t } = useI18N()
     const classes = useStylesExtends(useStyles(), props)
-
-    const HAPPY_RED_PACKET_ADDRESS = redPacketAddress.main
+    const network = currentSubstrateNetworkSettings.value
+    const HAPPY_RED_PACKET_ADDRESS = redPacketAddress[network]
 
     // context
     // polkdot wallet address
     const account = useAccount()
-    const RED_PACKET_ADDRESS = redPacketAddress.main
 
     //#region select token
     const { state, tokensDetailed } = useERC20TokensDetailedFromTokenLists(ERC20_TOKEN_LISTS)
@@ -337,7 +337,7 @@ export function RedPacketForm(props: RedPacketFormProps) {
                 <SubERC20TokenApprovedBoundary
                     amount={totalAmount.toFixed()}
                     token={token as any}
-                    spender={RED_PACKET_ADDRESS}>
+                    spender={HAPPY_RED_PACKET_ADDRESS}>
                     <ActionButton className={classes.button} fullWidth onClick={createCallback}>
                         {validationMessage || `Send ${formatBalance(totalAmount, token.decimals)} ${token.symbol}`}
                     </ActionButton>

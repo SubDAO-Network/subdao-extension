@@ -22,7 +22,9 @@ export const voteAddress = {
 }
 
 export const redPacketAddress = {
-    main: '5HRpVAKhuFyFbZLJBmGDrQ8uBqzBJLggWhFpxrQWcbgzYn6U',
+    SubDAO: '5HRpVAKhuFyFbZLJBmGDrQ8uBqzBJLggWhFpxrQWcbgzYn6U',
+    Polkadot: '14Gb4ZGyN9LYEk6rhCbhWHYHQ7THYpZEsHXtDBR63E8zfRUA',
+    Kusama: '',
 }
 
 export const erc20Address = {
