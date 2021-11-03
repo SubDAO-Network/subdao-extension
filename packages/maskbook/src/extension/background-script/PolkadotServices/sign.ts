@@ -13,6 +13,8 @@ export async function getSigner(): Promise<any> {
     if (!wallet) throw new Error('cannot find given wallet')
     switch (currentSelectedWalletProviderSettings.value) {
         case ProviderType.SubDAO:
+        case ProviderType.Polkadot:
+        case ProviderType.Kusama:
             const keyring = new Keyring({ type: keypairType })
             let seed: string
             if (wallet?.mnemonic?.length > 0) {

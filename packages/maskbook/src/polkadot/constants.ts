@@ -27,6 +27,8 @@ export const redPacketAddress = {
     Kusama: '',
 }
 
+export const redPacketUrl = 'https://redpacket-api.subdao.org'
+
 export const erc20Address = {
     test: '5DCyzSLBMpYMeFpVHDKjPEVh3vuu2D3Ku4VMqaDUz3VtZ87N',
 }

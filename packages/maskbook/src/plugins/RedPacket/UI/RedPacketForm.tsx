@@ -81,7 +81,6 @@ export function RedPacketForm(props: RedPacketFormProps) {
     //#region select token
     const { state, tokensDetailed } = useERC20TokensDetailedFromTokenLists(ERC20_TOKEN_LISTS)
     const sudaoTokenDetailed = tokensDetailed[0]
-    console.log({ sudaoTokenDetailed })
 
     const [token = sudaoTokenDetailed, setToken] = useState<EtherTokenDetailed | ERC20TokenDetailed | undefined>()
 
@@ -334,14 +333,17 @@ export function RedPacketForm(props: RedPacketFormProps) {
                 />
             </div>
             <SubdaoWalletConnectedBoundary>
-                <SubERC20TokenApprovedBoundary
+                <ActionButton className={classes.button} fullWidth onClick={createCallback}>
+                    {validationMessage || `Send ${formatBalance(totalAmount, token.decimals)} ${token.symbol}`}
+                </ActionButton>
+                {/* <SubERC20TokenApprovedBoundary
                     amount={totalAmount.toFixed()}
                     token={token as any}
                     spender={HAPPY_RED_PACKET_ADDRESS}>
                     <ActionButton className={classes.button} fullWidth onClick={createCallback}>
                         {validationMessage || `Send ${formatBalance(totalAmount, token.decimals)} ${token.symbol}`}
                     </ActionButton>
-                </SubERC20TokenApprovedBoundary>
+                </SubERC20TokenApprovedBoundary> */}
             </SubdaoWalletConnectedBoundary>
         </>
     )

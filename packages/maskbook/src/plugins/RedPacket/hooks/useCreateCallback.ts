@@ -1,14 +1,16 @@
 import { useCallback, useState } from 'react'
 import BigNumber from 'bignumber.js'
 import Web3Utils from 'web3-utils'
-import { useSubRedPacketContract } from '../contracts/useSubRedPacketContract'
+import { Keyring } from '@polkadot/api'
 import { useTransactionState, TransactionStateType } from '../../../web3/hooks/useTransactionState'
 import { ERC20TokenDetailed, EtherTokenDetailed, TransactionEventType, SubdaoTokenType } from '../../../web3/types'
 import { useAccount } from '../../../web3/hooks/useAccount'
 import type { SubdaoTokenDetailed } from '../../../polkadot/constants'
 import Services from '../../../extension/service'
 import { last, get } from 'lodash-es'
-import { EthereumMessages } from '../../Ethereum/messages'
+import { currentSubstrateNetworkSettings } from '../../../settings/settings'
+import { SubstrateNetwork, redPacketAddress, redPacketUrl, networkNativeTokens } from '../../../polkadot/constants'
+import { useWallet } from '../../../plugins/Wallet/hooks/useWallet'
 
 export interface RedPacketSettings {
     password: string
@@ -25,13 +27,14 @@ export interface RedPacketSettings {
 export function useCreateCallback(redPacketSettings: RedPacketSettings) {
     const account = useAccount()
     const [createState, setCreateState] = useTransactionState()
-    const { value: redPacketContract } = useSubRedPacketContract()
     const [createSettings, setCreateSettings] = useState<RedPacketSettings | null>(null)
 
-    const createCallback = useCallback(async () => {
-        const { password, isRandom, endTime, message, name, shares, total, token } = redPacketSettings
+    const wallet = useWallet()
 
-        if (!token || !redPacketContract) {
+    const createCallback = useCallback(async () => {
+        const { password, isRandom, endTime, shares, total, token } = redPacketSettings
+        console.log(`token...`, token)
+        if (!token) {
             setCreateState({
                 type: TransactionStateType.UNKNOWN,
             })
@@ -53,17 +56,35 @@ export function useCreateCallback(redPacketSettings: RedPacketSettings) {
             })
             return
         }
-        if (token.type !== SubdaoTokenType.SubDAO && token.type !== SubdaoTokenType.ERC20) {
-            setCreateState({
-                type: TransactionStateType.FAILED,
-                error: Error('Token not supported'),
-            })
-            return
-        }
+        // if (token.type !== SubdaoTokenType.SubDAO && token.type !== SubdaoTokenType.ERC20) {
+        //     setCreateState({
+        //         type: TransactionStateType.FAILED,
+        //         error: Error('Token not supported'),
+        //     })
+        //     return
+        // }
 
         setCreateState({
             type: TransactionStateType.WAIT_FOR_CONFIRMING,
         })
+        const network = currentSubstrateNetworkSettings.value
+        console.log(`network...`, network)
+
+        console.log(`wallet...`, wallet)
+        console.log(`condition`, network !== SubstrateNetwork.SubDAO && wallet)
+        if (network !== SubstrateNetwork.SubDAO && wallet) {
+            const params = { shares, sender: account, total }
+            const info = await Services.Polkadot.createDotOrKsmRedPacket(params)
+            if (info.data) {
+                setCreateSettings({
+                    rpid: info.data,
+                    ...redPacketSettings,
+                })
+                setCreateState({
+                    type: TransactionStateType.FINALIZED,
+                })
+            }
+        }
 
         const params = {
             token_type: token.type === SubdaoTokenType.SubDAO ? 0 : 1,
@@ -74,14 +95,10 @@ export function useCreateCallback(redPacketSettings: RedPacketSettings) {
             total_tokens: total,
             password: Web3Utils.sha3(password)!,
         }
-        console.log(`params...`, params)
 
         return new Promise<void>(async (resolve, reject) => {
             const result: any = await Services.Polkadot.createRedPacket(params)
-            console.log(`create result...`, result)
             if (result.status.finalized) {
-                let rid = Number(get(last(result.contractEvents), 'args[0]', '0'))
-                console.log({ rid })
                 setCreateSettings({
                     rpid: `${Number(get(last(result.contractEvents), 'args[0]', '0'))}`,
                     ...redPacketSettings,
@@ -89,11 +106,10 @@ export function useCreateCallback(redPacketSettings: RedPacketSettings) {
                 setCreateState({
                     type: TransactionStateType.FINALIZED,
                 })
-                // EthereumMessages.events.transactionDialogUpdated.sendToAll(result.events)
                 resolve()
             }
         })
-    }, [account, setCreateState, redPacketContract, redPacketSettings])
+    }, [account, setCreateState, redPacketSettings])
 
     const resetCallback = useCallback(() => {
         setCreateState({
