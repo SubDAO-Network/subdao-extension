@@ -21,14 +21,13 @@ export const createDotOrKsmRedPacket = async (params: any) => {
     const signer = await getSigner()
     const network = currentSubstrateNetworkSettings.value
     const txHash = await api.tx.balances.transfer(redPacketAddress[network], params.total).signAndSend(signer)
-    console.log(`txHash...`, txHash.toHex())
     const createRedPacket = `${redPacketUrl}/redpacket/create`
     const data = {
         sender: params.sender,
         tokenAmount: params.total,
         chainType: networkNativeTokens[network].symbol,
         transHash: txHash.toHex(),
-        redPacketNumber: params.shares,
+        redPacketNumber: params.shares.toString(),
     }
     console.log(`data...`, data)
     const res = await fetch(createRedPacket, {

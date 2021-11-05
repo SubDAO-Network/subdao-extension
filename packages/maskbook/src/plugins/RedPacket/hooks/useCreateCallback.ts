@@ -9,7 +9,7 @@ import type { SubdaoTokenDetailed } from '../../../polkadot/constants'
 import Services from '../../../extension/service'
 import { last, get } from 'lodash-es'
 import { currentSubstrateNetworkSettings } from '../../../settings/settings'
-import { SubstrateNetwork, redPacketAddress, redPacketUrl, networkNativeTokens } from '../../../polkadot/constants'
+import { SubstrateNetwork } from '../../../polkadot/constants'
 import { useWallet } from '../../../plugins/Wallet/hooks/useWallet'
 
 export interface RedPacketSettings {
@@ -68,22 +68,21 @@ export function useCreateCallback(redPacketSettings: RedPacketSettings) {
             type: TransactionStateType.WAIT_FOR_CONFIRMING,
         })
         const network = currentSubstrateNetworkSettings.value
-        console.log(`network...`, network)
-
-        console.log(`wallet...`, wallet)
-        console.log(`condition`, network !== SubstrateNetwork.SubDAO && wallet)
         if (network !== SubstrateNetwork.SubDAO && wallet) {
             const params = { shares, sender: account, total }
-            const info = await Services.Polkadot.createDotOrKsmRedPacket(params)
-            if (info.data) {
-                setCreateSettings({
-                    rpid: info.data,
-                    ...redPacketSettings,
-                })
-                setCreateState({
-                    type: TransactionStateType.FINALIZED,
-                })
-            }
+            return new Promise<void>(async (resolve, reject) => {
+                const info = await Services.Polkadot.createDotOrKsmRedPacket(params)
+                if (info.errCode === 0 && info.data) {
+                    setCreateSettings({
+                        rpid: info.data,
+                        ...redPacketSettings,
+                    })
+                    setCreateState({
+                        type: TransactionStateType.FINALIZED,
+                    })
+                    resolve()
+                }
+            })
         }
 
         const params = {
@@ -106,7 +105,6 @@ export function useCreateCallback(redPacketSettings: RedPacketSettings) {
                 setCreateState({
                     type: TransactionStateType.FINALIZED,
                 })
-                resolve()
             }
         })
     }, [account, setCreateState, redPacketSettings])
