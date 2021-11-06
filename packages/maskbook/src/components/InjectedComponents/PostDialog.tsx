@@ -414,7 +414,7 @@ export function PostDialog({ reason: props_reason = 'timeline', ...props }: Post
     // TODO: move into the plugin system
     const hasRedPacket = RedPacketMetadataReader(postBoxContent.meta).ok
     const theme = hasRedPacket ? PluginRedPacketTheme : undefined
-    const mustSelectShareToEveryone = hasRedPacket && !shareToEveryone
+    const mustSelectShareToEveryone = hasRedPacket && shareToEveryone
 
     useEffect(() => {
         if (mustSelectShareToEveryone) onShareToEveryoneChanged(true)
