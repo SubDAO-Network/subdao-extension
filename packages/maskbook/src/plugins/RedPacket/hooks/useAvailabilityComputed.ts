@@ -12,7 +12,7 @@ import { useAvailability } from './useAvailability'
  */
 export function useAvailabilityComputed(account: string, payload: RedPacketJSONPayload) {
     const chainId = useChainId()
-    const asyncResult = useAvailability(payload?.rpid)
+    const asyncResult = useAvailability(payload?.rpid, chainId)
     const { value: availability } = asyncResult
 
     if (!availability)
@@ -26,17 +26,44 @@ export function useAvailabilityComputed(account: string, payload: RedPacketJSONP
             },
         }
 
-    const { is_refund, claim_list, remaining_tokens, start_time, end_time, claimed_number, total_number } = JSON.parse(
-        availability,
-    )
+    let balance, isEmpty, isExpired, isClaimed, isRefunded, isCreator, parsedChainId
 
-    const balance = remaining_tokens.toString()
-    const isEmpty = balance === '0'
-    const isExpired = Date.now() > end_time
-    const isClaimed = claim_list.filter((el: any) => el.includes(account)).length > 0
-    const isRefunded = is_refund
-    const isCreator = isSameAddress(payload?.sender.address ?? '', account)
-    const parsedChainId = resolveChainId(payload.network ?? '') ?? ChainId.Mainnet
+    if (chainId === ChainId.Kusama || chainId === ChainId.Polkadot) {
+        const { expirationTime: end_time, sender, chainType, returnBackTokenAmoun } = JSON.parse(availability)
+
+        // balance = remaining_tokens.toString()
+        balance = '0.001'
+        isEmpty = balance === '0'
+        isExpired = Date.now() > end_time
+        // isClaimed = claim_list.filter((el: any) => el.includes(account)).length > 0
+        isClaimed = false
+        isRefunded = !!returnBackTokenAmoun
+        isCreator = isSameAddress(sender ?? '', account)
+        if (chainType.toLowerCase() === 'dot') {
+            parsedChainId === ChainId.Polkadot
+        }
+        if (chainType.toLowerCase() === 'ksm') {
+            parsedChainId === ChainId.Kusama
+        }
+    } else {
+        const {
+            is_refund,
+            claim_list,
+            remaining_tokens,
+            start_time,
+            end_time,
+            claimed_number,
+            total_number,
+        } = JSON.parse(availability)
+
+        balance = remaining_tokens.toString()
+        isEmpty = balance === '0'
+        isExpired = Date.now() > end_time
+        isClaimed = claim_list.filter((el: any) => el.includes(account)).length > 0
+        isRefunded = is_refund
+        isCreator = isSameAddress(payload?.sender.address ?? '', account)
+        parsedChainId = resolveChainId(payload.network ?? '') ?? ChainId.Mainnet
+    }
 
     return {
         ...asyncResult,

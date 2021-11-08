@@ -90,6 +90,9 @@ export interface AssetDetailed {
 // Learn more about ethereum ChainId https://github.com/ethereum/EIPs/blob/master/EIPS/eip-155.md
 export enum ChainId {
     Mainnet = 1,
+    SubDAO = 42,
+    Polkadot = 0,
+    Kusama = 2,
 }
 
 // Please don't use this enum but use ChainId instead

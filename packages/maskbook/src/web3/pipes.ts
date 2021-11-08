@@ -23,6 +23,12 @@ export function resolveChainId(name: string) {
     switch (name.toLowerCase()) {
         case 'mainnet':
             return ChainId.Mainnet
+        case 'subdao':
+            return ChainId.SubDAO
+        case 'kusama':
+            return ChainId.Kusama
+        case 'polkadot':
+            return ChainId.Polkadot
         default:
             return
     }
@@ -32,8 +38,13 @@ export function resolveChainName(chainId: ChainId) {
     switch (chainId) {
         case ChainId.Mainnet:
             return 'Mainnet'
+        case ChainId.SubDAO:
+            return 'SubDAO'
+        case ChainId.Kusama:
+            return 'Kusama'
+        case ChainId.Polkadot:
+            return 'Polkadot'
         default:
-            safeUnreachable(chainId)
             return 'Unknown'
     }
 }
@@ -52,7 +63,6 @@ export function resolveLinkOnEtherscan(chainId: ChainId) {
         case ChainId.Mainnet:
             return 'https://etherscan.io'
         default:
-            safeUnreachable(chainId)
             return 'https://etherscan.io'
     }
 }

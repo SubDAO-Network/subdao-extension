@@ -42,7 +42,7 @@ export const checkDotOrKsmRedPacket = async (redPacketId: string) => {
     try {
         const res = await fetch(getRedPacketApi)
         const info = await res.json()
-        console.log(`red packet info...`, info)
+        console.log(`get red packet info...`, info)
         return info
     } catch (err) {
         console.log(`get ${network} red packet err...`, err)
