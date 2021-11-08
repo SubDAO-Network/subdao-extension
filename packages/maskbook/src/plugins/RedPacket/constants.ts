@@ -7,10 +7,6 @@ export const RedPacketPluginID = 'com.subdao.red_packet'
 export const RED_PACKET_CONSTANTS = {
     HAPPY_RED_PACKET_ADDRESS: {
         [ChainId.Mainnet]: '5Feh3kEy5KLz4H9EUa7GMJJWyrgPuTS2Zz4yZaVYmDLYoh5U',
-        [ChainId.Ropsten]: '0x26760783c12181efa3c435aee4ae686c53bdddbb',
-        [ChainId.Rinkeby]: '0x575f906db24154977c7361c2319e2b25e897e3b6',
-        [ChainId.Kovan]: '',
-        [ChainId.Gorli]: '',
     },
 }
 
