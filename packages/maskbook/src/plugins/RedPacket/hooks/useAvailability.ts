@@ -8,9 +8,13 @@ export function useAvailability(id: string, chainId: ChainId) {
     return useAsyncRetry(async () => {
         if (!id) return null
         if (chainId === ChainId.Polkadot || chainId === ChainId.Kusama) {
-            return await Services.Polkadot.checkDotOrKsmRedPacket(id)
+            const info = await Services.Polkadot.checkDotOrKsmRedPacket(id)
+            if (info && info.errCode === 0) {
+                return info.data
+            }
+        } else {
+            if (!redPacketContract) return null
+            return await Services.Polkadot.checkRedPacket(id)
         }
-        if (!redPacketContract) return null
-        return await Services.Polkadot.checkRedPacket(id)
-    }, [id, redPacketContract])
+    }, [id, redPacketContract, chainId])
 }

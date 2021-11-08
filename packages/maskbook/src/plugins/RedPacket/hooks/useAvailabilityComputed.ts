@@ -29,7 +29,7 @@ export function useAvailabilityComputed(account: string, payload: RedPacketJSONP
     let balance, isEmpty, isExpired, isClaimed, isRefunded, isCreator, parsedChainId
 
     if (chainId === ChainId.Kusama || chainId === ChainId.Polkadot) {
-        const { expirationTime: end_time, sender, chainType, returnBackTokenAmoun } = JSON.parse(availability)
+        const { expirationTime: end_time, sender, chainType, returnBackTokenAmoun } = availability
 
         // balance = remaining_tokens.toString()
         balance = '0.001'

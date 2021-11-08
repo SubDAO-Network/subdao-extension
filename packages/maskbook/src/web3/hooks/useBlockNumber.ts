@@ -1,12 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useValueRef } from '../../utils/hooks/useValueRef'
 import { ChainId, ProviderType } from '../types'
-import {
-    currentBlockNumnberStateSettings,
-    currentMaskbookChainIdSettings,
-    currentMetaMaskChainIdSettings,
-    currentWalletConnectChainIdSettings,
-} from '../../settings/settings'
+import { currentBlockNumnberStateSettings } from '../../settings/settings'
 import type { ChainBlockNumber } from '../../settings/types'
 import { useWallet } from '../../plugins/Wallet/hooks/useWallet'
 import { Flags } from '../../utils/flags'
@@ -17,16 +12,12 @@ import { currentSelectedWalletProviderSettings } from '../../plugins/Wallet/sett
  */
 export function useUnsafeChainId() {
     const provider = useValueRef(currentSelectedWalletProviderSettings)
-    const MaskbookChainId = useValueRef(currentMaskbookChainIdSettings)
-    const MetaMaskChainId = useValueRef(currentMetaMaskChainIdSettings)
-    const WalletConnectChainId = useValueRef(currentWalletConnectChainIdSettings)
-
     const wallet = useWallet()
-    if (!wallet) return MaskbookChainId
-    if (provider === ProviderType.SubDAO) return MaskbookChainId
-    if (provider === ProviderType.MetaMask) return MetaMaskChainId
-    if (provider === ProviderType.WalletConnect) return WalletConnectChainId
-    return MaskbookChainId
+    if (!wallet) return ChainId.SubDAO
+    if (provider === ProviderType.SubDAO) return ChainId.SubDAO
+    if (provider === ProviderType.Polkadot) return ChainId.Polkadot
+    if (provider === ProviderType.Kusama) return ChainId.Kusama
+    return ChainId.Mainnet
 }
 
 /**

@@ -20,18 +20,11 @@ import { useAccount } from '../../../web3/hooks/useAccount'
 import ActionButton from '../../../extension/options-page/DashboardComponents/ActionButton'
 import { resolveChainName } from '../../../web3/pipes'
 import { usePostLink } from '../../../components/DataSource/usePostInfo'
-import {
-    currentIsMetamaskLockedSettings,
-    currentSelectedWalletProviderSettings,
-} from '../../../plugins/Wallet/settings'
-import { ProviderType } from '../../../web3/types'
-import { useValueRef } from '../../../utils/hooks/useValueRef'
-import { MetaMaskIcon } from '../../../resources/MetaMaskIcon'
-import Services from '../../../extension/service'
 import { useTokenDetailed } from '../../../web3/hooks/useTokenDetailed'
 import { EthereumMessages } from '../../Ethereum/messages'
 import { activatedSocialNetworkUI } from '../../../social-network'
-import { useSubDAOTokenDetailed } from '../../../web3/hooks/useSubDAOTokenDetailed'
+import { networkNativeTokens } from '../../../polkadot/constants'
+import { ChainId } from '../../../web3/types'
 
 const useStyles = makeStyles((theme) =>
     createStyles({
@@ -148,10 +141,6 @@ export function RedPacket(props: RedPacketProps) {
     const chainId = useChainId()
     const chainIdValid = useChainIdValid()
 
-    const currentSelectedWalletProvider = useValueRef(currentSelectedWalletProviderSettings)
-    const isMetamaskRedpacketLocked =
-        useValueRef(currentIsMetamaskLockedSettings) && currentSelectedWalletProvider === ProviderType.MetaMask
-
     //#region token detailed
     const {
         value: availability,
@@ -159,7 +148,13 @@ export function RedPacket(props: RedPacketProps) {
         retry: revalidateAvailability,
     } = useAvailabilityComputed(account, payload)
 
-    const { value: tokenDetailed } = useTokenDetailed(payload.token_type, payload.token?.address ?? '')
+    let tokenDetailed: any
+    const { value } = useTokenDetailed(payload.token_type, payload.token?.address ?? '')
+
+    const chainName = resolveChainName(chainId)
+
+    tokenDetailed = chainId === ChainId.Kusama || chainId === ChainId.Polkadot ? networkNativeTokens[chainName] : value
+
     //#ednregion
     console.log(`availabilityComputed...`, availabilityComputed)
     const { canFetch, canClaim, canRefund, listOfStatus } = availabilityComputed
@@ -240,22 +235,7 @@ export function RedPacket(props: RedPacketProps) {
         else if (canRefund) await refundCallback()
     }, [canClaim, canRefund, claimCallback, refundCallback])
 
-    console.log(`isMetamaskRedpacketLocked`, isMetamaskRedpacketLocked)
-    if (isMetamaskRedpacketLocked)
-        return (
-            <Card
-                className={classNames(classes.root, {
-                    [classes.metamaskContent]: true,
-                    [classes.cursor]: true,
-                })}
-                onClick={() => Services.Ethereum.connectMetaMask()}
-                component="article"
-                elevation={0}>
-                <MetaMaskIcon className={classes.icon} viewBox="0 0 45 45" />
-                {t('plugin_wallet_metamask_unlock')}
-            </Card>
-        )
-
+    console.log(`tokenDetailed...`, tokenDetailed)
     // the red packet can fetch without account
     if (!availability || !tokenDetailed)
         return (
