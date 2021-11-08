@@ -6,11 +6,10 @@ export function injectPostInspectorAtTwitter(signal: AbortSignal, current: PostI
     return injectPostInspectorDefault({
         zipPost(node) {
             const content = node.current.parentElement?.querySelector<HTMLDivElement>('[lang]')
-
             if (content) {
                 for (const a of content.querySelectorAll('a')) {
                     if (twitterEncoding.payloadDecoder(a.title)) hideDOM(a)
-                    if (/^https?:\/\/mask(\.io|book\.com)$/i.test(a.title)) hideDOM(a)
+                    if (/^https?:\/\/www\.subdao\.network$/i.test(a.title)) hideDOM(a)
                 }
                 for (const span of content.querySelectorAll('span')) {
                     // match (.) (\n) (—§—) (any space) (/*)
@@ -26,12 +25,20 @@ export function injectPostInspectorAtTwitter(signal: AbortSignal, current: PostI
                     parent.style.height = '0'
                     parent.style.overflow = 'hidden'
                 }
+
+                const cardWrapper = node.current.parentElement?.parentElement?.querySelector<HTMLDivElement>(
+                    '[data-testid="card.wrapper"]',
+                )
+                if (cardWrapper) {
+                    cardWrapper.style.display = 'none'
+                    cardWrapper.setAttribute('aria-hidden', 'true')
+                }
             }
         },
     })(current, signal)
 }
 function matches(input: string) {
-    return /maskbook\.com/i.test(input) && /Make Privacy Protected Again/i.test(input)
+    return /subdao\.network/i.test(input) && /Make Privacy Protected Again/i.test(input)
 }
 
 function hideDOM(a: HTMLElement) {
