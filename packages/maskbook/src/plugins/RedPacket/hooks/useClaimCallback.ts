@@ -34,7 +34,6 @@ export function useClaimCallback(from: string, id?: string, password?: string) {
                 resolve()
             }
             const promiEvent = await Services.Polkadot.claimRedPacket(params)
-            console.log(`claim promiEvent...`, promiEvent)
             if (promiEvent === 'finalized') {
                 onSucceed()
             }
