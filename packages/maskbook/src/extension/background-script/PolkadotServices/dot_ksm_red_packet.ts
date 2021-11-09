@@ -15,11 +15,9 @@ export const createDotOrKsmRedPacket = async (params: any) => {
 
     const createRedPacketApi = `${redPacketUrl}/redpacket/create`
     const data = {
-        sender: params.sender,
-        tokenAmount: params.total,
+        ...params,
         chainType: networkNativeTokens[network].symbol,
         transHash: txHash.toHex(),
-        redPacketNumber: params.shares.toString(),
     }
     try {
         const res = await fetch(createRedPacketApi, {
@@ -49,7 +47,7 @@ export const checkDotOrKsmRedPacket = async (redPacketId: string) => {
     }
 }
 
-export const claimDotOrKsmRedPacket = async (params: { receiver: string; redPacketId: string }) => {
+export const claimDotOrKsmRedPacket = async (params: { receiver: string; redPacketId: string; password: string }) => {
     const network = currentSubstrateNetworkSettings.value
     if (network !== SubstrateNetwork.Polkadot && network !== SubstrateNetwork.Kusama) return
     const claimRedPacketApi = `${redPacketUrl}/redpacket/receive`

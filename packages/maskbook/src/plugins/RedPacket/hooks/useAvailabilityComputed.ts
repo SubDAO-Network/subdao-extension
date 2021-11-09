@@ -29,15 +29,22 @@ export function useAvailabilityComputed(account: string, payload: RedPacketJSONP
     let balance, isEmpty, isExpired, isClaimed, isRefunded, isCreator, parsedChainId
 
     if (chainId === ChainId.Kusama || chainId === ChainId.Polkadot) {
-        const { expirationTime: end_time, sender, chainType, returnBackTokenAmoun } = availability
+        const {
+            expirationTime: end_time,
+            sender,
+            chainType,
+            returnBackTokenAmount,
+            remainingTokens,
+            claimedRedPackets,
+        } = availability
 
         // balance = remaining_tokens.toString()
-        balance = '0.001'
+        balance = remainingTokens
         isEmpty = balance === '0'
         isExpired = Date.now() > end_time
-        // isClaimed = claim_list.filter((el: any) => el.includes(account)).length > 0
+        isClaimed = claimedRedPackets.filter((el: any) => isSameAddress(el.receiver, account)).length > 0
         isClaimed = false
-        isRefunded = !!returnBackTokenAmoun
+        isRefunded = !!returnBackTokenAmount
         isCreator = isSameAddress(sender ?? '', account)
         if (chainType.toLowerCase() === 'dot') {
             parsedChainId === ChainId.Polkadot

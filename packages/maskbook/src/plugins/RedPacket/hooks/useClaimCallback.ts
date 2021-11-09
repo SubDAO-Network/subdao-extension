@@ -3,13 +3,22 @@ import { useSubRedPacketContract } from '../contracts/useSubRedPacketContract'
 import { useTransactionState, TransactionStateType } from '../../../web3/hooks/useTransactionState'
 import Web3Utils from 'web3-utils'
 import Services from '../../../extension/service'
+import { currentSubstrateNetworkSettings } from '../../../settings/settings'
+import { SubstrateNetwork } from '../../../polkadot/constants'
 
 export function useClaimCallback(from: string, id?: string, password?: string) {
     const [claimState, setClaimState] = useTransactionState()
     const { value: redPacketContract } = useSubRedPacketContract()
 
     const claimCallback = useCallback(async () => {
-        if (!redPacketContract || !id || !password) {
+        if (!id || !password || !from) {
+            setClaimState({
+                type: TransactionStateType.UNKNOWN,
+            })
+            return
+        }
+        const network = currentSubstrateNetworkSettings.value
+        if (network === SubstrateNetwork.SubDAO && !redPacketContract) {
             setClaimState({
                 type: TransactionStateType.UNKNOWN,
             })
@@ -21,9 +30,20 @@ export function useClaimCallback(from: string, id?: string, password?: string) {
         })
 
         const params = {
-            id,
+            redPacketId: id,
             password: Web3Utils.sha3(password)!,
-            recipient: from,
+            receiver: from,
+        }
+        if (network !== SubstrateNetwork.SubDAO) {
+            return new Promise<void>(async (resolve, reject) => {
+                const info = await Services.Polkadot.claimDotOrKsmRedPacket(params)
+                if (info.errCode === 0 && info.data) {
+                    setClaimState({
+                        type: TransactionStateType.FINALIZED,
+                    })
+                    resolve()
+                }
+            })
         }
 
         return new Promise<void>(async (resolve, reject) => {

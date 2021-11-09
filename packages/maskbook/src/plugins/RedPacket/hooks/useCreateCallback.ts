@@ -1,9 +1,8 @@
 import { useCallback, useState } from 'react'
 import BigNumber from 'bignumber.js'
 import Web3Utils from 'web3-utils'
-import { Keyring } from '@polkadot/api'
 import { useTransactionState, TransactionStateType } from '../../../web3/hooks/useTransactionState'
-import { ERC20TokenDetailed, EtherTokenDetailed, TransactionEventType, SubdaoTokenType } from '../../../web3/types'
+import { ERC20TokenDetailed, EtherTokenDetailed, SubdaoTokenType } from '../../../web3/types'
 import { useAccount } from '../../../web3/hooks/useAccount'
 import type { SubdaoTokenDetailed } from '../../../polkadot/constants'
 import Services from '../../../extension/service'
@@ -33,7 +32,7 @@ export function useCreateCallback(redPacketSettings: RedPacketSettings) {
 
     const createCallback = useCallback(async () => {
         const { password, isRandom, endTime, shares, total, token } = redPacketSettings
-        console.log(`token...`, token)
+
         if (!token) {
             setCreateState({
                 type: TransactionStateType.UNKNOWN,
@@ -69,7 +68,13 @@ export function useCreateCallback(redPacketSettings: RedPacketSettings) {
         })
         const network = currentSubstrateNetworkSettings.value
         if (network !== SubstrateNetwork.SubDAO && wallet) {
-            const params = { shares, sender: account, total }
+            const params = {
+                sender: account,
+                tokenAmount: total,
+                redPacketNumber: shares.toString(),
+                password: Web3Utils.sha3(password)!,
+                ifRandom: isRandom,
+            }
             return new Promise<void>(async (resolve, reject) => {
                 const info = await Services.Polkadot.createDotOrKsmRedPacket(params)
                 if (info.errCode === 0 && info.data) {
