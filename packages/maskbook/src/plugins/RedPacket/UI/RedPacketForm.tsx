@@ -202,6 +202,7 @@ export function RedPacketForm(props: RedPacketFormProps) {
                 total: totalAmount.toFixed(),
                 end_time: createSettings.endTime,
                 token_type: createSettings.token.type ?? 0,
+                network,
             }
 
             if (createSettings.token.type === SubdaoTokenType.ERC20) {

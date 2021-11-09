@@ -2,6 +2,7 @@ import { getApi } from './base'
 import { redPacketAddress, redPacketUrl, networkNativeTokens, SubstrateNetwork } from '../../../polkadot/constants'
 import { getSigner } from './sign'
 import { currentSubstrateNetworkSettings } from '../../../settings/settings'
+import { delay as sleep } from '../../../utils/utils'
 
 export const createDotOrKsmRedPacket = async (params: any) => {
     const api = await getApi()
@@ -10,7 +11,7 @@ export const createDotOrKsmRedPacket = async (params: any) => {
     const network = currentSubstrateNetworkSettings.value
     if (network !== SubstrateNetwork.Polkadot && network !== SubstrateNetwork.Kusama) return
 
-    const txHash = await api.tx.balances.transfer(redPacketAddress[network], params.total).signAndSend(signer)
+    const txHash = await api.tx.balances.transfer(redPacketAddress[network], params.tokenAmount).signAndSend(signer)
     if (!txHash) return
 
     const createRedPacketApi = `${redPacketUrl}/redpacket/create`
@@ -19,6 +20,9 @@ export const createDotOrKsmRedPacket = async (params: any) => {
         chainType: networkNativeTokens[network].symbol,
         transHash: txHash.toHex(),
     }
+    console.log(`txHash.toHex()`, txHash.toHex())
+    await sleep(3000)
+    console.log(`create dot red packet data...`, data)
     try {
         const res = await fetch(createRedPacketApi, {
             method: 'POST',
@@ -26,6 +30,7 @@ export const createDotOrKsmRedPacket = async (params: any) => {
             body: JSON.stringify(data),
         })
         const info = await res.json()
+        console.log(`create dot red packet info...`, info)
         return info
     } catch (err) {
         console.log(`create ${network} red packet err...`, err)

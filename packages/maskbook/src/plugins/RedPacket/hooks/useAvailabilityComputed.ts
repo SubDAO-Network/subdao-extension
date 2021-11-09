@@ -29,28 +29,23 @@ export function useAvailabilityComputed(account: string, payload: RedPacketJSONP
     let balance, isEmpty, isExpired, isClaimed, isRefunded, isCreator, parsedChainId
 
     if (chainId === ChainId.Kusama || chainId === ChainId.Polkadot) {
-        const {
-            expirationTime: end_time,
-            sender,
-            chainType,
-            returnBackTokenAmount,
-            remainingTokens,
-            claimedRedPackets,
-        } = availability
-
-        // balance = remaining_tokens.toString()
-        balance = remainingTokens
-        isEmpty = balance === '0'
-        isExpired = Date.now() > end_time
-        isClaimed = claimedRedPackets.filter((el: any) => isSameAddress(el.receiver, account)).length > 0
-        isClaimed = false
-        isRefunded = !!returnBackTokenAmount
-        isCreator = isSameAddress(sender ?? '', account)
-        if (chainType.toLowerCase() === 'dot') {
-            parsedChainId === ChainId.Polkadot
-        }
-        if (chainType.toLowerCase() === 'ksm') {
-            parsedChainId === ChainId.Kusama
+        const { claimedRedPackets, redPacket } = availability
+        console.log(`redPacket...`, redPacket)
+        if (redPacket) {
+            console.log(`inside redPacket`, redPacket)
+            const { expirationTime, sender, chainType, returnBackTokenAmount, remainingTokens } = redPacket
+            balance = remainingTokens
+            isEmpty = balance === '0'
+            isExpired = Date.now() > parseInt(expirationTime)
+            isClaimed = claimedRedPackets.filter((el: any) => isSameAddress(el.receiver, account)).length > 0
+            isRefunded = returnBackTokenAmount !== '0'
+            isCreator = isSameAddress(sender ?? '', account)
+            if (chainType.toLowerCase() === 'dot') {
+                parsedChainId = ChainId.Polkadot
+            }
+            if (chainType.toLowerCase() === 'ksm') {
+                parsedChainId = ChainId.Kusama
+            }
         }
     } else {
         const {
@@ -71,7 +66,6 @@ export function useAvailabilityComputed(account: string, payload: RedPacketJSONP
         isCreator = isSameAddress(payload?.sender.address ?? '', account)
         parsedChainId = resolveChainId(payload.network ?? '') ?? ChainId.Mainnet
     }
-
     return {
         ...asyncResult,
         value: { balance },

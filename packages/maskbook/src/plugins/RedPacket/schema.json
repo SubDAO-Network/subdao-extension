@@ -59,7 +59,7 @@
             "title": "duration"
         },
         "network": {
-            "enum": ["Mainnet"],
+            "enum": ["Mainnet", "SubDAO", "Polkadot", "Kusama"],
             "type": "string",
             "title": "network"
         },

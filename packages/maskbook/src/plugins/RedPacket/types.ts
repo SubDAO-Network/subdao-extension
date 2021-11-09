@@ -1,6 +1,7 @@
 import type { ERC20TokenRecord } from '../Wallet/database/types'
 import type { EthereumTokenType, EthereumNetwork } from '../../web3/types'
 import type { Transaction } from 'web3-core'
+import type { SubstrateNetwork } from '../../polkadot/constants'
 
 /**
  * @see https://github.com/DimensionDev/Tessercube-iOS/wiki/Red-Packet-Data-Dictionary
@@ -52,7 +53,7 @@ export interface RedPacketJSONPayload {
     end_time: number
     creation_time?: number
     duration?: number
-    network?: EthereumNetwork
+    network?: EthereumNetwork | SubstrateNetwork
     token_type: EthereumTokenType.Ether | EthereumTokenType.ERC20
     token?: Pick<ERC20TokenRecord, 'address' | 'name' | 'decimals' | 'symbol'>
 }

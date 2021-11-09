@@ -253,7 +253,9 @@ export function RedPacket(props: RedPacketProps) {
         )
 
     // the chain id is not available
-    if (!canFetch && payload.network) return <Typography>Not available on {resolveChainName(chainId)}.</Typography>
+    if (!canFetch && payload.network) {
+        return <Typography>Not available on {resolveChainName(chainId)}, please try again later.</Typography>
+    }
 
     return (
         <>

@@ -73,7 +73,7 @@ export function useCreateCallback(redPacketSettings: RedPacketSettings) {
                 tokenAmount: total,
                 redPacketNumber: shares.toString(),
                 password: Web3Utils.sha3(password)!,
-                ifRandom: isRandom,
+                ifRandom: isRandom ? '1' : '0',
             }
             return new Promise<void>(async (resolve, reject) => {
                 const info = await Services.Polkadot.createDotOrKsmRedPacket(params)
