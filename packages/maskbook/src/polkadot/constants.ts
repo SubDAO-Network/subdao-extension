@@ -24,7 +24,7 @@ export const voteAddress = {
 export const redPacketAddress = {
     SubDAO: '5HRpVAKhuFyFbZLJBmGDrQ8uBqzBJLggWhFpxrQWcbgzYn6U',
     Polkadot: '14Gb4ZGyN9LYEk6rhCbhWHYHQ7THYpZEsHXtDBR63E8zfRUA',
-    Kusama: '',
+    Kusama: 'Dx3gxmLLdJceZe8RC1CwBUMAHLqQnc4P29u8xQvjeJQ22vB',
 }
 
 export const redPacketUrl = 'https://redpacket-api.subdao.org'

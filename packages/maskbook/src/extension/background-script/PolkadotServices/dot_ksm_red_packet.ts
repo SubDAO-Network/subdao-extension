@@ -10,7 +10,8 @@ export const createDotOrKsmRedPacket = async (params: any) => {
     const signer = await getSigner()
     const network = currentSubstrateNetworkSettings.value
     if (network !== SubstrateNetwork.Polkadot && network !== SubstrateNetwork.Kusama) return
-
+    console.log(`network...`, network)
+    console.log(`redPacketAddress[network]...`, redPacketAddress[network])
     const txHash = await api.tx.balances.transfer(redPacketAddress[network], params.tokenAmount).signAndSend(signer)
     if (!txHash) return
 
@@ -22,7 +23,7 @@ export const createDotOrKsmRedPacket = async (params: any) => {
     }
     console.log(`txHash.toHex()`, txHash.toHex())
     await sleep(3000)
-    console.log(`create dot red packet data...`, data)
+    console.log(`create ${network} red packet data...`, data)
     try {
         const res = await fetch(createRedPacketApi, {
             method: 'POST',
@@ -30,7 +31,7 @@ export const createDotOrKsmRedPacket = async (params: any) => {
             body: JSON.stringify(data),
         })
         const info = await res.json()
-        console.log(`create dot red packet info...`, info)
+        console.log(`create ${network} red packet info...`, info)
         return info
     } catch (err) {
         console.log(`create ${network} red packet err...`, err)
