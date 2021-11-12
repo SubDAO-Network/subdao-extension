@@ -35,6 +35,7 @@ import { redPacketAddress } from '../../../polkadot/constants'
 import { useERC20TokensDetailedFromTokenLists } from '../../../polkadot/hooks/useERC20TokensDetailedFromTokenLists'
 import { ERC20_TOKEN_LISTS } from '../../../polkadot/constants'
 import { currentSubstrateNetworkSettings } from '../../../settings/settings'
+import { SubstrateNetwork } from '../../../polkadot/constants'
 
 const useStyles = makeStyles((theme) =>
     createStyles({
@@ -334,17 +335,20 @@ export function RedPacketForm(props: RedPacketFormProps) {
                 />
             </div>
             <SubdaoWalletConnectedBoundary>
-                <ActionButton className={classes.button} fullWidth onClick={createCallback}>
-                    {validationMessage || `Send ${formatBalance(totalAmount, token.decimals)} ${token.symbol}`}
-                </ActionButton>
-                {/* <SubERC20TokenApprovedBoundary
-                    amount={totalAmount.toFixed()}
-                    token={token as any}
-                    spender={HAPPY_RED_PACKET_ADDRESS}>
+                {network === SubstrateNetwork.Polkadot || network === SubstrateNetwork.Kusama ? (
                     <ActionButton className={classes.button} fullWidth onClick={createCallback}>
                         {validationMessage || `Send ${formatBalance(totalAmount, token.decimals)} ${token.symbol}`}
                     </ActionButton>
-                </SubERC20TokenApprovedBoundary> */}
+                ) : (
+                    <SubERC20TokenApprovedBoundary
+                        amount={totalAmount.toFixed()}
+                        token={token as any}
+                        spender={HAPPY_RED_PACKET_ADDRESS}>
+                        <ActionButton className={classes.button} fullWidth onClick={createCallback}>
+                            {validationMessage || `Send ${formatBalance(totalAmount, token.decimals)} ${token.symbol}`}
+                        </ActionButton>
+                    </SubERC20TokenApprovedBoundary>
+                )}
             </SubdaoWalletConnectedBoundary>
         </>
     )
