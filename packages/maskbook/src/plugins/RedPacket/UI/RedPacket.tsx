@@ -156,7 +156,6 @@ export function RedPacket(props: RedPacketProps) {
     tokenDetailed = chainId === ChainId.Kusama || chainId === ChainId.Polkadot ? networkNativeTokens[chainName] : value
 
     //#ednregion
-    console.log(`availabilityComputed...`, availabilityComputed)
     const { canFetch, canClaim, canRefund, listOfStatus } = availabilityComputed
 
     //#region remote controlled select provider dialog
@@ -235,7 +234,6 @@ export function RedPacket(props: RedPacketProps) {
         else if (canRefund) await refundCallback()
     }, [canClaim, canRefund, claimCallback, refundCallback])
 
-    console.log(`tokenDetailed...`, tokenDetailed)
     // the red packet can fetch without account
     if (!availability || !tokenDetailed)
         return (

@@ -30,9 +30,7 @@ export function useAvailabilityComputed(account: string, payload: RedPacketJSONP
 
     if (chainId === ChainId.Kusama || chainId === ChainId.Polkadot) {
         const { claimedRedPackets, redPacket } = availability
-        console.log(`redPacket...`, redPacket)
         if (redPacket) {
-            console.log(`inside redPacket`, redPacket)
             const { expirationTime, sender, chainType, returnBackTokenAmount, remainingTokens } = redPacket
             balance = remainingTokens
             isEmpty = balance === '0'
@@ -40,10 +38,10 @@ export function useAvailabilityComputed(account: string, payload: RedPacketJSONP
             isClaimed = claimedRedPackets.filter((el: any) => isSameAddress(el.receiver, account)).length > 0
             isRefunded = returnBackTokenAmount !== '0'
             isCreator = isSameAddress(sender ?? '', account)
-            if (chainType.toLowerCase() === 'dot') {
+            if (chainType?.toLowerCase() === 'dot') {
                 parsedChainId = ChainId.Polkadot
             }
-            if (chainType.toLowerCase() === 'ksm') {
+            if (chainType?.toLowerCase() === 'ksm') {
                 parsedChainId = ChainId.Kusama
             }
         }
