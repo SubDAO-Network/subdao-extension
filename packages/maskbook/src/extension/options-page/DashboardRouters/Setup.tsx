@@ -48,16 +48,31 @@ import { extendsTheme } from '../../../utils/theme'
 import { LogoIconURLs } from '../../../resources/logo'
 import { Image } from '../../../components/shared/Image'
 
+import TextInput from '../DashboardComponents/TextInput'
+import FooterLine from '../DashboardComponents/FooterLine'
+
 //#region setup form
 const useSetupFormStyles = makeStyles((theme) => {
     const dark = theme.palette.mode === 'dark'
     return createStyles({
+        root: {
+            width: '100vw',
+            height: '100vh',
+
+            [theme.breakpoints.up('md')]: {
+                display: 'grid',
+                gridTemplateColumns: '1fr [content-start] 1100px [content-end] 1fr',
+                gridTemplateRows: '32px [content-start] auto [content-end]',
+                placeItems: 'center',
+            },
+        },
         wrapper: {
-            flex: 1,
-            minHeight: '100vh',
+            gridRow: 'content-start / content-end',
+            gridColumn: 'content-start / content-end',
+            width: '100%',
+            height: '100%',
             display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
+            flexDirection: 'column',
         },
         wrapper2: {
             minHeight: '100vh',
@@ -80,21 +95,41 @@ const useSetupFormStyles = makeStyles((theme) => {
             margin: `${theme.typography.pxToRem(55)} ${theme.typography.pxToRem(80)}`,
         },
         imgContainer2: {
-            backgroundImage: 'linear-gradient(176deg, #DC0D88 0%, #738FF9 100%)',
-            padding: `${theme.typography.pxToRem(55)} ${theme.typography.pxToRem(80)}`,
-            borderRadius: '12px 0 0 12px',
+            paddingLeft: theme.typography.pxToRem(70),
+            paddingTop: theme.typography.pxToRem(24),
+            paddingBottom: theme.typography.pxToRem(24),
+            borderRadius: 10,
+            backgroundColor: dark ? '#20265C' : '#FFFFFF',
+            display: 'flex',
+            justifyContent: 'flex-start',
+            boxShadow: '0px 0px 10px 0px rgba(23, 23, 23, 0.1)',
+        },
+        logoText: {
+            marginLeft: 10,
+            lineHeight: '40px',
+            fontSize: '18px',
         },
         mainContainer: {
+            flex: 1,
+            marginTop: 20,
+            backgroundColor: dark ? '#20265C' : '#FFFFFF',
+            borderRadius: 10,
+            boxShadow: '0px 0px 10px 0px rgba(23, 23, 23, 0.1)',
+            overflowY: 'auto',
+            '& *::-webkit-scrollbar': {
+                display: 'none',
+            },
+        },
+        sectionContainer: {
+            margin: '0 auto',
+            height: '100%',
+            width: theme.typography.pxToRem(400),
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
         },
-        section: {
-            marginLeft: theme.typography.pxToRem(68),
-        },
-        section2: {
-            margin: `0 ${theme.typography.pxToRem(80)}`,
-        },
+        section: {},
+        section2: {},
         gridMain: {
             gridArea: 'main',
             margin: `0 ${theme.typography.pxToRem(80)}`,
@@ -103,9 +138,7 @@ const useSetupFormStyles = makeStyles((theme) => {
             gridArea: 'action',
             margin: `0 ${theme.typography.pxToRem(80)}`,
         },
-        section3: {
-            margin: `0 ${theme.typography.pxToRem(80)}`,
-        },
+        section3: {},
         primary: {
             fontWeight: 500,
             fontSize: 41,
@@ -127,8 +160,6 @@ const useSetupFormStyles = makeStyles((theme) => {
             },
         },
         form: {
-            width: 368,
-            minHeight: 200,
             [theme.breakpoints.down('sm')]: {
                 width: '100%',
             },
@@ -138,11 +169,6 @@ const useSetupFormStyles = makeStyles((theme) => {
             width: '60%',
             [theme.breakpoints.down('sm')]: {
                 width: '100%',
-            },
-        },
-        input: {
-            [`& fieldset`]: {
-                borderRadius: '23px',
             },
         },
         or: {
@@ -155,7 +181,6 @@ const useSetupFormStyles = makeStyles((theme) => {
         button: {
             width: 220,
             height: 40,
-            borderRadius: '23px',
             marginBottom: 20,
         },
         restoreButton: {
@@ -172,6 +197,10 @@ const useSetupFormStyles = makeStyles((theme) => {
             '&:hover': {
                 backgroundColor: green[700],
             },
+        },
+        footer: {
+            padding: `${theme.typography.pxToRem(20)} 0`,
+            marginTop: 6,
         },
     })
 })
@@ -190,7 +219,7 @@ function WelcomeWarp(props: SetupFormProps) {
             <div className={classNames(classes.wrapper2)}>
                 <div className={classNames(classes.bgi)}>
                     <div className={classes.imgContainer}>
-                        <Image src={LogoIconURLs.subdao.image} width={152} height={31} />
+                        <Image src={LogoIconURLs.subdao.image} width={40} height={40} />
                     </div>
                     <div className={classes.gridMain}>
                         <Typography className={classNames(classes.primary, classes.primary2)} variant="h5">
@@ -209,25 +238,33 @@ function SetupForm(props: SetupFormProps) {
     const classes = useStylesExtends(useSetupFormStyles(), props)
     return (
         <Fade in>
-            <div className={classes.wrapper}>
-                <div className={classes.imgContainer2}>
-                    <Image src={LogoIconURLs.subdao.image} width={152} height={31} />
-                </div>
-                <div className={classes.mainContainer}>
-                    <div className={classes.section}>
-                        <Typography className={classes.primary} variant="h5" color="textPrimary">
-                            {props.primary}
-                        </Typography>
-                        {props.secondary ? (
-                            <Typography className={classes.secondary} variant="body1" color="textPrimary">
-                                {props.secondary}
-                            </Typography>
-                        ) : null}
+            <div className={classes.root}>
+                <div className={classes.wrapper}>
+                    <div className={classes.imgContainer2}>
+                        <Image src={LogoIconURLs.subdao.image} width={40} height={40} />
+                        <span className={classes.logoText}>SubDAO</span>
                     </div>
-                    <div className={classes.section}>
-                        <form className={classes.form}>{props.content}</form>
+                    <div className={classes.mainContainer}>
+                        <div className={classes.sectionContainer}>
+                            <div className={classes.section}>
+                                <Typography className={classes.primary} variant="h5" color="textPrimary">
+                                    {props.primary}
+                                </Typography>
+                                {props.secondary ? (
+                                    <Typography className={classes.secondary} variant="body1" color="textPrimary">
+                                        {props.secondary}
+                                    </Typography>
+                                ) : null}
+                            </div>
+                            <div className={classes.section}>
+                                <form className={classes.form}>{props.content}</form>
+                            </div>
+                            <div className={classes.section}>{props.actions}</div>
+                        </div>
                     </div>
-                    <div className={classes.section}>{props.actions}</div>
+                    <footer className={classes.footer}>
+                        <FooterLine />
+                    </footer>
                 </div>
             </div>
         </Fade>
@@ -297,7 +334,8 @@ export function ConsentDataCollection() {
 const userCreatePersonaStyles = makeStyles((theme) =>
     createStyles({
         form: {
-            minHeight: 130,
+            marginRight: 0,
+            marginBottom: 20,
         },
     }),
 )
@@ -327,10 +365,9 @@ export function CreatePersona() {
             secondary={t('set_up_create_persona_hint')}
             content={
                 <>
-                    <TextField
+                    <TextInput
                         required
                         autoFocus
-                        className={setupFormClasses.input}
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         onKeyDown={(e) => {
@@ -351,6 +388,7 @@ export function CreatePersona() {
             actions={
                 <>
                     <ActionButton
+                        width="100%"
                         className={setupFormClasses.button}
                         variant="contained"
                         onClick={createPersonaAndNext}
@@ -358,11 +396,9 @@ export function CreatePersona() {
                         data-testid="next_button">
                         {t('set_up_button_next')}
                     </ActionButton>
-                    <Typography className={setupFormClasses.or} variant="body1">
-                        {t('set_up_tip_or')}
-                    </Typography>
                     <ActionButton<typeof Link>
-                        variant="text"
+                        disableRipple={true}
+                        width="100%"
                         component={Link}
                         to={SetupStep.RestoreDatabase}
                         data-testid="backup_button">
