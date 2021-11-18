@@ -6,6 +6,9 @@ const useStyles = makeStyles((theme: Theme) =>
         tab: {
             minWidth: 'unset',
         },
+        tabSelected: {
+            background: '#FFF3F9', // TODO dark mode [bridge]
+        },
         tabPanel: {
             marginTop: theme.spacing(3),
         },
@@ -42,6 +45,9 @@ export default function AbstractTab({ tabs, state, height = 200 }: AbstractTabPr
                     {tabs.map((tab) => (
                         <Tab
                             className={classes.tab}
+                            classes={{
+                                selected: classes.tabSelected,
+                            }}
                             label={tab.label}
                             key={tab.label}
                             data-testid={`${tab.id?.toLowerCase()}_tab`}
