@@ -48,6 +48,9 @@ const useStyles = makeStyles((theme) =>
             maxWidth: 360,
             backgroundColor: theme.palette.background.paper,
         },
+        card: {
+            boxShadow: '0px 0px 6px 4px rgba(239, 240, 246, 0.8)',
+        },
         title: {
             fontWeight: 'normal',
             lineHeight: '30px',
@@ -164,27 +167,25 @@ export default function DashboardSettingsRouter() {
                         <Typography className={classes.title} variant="h6" color="textPrimary">
                             {t('settings_title_general')}
                         </Typography>
-                        <Card elevation={0}>
+                        <Card elevation={0} className={classes.card}>
                             <List className={classes.list} disablePadding>
                                 <SettingsUIEnum
                                     classes={listStyle}
                                     enumObject={Language}
                                     getText={langMapper}
-                                    icon={<LanguageIcon />}
                                     value={languageSettings}
                                 />
                                 <SettingsUIEnum
                                     classes={listStyle}
                                     enumObject={Appearance}
                                     getText={appearanceMapper}
-                                    icon={<PaletteIcon />}
                                     value={appearanceSettings}
                                 />
                                 <SettingsUIEnum
                                     classes={listStyle}
                                     enumObject={SubstrateNetwork}
-                                    icon={<WifiIcon />}
                                     value={currentSubstrateNetworkSettings}
+                                    noneBorder={true}
                                 />
                             </List>
                         </Card>
@@ -195,22 +196,14 @@ export default function DashboardSettingsRouter() {
                             <Typography className={classes.title} variant="h6" color="textPrimary">
                                 {t('settings_title_advanced_options')}
                             </Typography>
-                            <Card elevation={0}>
+                            <Card elevation={0} className={classes.card}>
                                 <List className={classes.list} disablePadding>
+                                    <SettingsUI classes={listStyle} value={debugModeSetting} />
+                                    <SettingsUI classes={listStyle} value={allPostReplacementSettings} />
                                     <SettingsUI
                                         classes={listStyle}
-                                        icon={<MemoryOutlinedIcon />}
-                                        value={debugModeSetting}
-                                    />
-                                    <SettingsUI
-                                        classes={listStyle}
-                                        icon={<FlipToFrontIcon />}
-                                        value={allPostReplacementSettings}
-                                    />
-                                    <SettingsUI
-                                        classes={listStyle}
-                                        icon={<ShareIcon />}
                                         value={enableGroupSharingSettings}
+                                        noneBorder={true}
                                     />
                                 </List>
                             </Card>
@@ -221,21 +214,20 @@ export default function DashboardSettingsRouter() {
                         <Typography className={classes.title} variant="h6" color="textPrimary">
                             {t('settings_title_database_management')}
                         </Typography>
-                        <Card elevation={0}>
+                        <Card elevation={0} className={classes.card}>
                             <List className={classes.list} disablePadding>
                                 <SettingsUIDummy
                                     classes={listStyle}
-                                    icon={<UnarchiveOutlinedIcon />}
                                     primary={t('backup_database')}
                                     secondary={t('dashboard_backup_database_hint')}
                                     onClick={openBackupDialog}
                                 />
                                 <SettingsUIDummy
                                     classes={listStyle}
-                                    icon={<ArchiveOutlinedIcon />}
                                     primary={t('restore_database')}
                                     secondary={t('dashboard_import_database_hint')}
                                     onClick={openRestoreDialog}
+                                    noneBorder={true}
                                 />
                             </List>
                         </Card>
