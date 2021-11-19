@@ -1,5 +1,7 @@
 import React, { useEffect, useMemo } from 'react'
 import {
+    List,
+    ListItem,
     Box,
     Button,
     IconButton,
@@ -61,14 +63,27 @@ const useStyles = makeStyles((theme: Theme) => ({
     table: {},
     actionCell: {
         minWidth: '10rem',
+        flex: 2,
     },
     head: {
         backgroundColor: theme.palette.mode === 'light' ? theme.palette.common.white : 'var(--drawerBody)',
+        padding: `${theme.spacing(1.25)} ${theme.spacing(3.75)}`,
     },
     cell: {
-        paddingLeft: theme.spacing(2),
-        paddingRight: theme.spacing(1.5),
+        // paddingLeft: theme.spacing(2),
+        // paddingRight: theme.spacing(1.5),
         whiteSpace: 'nowrap',
+        borderBottom: 'none',
+        textAlign: 'left',
+        flex: 3,
+    },
+    row: {
+        display: 'flex',
+        borderRadius: 12,
+        background: 'rgba(241, 242, 248, 0.5)', // TODO dark mode color is 'rgba(255, 255, 255, 0.08)' [bridge]
+        border: '1px solid #E7EAF3', // TODO dark mode color is '#1F2452' [bridge]
+        padding: `${theme.spacing(3)} ${theme.spacing(3.75)}`,
+        marginBottom: 15,
     },
     record: {
         display: 'flex',
@@ -181,7 +196,7 @@ function ViewDetailed(props: ViewDetailedProps) {
         )
 
     return (
-        <TableRow className={classes.cell}>
+        <ListItem className={classes.row}>
             {[
                 <Box
                     onClick={onCopy}
@@ -202,9 +217,9 @@ function ViewDetailed(props: ViewDetailedProps) {
                 <Box
                     sx={{
                         display: 'flex',
-                        justifyContent: 'flex-end',
+                        justifyContent: 'flex-start',
                         flexDirection: 'column',
-                        textAlign: 'right',
+                        textAlign: 'left',
                         flex: 1,
                     }}>
                     {!isERC20 ? (
@@ -213,13 +228,14 @@ function ViewDetailed(props: ViewDetailedProps) {
                                 <FormatBalance
                                     value={balanceAll && balanceAll.freeBalance.add(balanceAll.reservedBalance)}
                                 />
-                                <IconButton color="inherit" size="small" onClick={togglePopupOpen}>
+                                {/* <IconButton color="inherit" size="small" onClick={togglePopupOpen}>
                                     {!isPopupOpen ? <ExpandMoreIcon /> : <ExpandLessIcon />}
-                                </IconButton>
+                                </IconButton> */}
                             </Typography>
-                            <Collapse in={isPopupOpen} timeout="auto" unmountOnExit>
+                            {/* <Collapse in={isPopupOpen} timeout="auto" unmountOnExit>
                                 {allItems}
-                            </Collapse>
+                            </Collapse> */}
+                            <Typography color="textSecondary">{allItems}</Typography>
                         </>
                     ) : (
                         <Typography className={classes.balanceName} color="textPrimary" component="span">
@@ -231,7 +247,7 @@ function ViewDetailed(props: ViewDetailedProps) {
                     className={classes.actionCell}
                     sx={{
                         display: 'flex',
-                        justifyContent: 'flex-end',
+                        justifyContent: 'flex-start',
                     }}>
                     {!isERC20 ? (
                         <Button
@@ -252,7 +268,15 @@ function ViewDetailed(props: ViewDetailedProps) {
                                 onClick={() => openTransferDialogOpen({ wallet, ...detailedToken, token })}>
                                 {t('wallet_transfer_title')}
                             </Button>
-                            <IconButton
+                            <Button
+                                className={classes.actionButton}
+                                startIcon={btnStartIcon}
+                                color="primary"
+                                disabled={btnDisabled}
+                                onClick={() => removeToken()}>
+                                {t('delete')}
+                            </Button>
+                            {/* <IconButton
                                 className={classes.more}
                                 size="small"
                                 onClick={(e) => {
@@ -260,7 +284,7 @@ function ViewDetailed(props: ViewDetailedProps) {
                                     openMenu(e)
                                 }}>
                                 <MoreHorizIcon />
-                            </IconButton>
+                            </IconButton> */}
                             {menu}
                         </>
                     )}
@@ -268,12 +292,12 @@ function ViewDetailed(props: ViewDetailedProps) {
             ]
                 .filter(Boolean)
                 .map((y, i) => (
-                    <TableCell className={classes.cell} key={i}>
+                    <Box className={classes.cell} key={i}>
                         {y}
-                    </TableCell>
+                    </Box>
                 ))}
             {transeferDialog}
-        </TableRow>
+        </ListItem>
     )
 }
 //#endregion
@@ -349,87 +373,79 @@ export function WalletAssetsTable(props: WalletAssetsTableProps) {
     return (
         <>
             <TableContainer className={classes.container}>
-                <Table className={classes.table} component="table" size="medium" stickyHeader>
-                    <TableHead className={classes.head}>
-                        <TableRow>
-                            {LABELS.map((x, i) => (
-                                <TableCell
-                                    className={classNames(classes.head, classes.cell)}
-                                    key={i}
-                                    align={i === 0 ? 'left' : 'right'}>
-                                    {x}
-                                </TableCell>
-                            ))}
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {detailedTokensLoading ? (
-                            new Array(3).fill(0).map((_, i) => (
-                                <TableRow className={classes.cell} key={i}>
-                                    <TableCell>
-                                        <Skeleton
-                                            animation="wave"
-                                            variant="rectangular"
-                                            width="100%"
-                                            height={30}></Skeleton>
-                                    </TableCell>
-                                    <TableCell>
-                                        <Skeleton
-                                            animation="wave"
-                                            variant="rectangular"
-                                            width="100%"
-                                            height={30}></Skeleton>
-                                    </TableCell>
-                                    <TableCell>
-                                        <Skeleton
-                                            animation="wave"
-                                            variant="rectangular"
-                                            width="100%"
-                                            height={30}></Skeleton>
-                                    </TableCell>
-                                    <TableCell>
-                                        <Skeleton
-                                            animation="wave"
-                                            variant="rectangular"
-                                            width="100%"
-                                            height={30}></Skeleton>
-                                    </TableCell>
-                                    <TableCell>
-                                        <Skeleton
-                                            animation="wave"
-                                            variant="rectangular"
-                                            width="100%"
-                                            height={30}></Skeleton>
-                                    </TableCell>
-                                </TableRow>
-                            ))
-                        ) : (
-                            <>
+                <List className={classes.table}>
+                    <ListItem className={classes.head}>
+                        {LABELS.map((x, i) => (
+                            <Box className={classes.cell} key={i}>
+                                {x}
+                            </Box>
+                        ))}
+                    </ListItem>
+                    {detailedTokensLoading ? (
+                        new Array(3).fill(0).map((_, i) => (
+                            <ListItem classes={{ root: classes.row }} key={i}>
+                                <Box>
+                                    <Skeleton
+                                        animation="wave"
+                                        variant="rectangular"
+                                        width="100%"
+                                        height={30}></Skeleton>
+                                </Box>
+                                <Box>
+                                    <Skeleton
+                                        animation="wave"
+                                        variant="rectangular"
+                                        width="100%"
+                                        height={30}></Skeleton>
+                                </Box>
+                                <Box>
+                                    <Skeleton
+                                        animation="wave"
+                                        variant="rectangular"
+                                        width="100%"
+                                        height={30}></Skeleton>
+                                </Box>
+                                <Box>
+                                    <Skeleton
+                                        animation="wave"
+                                        variant="rectangular"
+                                        width="100%"
+                                        height={30}></Skeleton>
+                                </Box>
+                                <Box>
+                                    <Skeleton
+                                        animation="wave"
+                                        variant="rectangular"
+                                        width="100%"
+                                        height={30}></Skeleton>
+                                </Box>
+                            </ListItem>
+                        ))
+                    ) : (
+                        <>
+                            <ViewDetailed
+                                address={address}
+                                balanceAll={balanceAll}
+                                key={address}
+                                detailedToken={detailedToken}
+                                token={token}
+                                wallet={wallet}
+                                transferState={transferState}
+                            />
+                            {erc20Tokens?.map((o, idx) => (
                                 <ViewDetailed
-                                    address={address}
-                                    balanceAll={balanceAll}
-                                    key={address}
-                                    detailedToken={detailedToken}
-                                    token={token}
-                                    wallet={wallet}
+                                    isERC20
+                                    key={idx}
+                                    token={o}
                                     transferState={transferState}
+                                    wallet={wallet}
                                 />
-                                {more &&
-                                    erc20Tokens?.map((o, idx) => (
-                                        <ViewDetailed
-                                            isERC20
-                                            key={idx}
-                                            token={o}
-                                            transferState={transferState}
-                                            wallet={wallet}
-                                        />
-                                    ))}
-                            </>
-                        )}
-                    </TableBody>
-                </Table>
+                            ))}
+                        </>
+                    )}
+                </List>
             </TableContainer>
-            {Boolean(erc20Tokens?.length) && (
+            {/* {Boolean(erc20Tokens?.length) && (
                 <div className={classes.lessButton}>
                     <IconButton
                         onClick={() => {
@@ -438,7 +454,7 @@ export function WalletAssetsTable(props: WalletAssetsTableProps) {
                         {more ? <ExpandLessIcon /> : <ExpandMoreIcon />}
                     </IconButton>
                 </div>
-            )}
+            )} */}
         </>
     )
 }
