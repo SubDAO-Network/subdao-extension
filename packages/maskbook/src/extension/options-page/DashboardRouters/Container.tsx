@@ -76,6 +76,10 @@ const useStyles = makeStyles((theme) => {
         },
         scroller: {
             height: '100%',
+            width: '100%',
+            position: 'absolute',
+            left: 0,
+            top: 0,
             scrollbarWidth: 'none',
             '&::-webkit-scrollbar': {
                 display: 'none',
@@ -121,8 +125,6 @@ const useStyles = makeStyles((theme) => {
             flex: 1,
         },
         content: {
-            display: 'flex',
-            flexDirection: 'column',
             flex: 1,
             position: 'relative',
             borderRadius: 10,
@@ -130,6 +132,9 @@ const useStyles = makeStyles((theme) => {
                 height: '100vh',
             },
             padding: `0 ${theme.typography.pxToRem(70)}`,
+            [theme.breakpoints.down('sm')]: {
+                padding: `0 ${theme.typography.pxToRem(20)}`,
+            },
         },
         contentPadded: {
             '& > *': {
@@ -221,7 +226,7 @@ export default function DashboardRouterContainer(props: DashboardRouterContainer
                         )}
                     </>
                 )}
-                <main className={classNames(classes.content)}>
+                <div className={classNames(classes.content)}>
                     <div className={classNames(classes.scroller, { [classes.scrollerCompact]: compact !== false })}>
                         {children}
                     </div>
@@ -235,7 +240,7 @@ export default function DashboardRouterContainer(props: DashboardRouterContainer
                             ) : null}
                         </div>
                     ) : null}
-                </main>
+                </div>
                 <div className={classes.floatButtonContainer}>
                     {Flags.has_native_nav_bar
                         ? floatingButtons?.map((floatingButton, index) => (
