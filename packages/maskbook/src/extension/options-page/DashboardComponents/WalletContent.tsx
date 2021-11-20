@@ -2,7 +2,7 @@ import { forwardRef, useCallback, useState } from 'react'
 import { Button, Box, IconButton, MenuItem, Tabs, Tab } from '@material-ui/core'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 import AddIcon from '@material-ui/icons/Add'
-import MoreVertOutlinedIcon from '@material-ui/icons/MoreVertOutlined'
+import MoreHorizOutlinedIcon from '@material-ui/icons/MoreHorizOutlined'
 import { useModal } from '../DashboardDialogs/Base'
 import {
     DashboardWalletHistoryDialog,
@@ -52,13 +52,24 @@ const useStyles = makeStyles((theme) =>
         },
         tabs: {},
         addButton: {
-            color: theme.palette.primary.main,
+            backgroundColor: '#5C5F85',
+            color: '#FFFFFF',
         },
         moreButton: {
-            color: theme.palette.text.primary,
+            backgroundColor: '#F79300',
+            color: '#FFFFFF',
+            marginLeft: 10,
+            height: 36,
+            width: 36,
+            marginTop: 6,
+            borderRadius: 8,
+            cursor: 'pointer',
         },
         assetsTable: {
             flex: 1,
+        },
+        menuItem: {
+            color: theme.palette.text.secondary,
         },
     }),
 )
@@ -89,7 +100,7 @@ export const WalletContent = forwardRef<HTMLDivElement, WalletContentProps>(func
         wallet._private_key_ || wallet.mnemonic.length ? (
             <MenuItem onClick={() => openWalletBackup({ wallet })}>{t('backup')}</MenuItem>
         ) : null,
-        <MenuItem onClick={() => openWalletDelete({ wallet })} className={color.error} data-testid="delete_button">
+        <MenuItem onClick={() => openWalletDelete({ wallet })} className={classes.menuItem} data-testid="delete_button">
             {t('delete')}
         </MenuItem>,
     ])
@@ -133,20 +144,32 @@ export const WalletContent = forwardRef<HTMLDivElement, WalletContentProps>(func
                     }}>
                     {!xsMatched && tabIndex === 0 ? (
                         <Button
-                            className={classes.addButton}
-                            variant="text"
+                            classes={{ root: classes.addButton }}
+                            variant="contained"
+                            size="medium"
                             onClick={() => openAddToken({ wallet })}
                             startIcon={<AddIcon />}>
                             {t('add_token')}
                         </Button>
                     ) : null}
-                    <IconButton
+                    {/* <Button
+                        classes={{root: classes.moreButton}}
+                        variant="contained"
+                        size="medium"
+                        onClick={openMenu}
+                        startIcon={<MoreHorizOutlinedIcon />}>
+                    </Button> */}
+                    <div onClick={openMenu}>
+                        <MoreHorizOutlinedIcon classes={{ root: classes.moreButton }} />
+                    </div>
+
+                    {/* <IconButton
                         className={classes.moreButton}
                         size="small"
                         onClick={openMenu}
                         data-testid="setting_icon">
-                        <MoreVertOutlinedIcon />
-                    </IconButton>
+                        <MoreHorizOutlinedIcon />
+                    </IconButton> */}
                 </Box>
             </Box>
 
