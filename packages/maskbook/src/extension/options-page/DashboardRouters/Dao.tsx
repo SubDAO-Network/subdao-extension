@@ -3,6 +3,7 @@ import DashboardRouterContainer, { ContainerLoading } from './Container'
 import { Link, useParams } from 'react-router-dom'
 import {
     Box,
+    Button,
     Divider,
     TextField,
     Tabs,
@@ -56,6 +57,14 @@ const useStyles = makeStyles((theme) =>
                 marginLeft: theme.spacing(-2),
                 marginRight: theme.spacing(-2),
             },
+        },
+        empty: {
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+        },
+        create: {
+            marginTop: 30,
         },
     }),
 )
@@ -308,15 +317,10 @@ export default function DashboardDaoRouter() {
     const isEmpty = items.length === 0
 
     return (
-        <DashboardRouterContainer navHeight={150} title={t('dao')} empty={!loading && items.length === 0}>
+        <DashboardRouterContainer navHeight={150} title={t('dao')}>
             <ContainerLoading loading={loading}>
                 <Typography className={classes.title} variant="body2">
                     {t('dao_in_org')}
-                </Typography>
-                <Typography className={classes.caption}>
-                    <a href={t('create_dao_href')} target="blank">
-                        {t('create_dao')}
-                    </a>
                 </Typography>
                 <section className={classes.list}>
                     <AutoResize>
@@ -340,6 +344,18 @@ export default function DashboardDaoRouter() {
                         )}
                     </AutoResize>
                 </section>
+                {!loading && isEmpty ? (
+                    <div className={classes.empty}>
+                        <img src={new URL('./dashboard-placeholder.png', import.meta.url).toString()}></img>
+                        <Button
+                            className={classes.create}
+                            size="medium"
+                            variant="contained"
+                            href={t('create_dao_href')}>
+                            {t('create_dao')}
+                        </Button>
+                    </div>
+                ) : null}
             </ContainerLoading>
         </DashboardRouterContainer>
     )
