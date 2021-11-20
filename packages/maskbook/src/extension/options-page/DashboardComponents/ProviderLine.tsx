@@ -1,4 +1,4 @@
-import { Typography, IconButton, Link } from '@material-ui/core'
+import { Typography, IconButton, Link, Button } from '@material-ui/core'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 import classNames from 'classnames'
 import { capitalize } from 'lodash-es'
@@ -45,6 +45,18 @@ const useStyles = makeStyles((theme) =>
         control: {
             marginBottom: theme.spacing(2),
         },
+        simpleControl: {},
+        simpleText: {
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+        },
+        simpleTitle: {
+            marginBottom: 0,
+        },
+        linkButton: {
+            backgroundColor: '#FFFFFF',
+        },
     }),
 )
 
@@ -62,7 +74,7 @@ export default function ProviderLine(props: ProviderLineProps) {
     // TODO: internal name should not be used to display
     const { internalName, network, connected, userId, onAction, border } = props
     const classes = useStyles({ border })
-    return (
+    return border ? (
         <div className={classes.control}>
             <Typography className={classes.title} variant="body2" color="textSecondary">
                 {capitalize(internalName)}
@@ -91,6 +103,32 @@ export default function ProviderLine(props: ProviderLineProps) {
                     <IconButton size="small">
                         <ArrowForwardIcon color="primary" />
                     </IconButton>
+                )}
+            </Typography>
+        </div>
+    ) : (
+        <div className={classes.simpleControl}>
+            <Typography
+                className={classNames(classes.title, classes.simpleTitle)}
+                variant="body2"
+                color="textSecondary">
+                {capitalize(internalName)}
+            </Typography>
+            <Typography
+                className={classNames(classes.simpleText)}
+                color="textPrimary"
+                variant="body1"
+                component="div"
+                data-testid={`connect_button_${network.toLowerCase()}`}>
+                {connected ? <span>{userId}</span> : <span>{`${t('connect_to')} ${network}`}</span>}
+                {connected ? (
+                    <Button className={classes.linkButton} variant="outlined" onClick={onAction}>
+                        {t('personas_disconnect')}
+                    </Button>
+                ) : (
+                    <Button className={classes.linkButton} variant="outlined" onClick={onAction}>
+                        {t('personas_connect')}
+                    </Button>
                 )}
             </Typography>
         </div>

@@ -143,6 +143,8 @@
     "person_or_group_in_list_0": "This is an empty group",
     "person_or_group_in_list_many": "{{people}}… {{count}} in total",
     "person_or_group_in_list_many_no_preview": "{{count}} in total",
+    "personas_disconnect": "Break Link",
+    "personas_connect": "Go",
     "personas": "Personas",
     "popup_missing_permission": "SubDAO is lacking permission to work.",
     "popup_request_permission": "Fix it",

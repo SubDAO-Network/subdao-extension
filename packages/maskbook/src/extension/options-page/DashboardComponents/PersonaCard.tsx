@@ -24,19 +24,25 @@ interface Props {
 const useStyles = makeStyles((theme) =>
     createStyles({
         card: {
-            width: 350,
-            flex: '0 0 auto',
-            marginRight: theme.spacing(6),
-            marginBottom: theme.spacing(5),
-            padding: theme.spacing(4, 3, 5, 3),
-            boxShadow:
-                theme.palette.mode === 'dark'
-                    ? 'none'
-                    : '0px 2px 4px rgba(96, 97, 112, 0.16), 0px 0px 1px rgba(40, 41, 61, 0.04)',
-
+            flex: 1,
+            height: 160,
+            '&:nth-child(2n)': {
+                marginLeft: theme.spacing(1.25),
+            },
+            '&:nth-child(2n-1)': {
+                marginRight: theme.spacing(1.25),
+            },
+            padding: '17px 7px 17px 20px',
+            background: '#F8F8FB',
+            borderRadius: 12,
+            border: '1px solid #E7EAF3',
+            boxShadow: 'none',
             [theme.breakpoints.down('sm')]: {
+                flex: 'none',
                 width: '100%',
-                marginRight: 0,
+                marginRight: '0 !important',
+                marginLeft: '0 !important',
+                marginBottom: 10,
             },
         },
         header: {

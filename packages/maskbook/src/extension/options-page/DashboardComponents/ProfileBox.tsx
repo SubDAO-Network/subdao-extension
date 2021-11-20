@@ -64,7 +64,9 @@ export default function ProfileBox({ persona, ProviderLineProps, border }: Profi
                 <ProviderLine
                     border={border ?? false}
                     key={index}
-                    onAction={() => (provider.connected ? onDisconnect(provider) : onConnect(provider))}
+                    onAction={() =>
+                        border ? (provider.connected ? onDisconnect(provider) : onConnect(provider)) : () => {}
+                    }
                     {...provider}
                     {...ProviderLineProps}></ProviderLine>
             ))}

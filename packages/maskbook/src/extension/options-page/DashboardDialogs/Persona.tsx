@@ -264,7 +264,6 @@ export function DashboardPersonaRenameDialog(props: WrappedDialogProps<PersonaPr
     return (
         <DashboardDialogCore fullScreen={false} {...props}>
             <DashboardDialogWrapper
-                size="small"
                 primary={t('persona_rename')}
                 content={
                     <TextField
