@@ -58,6 +58,7 @@ const useSetupFormStyles = makeStyles((theme) => {
         root: {
             width: '100vw',
             height: '100vh',
+            backgroundColor: dark ? '#141946' : '#F1F2F8',
 
             [theme.breakpoints.up('md')]: {
                 display: 'grid',

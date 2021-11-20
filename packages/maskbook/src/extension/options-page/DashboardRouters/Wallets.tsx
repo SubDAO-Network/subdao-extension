@@ -139,7 +139,7 @@ export default function DashboardWalletsRouter() {
                 title={t('my_wallets')}
                 actions={[
                     <EthereumStatusBar disableEther BoxProps={{ sx: { justifyContent: 'flex-end' } }} />,
-                    <Button variant="contained" onClick={openWalletCreate} data-testid="create_button">
+                    <Button variant="contained" onClick={openWalletCreate} data-testid="create_button" size="medium">
                         {t('plugin_wallet_on_create')}
                     </Button>,
                 ]}
