@@ -128,6 +128,9 @@ const useSetupFormStyles = makeStyles((theme) => {
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
+            '&:first-child': {
+                width: theme.typography.pxToRem(370),
+            },
         },
         section: {},
         section2: {},
@@ -464,32 +467,32 @@ export function ConnectNetwork() {
                     />
                 </>
             }
-            actions={
-                <>
-                    <ActionButton
-                        className={classes.button}
-                        variant="contained"
-                        disabled={persona?.linkedProfiles.size === 0}
-                        onClick={async () => {
-                            const [_, address] = await Promise.all([
-                                Services.Identity.setupPersona(persona.identifier),
-                                WalletRPC.importFirstWallet({
-                                    name: persona.nickname ?? t('untitled_wallet'),
-                                    mnemonic: persona.mnemonic?.words.split(' '),
-                                    passphrase: '',
-                                }),
-                            ])
-                            if (address) currentSelectedWalletAddressSettings.value = address
-                            await delay(300)
-                            history.replace(Flags.has_no_browser_tab_ui ? DashboardRoute.Nav : DashboardRoute.Personas)
-                        }}>
-                        {t('set_up_button_finish')}
-                    </ActionButton>
-                    <ActionButton color="inherit" variant="text" onClick={() => history.goBack()}>
-                        {t('set_up_button_cancel')}
-                    </ActionButton>
-                </>
-            }
+            // actions={
+            //     <>
+            //         <ActionButton
+            //             className={classes.button}
+            //             variant="contained"
+            //             disabled={persona?.linkedProfiles.size === 0}
+            //             onClick={async () => {
+            //                 const [_, address] = await Promise.all([
+            //                     Services.Identity.setupPersona(persona.identifier),
+            //                     WalletRPC.importFirstWallet({
+            //                         name: persona.nickname ?? t('untitled_wallet'),
+            //                         mnemonic: persona.mnemonic?.words.split(' '),
+            //                         passphrase: '',
+            //                     }),
+            //                 ])
+            //                 if (address) currentSelectedWalletAddressSettings.value = address
+            //                 await delay(300)
+            //                 history.replace(Flags.has_no_browser_tab_ui ? DashboardRoute.Nav : DashboardRoute.Personas)
+            //             }}>
+            //             {t('set_up_button_finish')}
+            //         </ActionButton>
+            //         <ActionButton color="inherit" variant="text" onClick={() => history.goBack()}>
+            //             {t('set_up_button_cancel')}
+            //         </ActionButton>
+            //     </>
+            // }
         />
     )
 }
@@ -1048,9 +1051,10 @@ const CurrentStep = () => {
 
 const Container = styled('div')(
     ({ theme }) => `
-    color: white;
+    color: 'white'
 `,
 )
+// color: ${theme.palette.mode === 'dark' ? 'white' : '#10164B'};
 
 export interface DashboardSetupRouterProps {}
 
