@@ -247,7 +247,6 @@ export function DashboardWalletTransferDialog(props: WrappedDialogProps<Transfer
         <DashboardDialogCore {...props}>
             <DashboardDialogWrapper
                 primary={t('wallet_transfer_title')}
-                icon={<SendIcon />}
                 iconColor="#4EE0BC"
                 size="medium"
                 content={<AbstractTab height={268} {...tabProps} />}

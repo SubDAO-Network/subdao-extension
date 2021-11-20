@@ -41,8 +41,6 @@ export function DashboardPersonaCreateDialog(props: WrappedDialogProps) {
     return (
         <DashboardDialogCore fullScreen={false} {...props}>
             <DashboardDialogWrapper
-                icon={<UserPlus />}
-                iconColor="#5FDD97"
                 primary={t('create_a_persona')}
                 secondary={' '}
                 content={

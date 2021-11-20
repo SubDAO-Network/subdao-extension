@@ -94,7 +94,6 @@ export function RestoreBox(props: RestoreBoxProps) {
                 classes={{ text: classes.buttonText }}
                 variant="text"
                 style={{ paddingLeft: entered || file ? 8 : 28 }}
-                startIcon={entered || file ? null : <AddBoxOutlinedIcon className={classes.icon} />}
                 onClick={(e: React.MouseEvent<HTMLButtonElement>) => e.preventDefault()}>
                 {entered ? enterText : file ? file.name : leaveText}
             </ActionButton>

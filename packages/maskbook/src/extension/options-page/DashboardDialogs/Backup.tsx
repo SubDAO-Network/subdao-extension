@@ -70,7 +70,6 @@ export function DashboardBackupDialog(props: WrappedDialogProps) {
         <DashboardDialogCore {...props}>
             <DashboardDialogWrapper
                 size="medium"
-                icon={<DatabaseIcon />}
                 iconColor="#699CF7"
                 primary={t('backup_database')}
                 secondary={t('dashboard_backup_database_hint')}
@@ -221,7 +220,6 @@ function SelectBackup({ onConfirm }: SelectBackupProps) {
     return (
         <DashboardDialogWrapper
             size="medium"
-            icon={<DatabaseIcon />}
             iconColor="#699CF7"
             primary={t('set_up_restore')}
             secondary={t('set_up_restore_hint')}
@@ -322,7 +320,6 @@ function ConfirmBackup({ restoreId, date, backup, onDone }: ConfirmBackupProps) 
     return (
         <DashboardDialogWrapper
             size="medium"
-            icon={<DatabaseIcon />}
             iconColor="#699CF7"
             primary={t('restore_database')}
             secondary={
