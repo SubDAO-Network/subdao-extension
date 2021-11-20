@@ -3,8 +3,8 @@ import { makeStyles, createStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import type { Persona } from '../../../database'
 import { MenuItem, Card, IconButton } from '@material-ui/core'
+import MoreHorizOutlinedIcon from '@material-ui/icons/MoreHorizOutlined'
 import Services from '../../service'
-import MoreVertIcon from '@material-ui/icons/MoreVert'
 import { useColorStyles } from '../../../utils/theme'
 import { useI18N } from '../../../utils/i18n-next-ui'
 import ProfileBox from './ProfileBox'
@@ -103,7 +103,7 @@ export default function PersonaCard({ persona }: Props) {
                         {persona.nickname}
                     </span>
                     <IconButton size="small" className={classes.menu} onClick={openMenu} data-testid="setting_icon">
-                        <MoreVertIcon />
+                        <MoreHorizOutlinedIcon />
                     </IconButton>
                     {menu}
                 </>
