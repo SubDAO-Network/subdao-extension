@@ -3,6 +3,9 @@ import classNames from 'classnames'
 
 const useStyles = makeStyles((theme) => ({
     root: {
+        '&:first-child': {
+            marginTop:  theme.spacing(1.25),
+        },
         '& label': {
             transform: 'translate(-0, -6px) scale(0.75) !important',
             textAlign: 'left',

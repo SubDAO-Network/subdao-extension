@@ -102,6 +102,7 @@ export function DashboardBackupDialog(props: WrappedDialogProps) {
                             )
                         ) : (
                             <ActionButton
+                                width="100%"
                                 loading={loading}
                                 disabled={loading || records.every((r) => !r.length)}
                                 variant="contained"
@@ -133,7 +134,12 @@ const useSelectBackupStyles = makeStyles((theme: Theme) =>
                 overflow: 'auto !important',
                 height: '100% !important',
             },
+            caretColor: '#D52473',
+            '&.focused': {
+                border: '2px solid rgba(213, 17, 114, 0.2)',
+            },
         },
+
         button: {
             marginTop: theme.spacing(3),
         },
@@ -240,6 +246,7 @@ function SelectBackup({ onConfirm }: SelectBackupProps) {
                         <AbstractTab {...tabProps}></AbstractTab>
                     </Box>
                     <ActionButton
+                        width="100%"
                         className={selectBackupClasses.button}
                         variant="contained"
                         disabled={

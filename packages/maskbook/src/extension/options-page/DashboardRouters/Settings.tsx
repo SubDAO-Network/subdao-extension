@@ -55,15 +55,18 @@ const useStyles = makeStyles((theme) =>
         title: {
             fontWeight: 'normal',
             lineHeight: '30px',
-            marginBottom: theme.spacing(1.5),
+            marginBottom: theme.spacing(2.5),
             [theme.breakpoints.down('sm')]: {
                 marginBottom: 0,
             },
+            '&:first-child': {
+                marginTop: 20,
+            },
         },
         section: {
-            padding: '26px 40px',
-            margin: theme.spacing(3, 0),
+            marginBottom: theme.spacing(4),
             backgroundColor: 'transparent',
+            boxShadow: 'none',
             [theme.breakpoints.down('sm')]: {
                 padding: theme.spacing(2),
             },

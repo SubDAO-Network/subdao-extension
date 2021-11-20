@@ -1,7 +1,7 @@
 import { useCopyToClipboard } from 'react-use'
 import { useState, useCallback, useEffect } from 'react'
 import { CreditCard as CreditCardIcon } from 'react-feather'
-import { TextField, makeStyles, createStyles, FormControlLabel, Checkbox, Theme } from '@material-ui/core'
+import { TextField, makeStyles, createStyles, FormControlLabel, Checkbox, Theme, Typography } from '@material-ui/core'
 import FileCopyIcon from '@material-ui/icons/FileCopy'
 import IconButton from '@material-ui/core/IconButton'
 import { mnemonicValidate } from '@polkadot/util-crypto'
@@ -11,6 +11,7 @@ import { DashboardDialogCore, DashboardDialogWrapper, WrappedDialogProps, useSna
 import { DebounceButton } from '../../DashboardComponents/ActionButton'
 import AbstractTab, { AbstractTabProps } from '../../DashboardComponents/AbstractTab'
 import ShowcaseBox from '../../DashboardComponents/ShowcaseBox'
+import TextInput from '../../DashboardComponents/TextInput'
 import { checkInputLengthExceed } from '../../../../utils/utils'
 import { WALLET_OR_PERSONA_NAME_MAX_LEN } from '../../../../utils/constants'
 
@@ -65,14 +66,31 @@ const useWalletCreateDialogStyle = makeStyles((theme: Theme) =>
             marginBottom: theme.spacing(1),
         },
         mnemonic: {
-            display: 'flex',
-            alignItems: 'center',
+            position: 'relative',
         },
         iconCopy: {
-            marginLeft: theme.spacing(1),
+            position: 'absolute',
+            right: 6,
+            bottom: 6,
         },
         section: {
             textAlign: 'left',
+        },
+        address: {
+            padding: theme.spacing(1.25),
+            backgroundColor: '#F7F8FB',
+            marginBottom: 20,
+            borderRadius: 4,
+            fontSize: '14px',
+        },
+        addressTittle: {
+            fontSize: '14px',
+            color: theme.palette.text.secondary,
+            marginBottom: 6,
+        },
+        input: {
+            backgroundColor: '#F7F8FB',
+            fontSize: '14px',
         },
     }),
 )
@@ -137,7 +155,7 @@ export function WalletCreateDialog(props: WrappedDialogProps<object>) {
 
     const f = (
         <>
-            <TextField
+            <TextInput
                 helperText={
                     checkInputLengthExceed(name)
                         ? t('input_length_exceed_prompt', {
@@ -153,10 +171,14 @@ export function WalletCreateDialog(props: WrappedDialogProps<object>) {
                 onChange={(e) => setName(e.target.value)}
                 variant="outlined"
             />
-            <FormControlLabel
-                control={<Checkbox checked={checkSave} onChange={onCheckboxChange} name="checksave" color="primary" />}
-                label={t('mnemonic_saved')}
-            />
+            <div>
+                <FormControlLabel
+                    control={
+                        <Checkbox checked={checkSave} onChange={onCheckboxChange} name="checksave" color="primary" />
+                    }
+                    label={t('mnemonic_saved')}
+                />
+            </div>
         </>
     )
 
@@ -167,7 +189,8 @@ export function WalletCreateDialog(props: WrappedDialogProps<object>) {
                 children: (
                     <>
                         <div className={classes.mnemonic}>
-                            <TextField
+                            <TextInput
+                                className={classes.input}
                                 required
                                 label={t('mnemonic_words')}
                                 value={seed}
@@ -192,7 +215,8 @@ export function WalletCreateDialog(props: WrappedDialogProps<object>) {
                 label: t('private_key'),
                 children: (
                     <div>
-                        <TextField
+                        <TextInput
+                            disabled
                             required
                             label={t('private_key')}
                             value={seed}
@@ -208,13 +232,14 @@ export function WalletCreateDialog(props: WrappedDialogProps<object>) {
             },
         ],
         state,
-        height: 200,
+        // height: 200,
     }
 
     const content = (
         <>
             <section className={classes.section}>
-                <ShowcaseBox title={t('wallet_address')}>{address}</ShowcaseBox>
+                <Typography className={classes.addressTittle}>{t('wallet_address')}</Typography>
+                <Typography className={classes.address}>{address}</Typography>
             </section>
             <AbstractTab {...tabProps} />
         </>
@@ -257,8 +282,6 @@ export function WalletCreateDialog(props: WrappedDialogProps<object>) {
     return (
         <DashboardDialogCore {...props}>
             <DashboardDialogWrapper
-                icon={<CreditCardIcon />}
-                iconColor="#4EE0BC"
                 primary={t('plugin_wallet_on_create')}
                 size="large"
                 content={content}

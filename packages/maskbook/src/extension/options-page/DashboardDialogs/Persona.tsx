@@ -24,6 +24,7 @@ import { RestoreFromQRCodeImageBox } from '../DashboardComponents/RestoreFromQRC
 import { RestoreFromQRCodeCameraBox } from '../DashboardComponents/RestoreFromQRCodeCameraBox'
 import { SetupStep } from '../SetupStep'
 import { useMyPersonas } from '../../../components/DataSource/useMyPersonas'
+import TextInput from '../DashboardComponents/TextInput'
 
 //#region persona create dialog
 export function DashboardPersonaCreateDialog(props: WrappedDialogProps) {
@@ -58,7 +59,7 @@ export function DashboardPersonaCreateDialog(props: WrappedDialogProps) {
                                 style={{ marginBottom: 20 }}
                                 autoFocus
                                 required
-                                label={t('name')}
+                                lable={t('name')}
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
                                 onKeyDown={(e) => {
@@ -124,7 +125,7 @@ export function DashboardImportPersonaDialog(props: WrappedDialogProps) {
                 label: t('mnemonic_words'),
                 children: (
                     <>
-                        <TextField
+                        <TextInput
                             onChange={(e) => setNickname(e.target.value)}
                             value={nickname}
                             autoFocus
@@ -135,7 +136,7 @@ export function DashboardImportPersonaDialog(props: WrappedDialogProps) {
                             }}
                             variant="outlined"
                         />
-                        <TextField
+                        <TextInput
                             value={mnemonicWordsValue}
                             onChange={(e) => setMnemonicWordsValue(e.target.value)}
                             required
@@ -145,7 +146,7 @@ export function DashboardImportPersonaDialog(props: WrappedDialogProps) {
                             }}
                             variant="outlined"
                         />
-                        <TextField
+                        <TextInput
                             onChange={(e) => setPassword(e.target.value)}
                             value={password}
                             label={t('password')}
@@ -206,12 +207,10 @@ export function DashboardImportPersonaDialog(props: WrappedDialogProps) {
             },
         ],
         state,
-        height: 176,
     }
     return (
         <DashboardDialogCore {...props}>
             <DashboardDialogWrapper
-                icon={<UserCheck />}
                 iconColor="#5FDD97"
                 primary={t('import_your_persona')}
                 secondary={t('dashboard_persona_import_dialog_hint')}
