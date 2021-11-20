@@ -29,15 +29,21 @@ import WalletLine from '../WalletLine'
 import { isETH, isSameAddress } from '../../../../web3/helpers'
 import { useAccount } from '../../../../web3/hooks/useAccount'
 import { WalletRPC } from '../../../../plugins/Wallet/messages'
+import TextInput from '../../DashboardComponents/TextInput'
 
 //#region predefined token selector
 const useERC20PredefinedTokenSelectorStyles = makeStyles((theme) =>
     createStyles({
         list: {
-            scrollbarWidth: 'none',
-            '&::-webkit-scrollbar': {
-                display: 'none',
-            },
+            // scrollbarWidth: 'none',
+            // '&::-webkit-scrollbar': {
+            //     display: 'none',
+            // },
+            backgroundColor: '#F4F4FA',
+            borderRadius: 12,
+        },
+        content: {
+            paddingTop: theme.spacing(1),
         },
         search: {
             marginBottom: theme.spacing(1),
@@ -428,10 +434,11 @@ export function ERC20PredefinedTokenSelector(props: ERC20PredefinedTokenSelector
 
     return (
         <Box
+            className={classes.content}
             sx={{
                 textAlign: 'left',
             }}>
-            <TextField
+            <TextInput
                 className={classes.search}
                 label={t('add_token_search_hint')}
                 autoFocus
@@ -471,7 +478,6 @@ export function DashboardWalletAddERC20TokenDialog(props: WrappedDialogProps<Wal
     return (
         <DashboardDialogCore {...props}>
             <DashboardDialogWrapper
-                icon={<HexagonIcon />}
                 iconColor="#699CF7"
                 primary={t('add_token')}
                 content={
