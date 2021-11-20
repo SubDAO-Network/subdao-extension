@@ -50,6 +50,7 @@ const useStyles = makeStyles((theme) =>
         },
         card: {
             boxShadow: '0px 0px 6px 4px rgba(239, 240, 246, 0.8)',
+            backgroundColor: 'transparent',
         },
         title: {
             fontWeight: 'normal',
@@ -62,6 +63,7 @@ const useStyles = makeStyles((theme) =>
         section: {
             padding: '26px 40px',
             margin: theme.spacing(3, 0),
+            backgroundColor: 'transparent',
             [theme.breakpoints.down('sm')]: {
                 padding: theme.spacing(2),
             },
@@ -80,6 +82,10 @@ const useStyles = makeStyles((theme) =>
             paddingBottom: theme.spacing(1.5),
             borderBottom: `1px solid ${theme.palette.divider}`,
         },
+        ListItemRootWithoutBorder: {
+            paddingTop: theme.spacing(1.5),
+            paddingBottom: theme.spacing(1.5),
+        },
         listItemIcon: {
             color: theme.palette.text.primary,
             justifyContent: 'flex-start',
@@ -88,6 +94,13 @@ const useStyles = makeStyles((theme) =>
             marginRight: theme.spacing(3),
             [theme.breakpoints.down('sm')]: {
                 display: 'none',
+            },
+        },
+        selectRoot: {
+            backgroundColor: '#D51172',
+            color: '#fff',
+            '&:focus': {
+                backgroundColor: '#D51172',
             },
         },
     }),
@@ -148,8 +161,6 @@ export default function DashboardSettingsRouter() {
     }).current
 
     const classes = useStyles()
-    const theme = useTheme()
-    const elevation = theme.palette.mode === 'dark' ? 1 : 0
 
     const [backupDialog, openBackupDialog] = useModal(DashboardBackupDialog)
     const [restoreDialog, openRestoreDialog] = useModal(DashboardRestoreDialog)
@@ -159,17 +170,29 @@ export default function DashboardSettingsRouter() {
         listItemRoot: classes.listItemRoot,
         listItemIcon: classes.listItemIcon,
     }
+    const listStyleWithoutBorder = {
+        secondaryAction: classes.secondaryAction,
+        listItemRoot: classes.ListItemRootWithoutBorder,
+        listItemIcon: classes.listItemIcon,
+    }
+
     return (
         <DashboardRouterContainer title={t('settings')}>
             <ThemeProvider theme={settingsTheme}>
                 <div className="wrapper">
-                    <Paper component="section" className={classes.section} elevation={elevation}>
+                    <Paper component="section" className={classes.section}>
                         <Typography className={classes.title} variant="h6" color="textPrimary">
                             {t('settings_title_general')}
                         </Typography>
                         <Card elevation={0} className={classes.card}>
                             <List className={classes.list} disablePadding>
                                 <SettingsUIEnum
+                                    SelectProps={{
+                                        classes: {
+                                            root: classes.selectRoot,
+                                            select: classes.selectRoot,
+                                        },
+                                    }}
                                     classes={listStyle}
                                     enumObject={Language}
                                     getText={langMapper}
@@ -182,17 +205,16 @@ export default function DashboardSettingsRouter() {
                                     value={appearanceSettings}
                                 />
                                 <SettingsUIEnum
-                                    classes={listStyle}
+                                    classes={listStyleWithoutBorder}
                                     enumObject={SubstrateNetwork}
                                     value={currentSubstrateNetworkSettings}
-                                    noneBorder={true}
                                 />
                             </List>
                         </Card>
                     </Paper>
 
                     {Flags.support_settings_advanced_options ? (
-                        <Paper component="section" className={classes.section} elevation={elevation}>
+                        <Paper component="section" className={classes.section}>
                             <Typography className={classes.title} variant="h6" color="textPrimary">
                                 {t('settings_title_advanced_options')}
                             </Typography>
@@ -200,17 +222,13 @@ export default function DashboardSettingsRouter() {
                                 <List className={classes.list} disablePadding>
                                     <SettingsUI classes={listStyle} value={debugModeSetting} />
                                     <SettingsUI classes={listStyle} value={allPostReplacementSettings} />
-                                    <SettingsUI
-                                        classes={listStyle}
-                                        value={enableGroupSharingSettings}
-                                        noneBorder={true}
-                                    />
+                                    <SettingsUI classes={listStyleWithoutBorder} value={enableGroupSharingSettings} />
                                 </List>
                             </Card>
                         </Paper>
                     ) : null}
 
-                    <Paper component="section" className={classes.section} elevation={elevation}>
+                    <Paper component="section" className={classes.section}>
                         <Typography className={classes.title} variant="h6" color="textPrimary">
                             {t('settings_title_database_management')}
                         </Typography>
@@ -223,11 +241,10 @@ export default function DashboardSettingsRouter() {
                                     onClick={openBackupDialog}
                                 />
                                 <SettingsUIDummy
-                                    classes={listStyle}
+                                    classes={listStyleWithoutBorder}
                                     primary={t('restore_database')}
                                     secondary={t('dashboard_import_database_hint')}
                                     onClick={openRestoreDialog}
-                                    noneBorder={true}
                                 />
                             </List>
                         </Card>
