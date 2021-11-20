@@ -50,13 +50,14 @@ const FAB_COLORS: PropTypes.Color[] = ['primary', 'secondary', 'default']
 const useStyles = makeStyles((theme) => {
     return createStyles<string, { isSetup: boolean; navHeight: number }>({
         wrapper: {
-            flex: 1,
             width: '100%',
             height: '100%',
-            [theme.breakpoints.up('sm')]: {
-                display: Flags.has_native_nav_bar ? 'inline' : 'grid',
-                gridTemplateRows: (props) => (props.isSetup ? '1fr' : '[titleAction] 0fr [divider] 0fr [content] auto'),
-            },
+            display: 'flex',
+            flexDirection: 'column'
+            // [theme.breakpoints.up('sm')]: {
+            //     display: Flags.has_native_nav_bar ? 'inline' : 'grid',
+            //     gridTemplateRows: (props) => (props.isSetup ? '1fr' : '[titleAction] 0fr [divider] 0fr [content] auto'),
+            // },
         },
         placeholder: {
             top: (props) => theme.typography.pxToRem(props.navHeight),
@@ -93,7 +94,7 @@ const useStyles = makeStyles((theme) => {
             justifyContent: 'space-between',
             alignItems: 'center',
             height: 110,
-            padding: theme.spacing(4, 3),
+            padding: `${theme.spacing(7.5)} 70px ${theme.spacing(4)} 70px`,
         },
         titleContent: {
             color: theme.palette.text.primary,
@@ -124,17 +125,17 @@ const useStyles = makeStyles((theme) => {
         content: {
             display: 'flex',
             flexDirection: 'column',
-            overflow: 'hidden',
+            flex: 1,
             position: 'relative',
+            borderRadius: 10,
             [theme.breakpoints.down('sm')]: {
                 height: '100vh',
             },
+            padding: `0 ${theme.typography.pxToRem(70)}`
         },
         contentPadded: {
             '& > *': {
                 overflow: 'auto',
-                display: 'flex',
-                flexDirection: 'column',
                 padding: theme.spacing(0, 3),
                 scrollbarWidth: 'none',
                 '&::-webkit-scrollbar': {

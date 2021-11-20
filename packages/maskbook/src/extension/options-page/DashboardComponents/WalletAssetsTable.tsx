@@ -19,6 +19,7 @@ import {
     MenuItem,
     Typography,
 } from '@material-ui/core'
+import { createStyles } from '@material-ui/core/styles'
 import { useCopyToClipboard } from 'react-use'
 import classNames from 'classnames'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
@@ -53,69 +54,72 @@ import { useSnackbarCallback } from '../DashboardDialogs/Base'
 const circleIcon = <CircularProgress color="inherit" size={12} />
 const sendIcon = <SendIcon size={12} />
 
-const useStyles = makeStyles((theme: Theme) => ({
-    container: {
-        '&::-webkit-scrollbar': {
-            display: 'none',
+const useStyles = makeStyles((theme: Theme) => {
+    const dark = theme.palette.mode == 'dark'
+    return createStyles({
+        container: {
+            '&::-webkit-scrollbar': {
+                display: 'none',
+            },
+            padding: theme.spacing(0),
         },
-        padding: theme.spacing(0),
-    },
-    table: {},
-    actionCell: {
-        minWidth: '10rem',
-        flex: 2,
-    },
-    head: {
-        backgroundColor: theme.palette.mode === 'light' ? theme.palette.common.white : 'var(--drawerBody)',
-        padding: `${theme.spacing(1.25)} ${theme.spacing(3.75)}`,
-    },
-    cell: {
-        // paddingLeft: theme.spacing(2),
-        // paddingRight: theme.spacing(1.5),
-        whiteSpace: 'nowrap',
-        borderBottom: 'none',
-        textAlign: 'left',
-        flex: 3,
-    },
-    row: {
-        display: 'flex',
-        borderRadius: 12,
-        background: 'rgba(241, 242, 248, 0.5)', // TODO dark mode color is 'rgba(255, 255, 255, 0.08)' [bridge]
-        border: '1px solid #E7EAF3', // TODO dark mode color is '#1F2452' [bridge]
-        padding: `${theme.spacing(3)} ${theme.spacing(3.75)}`,
-        marginBottom: 15,
-    },
-    record: {
-        display: 'flex',
-    },
-    coin: {
-        width: 24,
-        height: 24,
-    },
-    name: {
-        marginLeft: theme.spacing(1),
-    },
-    balanceMore: {
-        marginLeft: theme.spacing(0.5),
-    },
-    balanceName: {
-        minWidth: '15rem',
-    },
-    actionButton: {
-        '&:hover': {
-            backgroundColor: theme.palette.primary.main,
-            color: 'white',
+        table: {},
+        actionCell: {
+            minWidth: '10rem',
+            flex: 2,
         },
-    },
-    more: {
-        color: theme.palette.text.primary,
-    },
-    lessButton: {
-        display: 'flex',
-        justifyContent: 'center',
-        marginTop: theme.spacing(1),
-    },
-}))
+        head: {
+            backgroundColor: theme.palette.mode === 'light' ? theme.palette.common.white : 'var(--drawerBody)',
+            padding: `${theme.spacing(1.25)} ${theme.spacing(3.75)}`,
+        },
+        cell: {
+            // paddingLeft: theme.spacing(2),
+            // paddingRight: theme.spacing(1.5),
+            whiteSpace: 'nowrap',
+            borderBottom: 'none',
+            textAlign: 'left',
+            flex: 3,
+        },
+        row: {
+            display: 'flex',
+            borderRadius: 12,
+            background: dark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(241, 242, 248, 0.5)',
+            border: `1px solid ${dark ? '#1F2452' : '#E7EAF3'}`,
+            padding: `${theme.spacing(3)} ${theme.spacing(3.75)}`,
+            marginBottom: 15,
+        },
+        record: {
+            display: 'flex',
+        },
+        coin: {
+            width: 24,
+            height: 24,
+        },
+        name: {
+            marginLeft: theme.spacing(1),
+        },
+        balanceMore: {
+            marginLeft: theme.spacing(0.5),
+        },
+        balanceName: {
+            minWidth: '15rem',
+        },
+        actionButton: {
+            '&:hover': {
+                backgroundColor: theme.palette.primary.main,
+                color: 'white',
+            },
+        },
+        more: {
+            color: theme.palette.text.primary,
+        },
+        lessButton: {
+            display: 'flex',
+            justifyContent: 'center',
+            marginTop: theme.spacing(1),
+        },
+    })
+})
 
 //#region view detailed
 interface ViewDetailedProps extends withClasses<KeysInferFromUseStyles<typeof useStyles>> {
@@ -211,7 +215,10 @@ function ViewDetailed(props: ViewDetailedProps) {
                             4,
                         )})`}</Typography>
                     ) : (
-                        <Typography className={classes.name}>{tokenName}</Typography>
+                        <Typography className={classes.name}>
+                            {tokenName}
+                            {formatPolkadotAddress(address, 4)}
+                        </Typography>
                     )}
                 </Box>,
                 <Box
