@@ -72,6 +72,10 @@ const base: ThemeOptions = {
 const lightThemePatch: Partial<ThemeOptions> = {
     palette: {
         mode: 'light',
+        text: {
+            primary: '#10164B',
+            secondary: 'rgba(16, 22, 75, 0.6)',
+        },
     },
 }
 
@@ -80,6 +84,10 @@ const darkThemePatch: Partial<ThemeOptions> = {
         mode: 'dark',
         background: {
             paper: grey[900],
+        },
+        text: {
+            primary: '#F0F2FF',
+            secondary: '#DADEFA',
         },
     },
 }
