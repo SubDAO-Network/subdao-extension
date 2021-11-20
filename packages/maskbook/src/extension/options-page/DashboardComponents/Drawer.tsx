@@ -1,7 +1,7 @@
 import { Fragment } from 'react'
 import classNames from 'classnames'
 import { List, ListItem, ListItemIcon, ListItemText, Typography, Box, Divider } from '@material-ui/core'
-import { makeStyles, ThemeProvider } from '@material-ui/core/styles'
+import { createStyles, makeStyles, ThemeProvider } from '@material-ui/core/styles'
 import { Link, useRouteMatch } from 'react-router-dom'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import { TelegramIcon } from '@subdao/icons'
@@ -13,33 +13,43 @@ import { makeNewBugIssueURL } from '../../debug-page/issue'
 import { useMatchXS } from '../../../utils/hooks/useMatchXS'
 import { extendsTheme } from '../../../utils/theme'
 import { LogoIconURLs } from '../../../resources/logo'
+import { IconsURLs } from '../../../resources/icons'
 import { Image } from '../../../components/shared/Image'
 
-const activeColor = '#27F6EB'
+const activeColor = '#D51172'
 
 const useStyles = makeStyles((theme) => ({
     drawer: {
-        height: '100%',
-        display: 'grid',
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'space-between',
         gridTemplateRows: '[drawerHeader] 0fr [drawerList] auto [drawerFooter] 0fr',
-        color: 'white',
+        color: '#10164B',
         overflow: 'visible',
         position: 'relative',
         [theme.breakpoints.down('sm')]: {
             color: theme.palette.text.primary,
             width: '100%',
         },
+        backgroundColor: 'var(--drawerHeader)',
+        padding: `${theme.typography.pxToRem(16)} ${theme.typography.pxToRem(70)}`,
+        borderRadius: 10,
     },
     drawerHeader: {
-        color: 'white',
-        padding: theme.spacing(5.5, 10, 4, 4),
-        backgroundColor: 'var(--drawerHeader)',
+        display: 'flex',
+        marginTop: 8,
+    },
+    drawerHeaderText: {
+        marginLeft: 10,
+        lineHeight: '40px',
     },
     drawerBody: {
-        backgroundColor: 'var(--drawerBody)',
+        display: 'flex',
+        flexDirection: 'row',
     },
     drawerList: {
         padding: 0,
+        display: 'flex',
     },
     drawerItem: {
         borderLeft: 'solid 5px var(--drawerBody)',
@@ -48,6 +58,10 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.down('sm')]: {
             borderLeft: 'none',
             padding: theme.spacing(3, 0),
+        },
+        '&.Mui-selected': {
+            backgroundColor: 'transparent',
+            color: '#D51172',
         },
     },
     drawerItemIcon: {
@@ -72,6 +86,8 @@ const useStyles = makeStyles((theme) => ({
     },
     drawerFeedback: {
         borderLeft: 'none',
+        color: '#9094AF',
+        marginLeft: 90,
     },
     slogan: {
         color: theme.palette.mode === 'light' ? '#A1C1FA' : '#3B3B3B',
@@ -167,16 +183,11 @@ export default function Drawer(props: DrawerProps) {
                         onClick={onDebugPage}
                         className={classes.drawerHeader}
                         style={{ backgroundColor: `var(--drawerBody)` }}>
-                        <Image src={LogoIconURLs.subdao.image} width={136} height={27.736842105} />
+                        <Image src={LogoIconURLs.subdao.image} width={40} height={40} />
+                        <span className={classes.drawerHeaderText}>SubDAO</span>
                     </Box>
                 )}
-                <Box
-                    className={classes.drawerBody}
-                    sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'space-between',
-                    }}>
+                <Box className={classes.drawerBody}>
                     {forSetupPurpose ? null : (
                         <>
                             <List className={classes.drawerList}>
@@ -188,24 +199,13 @@ export default function Drawer(props: DrawerProps) {
                                             component={Link}
                                             to={item[1]}
                                             button>
-                                            <ListItemIcon
-                                                className={classNames(
-                                                    classes.drawerItemIcon,
-                                                    menusClasses[index].className,
-                                                )}
-                                                children={item[2]}></ListItemIcon>
                                             <ListItemText
                                                 className={classes.drawerItemText}
                                                 primary={item[0]}
                                                 primaryTypographyProps={{ className: classes.drawerItemTextPrimary }}
                                             />
-                                            {xsMatched ? (
-                                                <ListItemIcon>
-                                                    <ChevronRightIcon color="action" />
-                                                </ListItemIcon>
-                                            ) : null}
                                         </ListItem>
-                                        {xsMatched ? <Divider /> : null}
+                                        {/* {xsMatched ? <Divider /> : null} */}
                                     </Fragment>
                                 ))}
                             </List>
@@ -217,10 +217,8 @@ export default function Drawer(props: DrawerProps) {
                                         const url = new URL(t('feedback_address'))
                                         window.open(url.toString())
                                     }}>
-                                    <ListItemIcon
-                                        className={classes.drawerItemIcon}
-                                        children={<TelegramIcon fontSize="small" />}
-                                    />
+                                    <img src={IconsURLs.feedback.image} width={20} alt="" />
+
                                     <ListItemText
                                         className={classes.drawerItemText}
                                         primary={t('feedback')}
