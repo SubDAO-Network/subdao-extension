@@ -134,12 +134,10 @@ const getWrapperWidth = (size: string = '') => {
     switch (size) {
         case 'small':
             return 280
-        case 'large':
-            return 560
         default:
             break
     }
-    return 440
+    return 450
 }
 
 const useDashboardDialogWrapperStyles = makeStyles((theme) =>
@@ -149,15 +147,12 @@ const useDashboardDialogWrapperStyles = makeStyles((theme) =>
             flexDirection: 'column',
             maxWidth: '100%',
             width: (props) => getWrapperWidth(props.size),
-            padding: (props) => (props.size === 'small' ? '40px 24px !important' : '40px 36px !important'),
+            padding: (props) => (props.size === 'small' ? '40px 24px !important' : '40px 22px !important'),
             margin: '0 auto',
         },
         header: {
-            textAlign: 'center',
-            margin: '0 auto',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            textAlign: 'left',
+            paddingTop: 22,
         },
         content: {
             flex: 1,
@@ -171,19 +166,20 @@ const useDashboardDialogWrapperStyles = makeStyles((theme) =>
         primary: {
             margin: theme.spacing(2, 0, 1),
             fontWeight: 500,
-            fontSize: 20,
+            fontSize: 24,
             lineHeight: '30px',
         },
         secondary: {
             lineHeight: 1.75,
-            fontSize: 14,
-            textAlign: 'center',
+            fontSize: 18,
+            textAlign: 'left',
             wordBreak: 'break-word',
             marginBottom: 18,
+            padding: 0,
         },
         confineSecondary: {
-            paddingLeft: (props) => (props.size === 'small' ? 24 : 46),
-            paddingRight: (props) => (props.size === 'small' ? 24 : 46),
+            // paddingLeft: (props) => (props.size === 'small' ? 24 : 46),
+            // paddingRight: (props) => (props.size === 'small' ? 24 : 46),
         },
     }),
 )
