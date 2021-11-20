@@ -25,6 +25,7 @@ interface DashboardRouterContainerProps {
      * add or remove the placeholder
      */
     empty?: boolean
+    emptyText?: string
     /**
      * add or remove the padding of scroller
      */
@@ -53,7 +54,7 @@ const useStyles = makeStyles((theme) => {
             width: '100%',
             height: '100%',
             display: 'flex',
-            flexDirection: 'column'
+            flexDirection: 'column',
             // [theme.breakpoints.up('sm')]: {
             //     display: Flags.has_native_nav_bar ? 'inline' : 'grid',
             //     gridTemplateRows: (props) => (props.isSetup ? '1fr' : '[titleAction] 0fr [divider] 0fr [content] auto'),
@@ -65,17 +66,13 @@ const useStyles = makeStyles((theme) => {
             right: 0,
             bottom: 0,
             position: 'absolute',
-            backgroundSize: '185px 128px',
-            backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'center center',
-            backgroundImage: `url(${
-                theme.palette.mode === 'light'
-                    ? new URL('./dashboard-placeholder.png', import.meta.url)
-                    : new URL('./dashboard-placeholder-dark.png', import.meta.url)
-            })`,
-            [theme.breakpoints.down('sm')]: {
-                backgroundSize: '100px 70px',
-            },
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+        },
+        emptyText: {
+            marginTop: 20,
         },
         scroller: {
             height: '100%',
@@ -83,6 +80,7 @@ const useStyles = makeStyles((theme) => {
             '&::-webkit-scrollbar': {
                 display: 'none',
             },
+            overflow: 'auto',
         },
         scrollerCompact: {
             paddingLeft: '0 !important',
@@ -131,7 +129,7 @@ const useStyles = makeStyles((theme) => {
             [theme.breakpoints.down('sm')]: {
                 height: '100vh',
             },
-            padding: `0 ${theme.typography.pxToRem(70)}`
+            padding: `0 ${theme.typography.pxToRem(70)}`,
         },
         contentPadded: {
             '& > *': {
@@ -183,7 +181,17 @@ const useStyles = makeStyles((theme) => {
 })
 
 export default function DashboardRouterContainer(props: DashboardRouterContainerProps) {
-    const { title, actions, children, padded, navHeight = 0, empty, compact = false, floatingButtons = [] } = props
+    const {
+        title,
+        actions,
+        children,
+        padded,
+        navHeight = 0,
+        empty,
+        emptyText,
+        compact = false,
+        floatingButtons = [],
+    } = props
     const isSetup = location.hash.includes('/setup')
     const classes = useStyles({
         isSetup,
@@ -209,22 +217,24 @@ export default function DashboardRouterContainer(props: DashboardRouterContainer
                                         </div>
                                     )}
                                 </section>
-                                <div
-                                    className={classNames({
-                                        [classes.dividerPadded]: padded !== false,
-                                        [classes.dividerCompact]: xsMatched,
-                                    })}>
-                                    <Divider className={classes.divider} />
-                                </div>
                             </>
                         )}
                     </>
                 )}
-                <main className={classNames(classes.content, { [classes.contentPadded]: padded !== false })}>
+                <main className={classNames(classes.content)}>
                     <div className={classNames(classes.scroller, { [classes.scrollerCompact]: compact !== false })}>
                         {children}
                     </div>
-                    {empty ? <div className={classes.placeholder}></div> : null}
+                    {empty ? (
+                        <div className={classes.placeholder}>
+                            <img alt="" src={new URL('./dashboard-placeholder.png', import.meta.url).toString()} />
+                            {emptyText ? (
+                                <Typography className={classes.emptyText} color="textPrimary">
+                                    {emptyText}
+                                </Typography>
+                            ) : null}
+                        </div>
+                    ) : null}
                 </main>
                 <div className={classes.floatButtonContainer}>
                     {Flags.has_native_nav_bar

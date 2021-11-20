@@ -140,6 +140,7 @@ export default function DashboardContactsRouter() {
         <DashboardRouterContainer
             title={t('contacts')}
             empty={items.length === 0}
+            emptyText={t('search_result_empty')}
             actions={actions}
             floatingButtons={[
                 {
