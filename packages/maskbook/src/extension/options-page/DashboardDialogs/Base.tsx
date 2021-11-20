@@ -160,8 +160,12 @@ const useDashboardDialogWrapperStyles = makeStyles((theme) =>
         },
         footer: {
             display: 'flex',
-            justifyContent: 'space-around',
             marginTop: theme.spacing(3),
+            justifyContent: 'flex-end',
+        },
+        center: {
+            textAlign: 'right',
+            justifyContent: 'space-around',
         },
         primary: {
             margin: theme.spacing(2, 0, 1),
@@ -170,12 +174,16 @@ const useDashboardDialogWrapperStyles = makeStyles((theme) =>
             lineHeight: '30px',
         },
         secondary: {
-            lineHeight: 1.75,
+            lineHeight: '21px',
             fontSize: 18,
             textAlign: 'left',
             wordBreak: 'break-word',
             marginBottom: 18,
             padding: 0,
+        },
+        paddingSecondary: {
+            paddingLeft: 32,
+            fontSize: 14,
         },
         confineSecondary: {
             // paddingLeft: (props) => (props.size === 'small' ? 24 : 46),
@@ -273,30 +281,36 @@ interface DashboardDialogWrapperProps {
     size?: 'small' | 'medium' | 'large'
     content?: React.ReactNode
     footer?: React.ReactNode
+    layout?: 'center'
 }
 
 export function DashboardDialogWrapper(props: DashboardDialogWrapperProps) {
-    const { size, icon, iconColor, primary, secondary, constraintSecondary = true, content, footer } = props
+    const { size, icon, iconColor, primary, secondary, constraintSecondary = true, content, footer, layout } = props
     const classes = useDashboardDialogWrapperStyles(props)
     return (
         <ThemeProvider theme={dialogTheme}>
             <DialogContent className={classes.wrapper}>
                 <section className={classes.header}>
-                    {icon && cloneElement(icon, { width: 64, height: 64, stroke: iconColor })}
                     <Typography className={classes.primary} variant="h5">
-                        {primary}
+                        {icon && cloneElement(icon, { width: 24, height: 24, stroke: iconColor })}
+                        <span style={icon ? { marginLeft: 8 } : {}}>{primary}</span>
                     </Typography>
                     <Typography
                         className={classNames(
                             classes.secondary,
                             size !== 'small' && constraintSecondary ? classes.confineSecondary : '',
+                            icon ? classes.paddingSecondary : '',
                         )}
                         color="textSecondary"
                         variant="body2"
                         dangerouslySetInnerHTML={{ __html: secondary ?? '' }}></Typography>
                 </section>
                 {content ? <section className={classes.content}>{content}</section> : null}
-                {footer ? <section className={classes.footer}>{footer}</section> : null}
+                {footer ? (
+                    <section className={classNames(classes.footer, layout === 'center' ? classes.center : null)}>
+                        {footer}
+                    </section>
+                ) : null}
             </DialogContent>
         </ThemeProvider>
     )
