@@ -30,7 +30,7 @@ export interface AbstractTabProps {
 export default function AbstractTab({ tabs, state, height = 200 }: AbstractTabProps) {
     const classes = useStyles()
     const [value, setValue] = state
-    const tabIndicatorStyle = tabs.length ? { width: 100 / tabs.length + '%' } : undefined
+    const tabIndicatorStyle = tabs.length ? { width: 100 / tabs.length + '%', height: 2 } : undefined
 
     return (
         <>
@@ -60,7 +60,6 @@ export default function AbstractTab({ tabs, state, height = 200 }: AbstractTabPr
                 role="tabpanel"
                 {...tabs.find((_, index) => index === value)}
                 sx={{
-                    height: height,
                     minHeight: height,
                 }}
             />
