@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) =>
     createStyles({
         root: {
             userSelect: 'none',
-            backgroundColor: 'rgba(17, 18, 30, 0.4)',
+            backgroundColor: theme.palette.mode === 'dark' ? 'rgba(17, 18, 30, 0.6)' : 'rgba(17, 18, 30, 0.4)',
         },
         close: {
             color: theme.palette.text.primary,
@@ -150,6 +150,7 @@ const useDashboardDialogWrapperStyles = makeStyles((theme) =>
             width: (props) => getWrapperWidth(props.size),
             padding: (props) => (props.size === 'small' ? '40px 24px !important' : '40px 22px !important'),
             margin: '0 auto',
+            backgroundColor: theme.palette.mode === 'dark' ? '#20265C' : 'white',
         },
         header: {
             textAlign: 'left',
@@ -173,6 +174,8 @@ const useDashboardDialogWrapperStyles = makeStyles((theme) =>
             fontWeight: 500,
             fontSize: 24,
             lineHeight: '30px',
+            display: 'flex',
+            alignItems: 'center',
         },
         secondary: {
             lineHeight: '21px',
@@ -283,24 +286,43 @@ interface DashboardDialogWrapperProps {
     content?: React.ReactNode
     footer?: React.ReactNode
     layout?: 'center'
+    alert?: boolean
 }
 
 export function DashboardDialogWrapper(props: DashboardDialogWrapperProps) {
-    const { size, icon, iconColor, primary, secondary, constraintSecondary = true, content, footer, layout } = props
+    const {
+        size,
+        icon,
+        iconColor,
+        primary,
+        secondary,
+        constraintSecondary = true,
+        content,
+        footer,
+        layout,
+        alert,
+    } = props
     const classes = useDashboardDialogWrapperStyles(props)
     return (
         <ThemeProvider theme={dialogTheme}>
             <DialogContent className={classes.wrapper}>
                 <section className={classes.header}>
                     <Typography className={classes.primary} variant="h5">
+                        {alert && (
+                            <img
+                                src={new URL('./alert.png', import.meta.url).toString()}
+                                style={{ width: 24, height: 24 }}
+                                alt=""
+                            />
+                        )}
                         {icon && cloneElement(icon, { width: 24, height: 24, stroke: iconColor })}
-                        <span style={icon ? { marginLeft: 8 } : {}}>{primary}</span>
+                        <span style={icon || alert ? { marginLeft: 8 } : {}}>{primary}</span>
                     </Typography>
                     <Typography
                         className={classNames(
                             classes.secondary,
                             size !== 'small' && constraintSecondary ? classes.confineSecondary : '',
-                            icon ? classes.paddingSecondary : '',
+                            icon || alert ? classes.paddingSecondary : '',
                         )}
                         color="textSecondary"
                         variant="body2"

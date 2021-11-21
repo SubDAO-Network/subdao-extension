@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-import { TextField, Button } from '@material-ui/core'
+import { TextField, Button, makeStyles, createStyles } from '@material-ui/core'
 import { UserPlus, UserCheck, User, UserMinus } from 'react-feather'
 
 import { useI18N } from '../../../utils/i18n-next-ui'
@@ -25,6 +25,33 @@ import { RestoreFromQRCodeCameraBox } from '../DashboardComponents/RestoreFromQR
 import { SetupStep } from '../SetupStep'
 import { useMyPersonas } from '../../../components/DataSource/useMyPersonas'
 import TextInput from '../DashboardComponents/TextInput'
+
+const useStyles = makeStyles((theme) =>
+    createStyles({
+        cancel: {
+            border: 'none',
+            color: 'white',
+            '&, &:hover': {
+                backgroundColor: '#5C5F85',
+            },
+        },
+    }),
+)
+
+function ButtonCancel(props: any) {
+    const classes = useStyles()
+    const { t } = useI18N()
+    return (
+        <Button
+            size="medium"
+            classes={{ root: classes.cancel }}
+            variant="outlined"
+            color="inherit"
+            onClick={props.onClose}>
+            {t('cancel')}
+        </Button>
+    )
+}
 
 //#region persona create dialog
 export function DashboardPersonaCreateDialog(props: WrappedDialogProps) {
@@ -286,15 +313,13 @@ export function DashboardPersonaRenameDialog(props: WrappedDialogProps<PersonaPr
                 }
                 footer={
                     <SpacedButtonGroup>
+                        <ButtonCancel onClose={props.onClose}></ButtonCancel>
                         <DebounceButton
                             variant="contained"
                             onClick={renamePersona}
                             disabled={name.length === 0 || checkInputLengthExceed(name)}>
                             {t('ok')}
                         </DebounceButton>
-                        <Button variant="outlined" color="inherit" onClick={props.onClose}>
-                            {t('cancel')}
-                        </Button>
                     </SpacedButtonGroup>
                 }
             />
@@ -359,8 +384,6 @@ export function DashboardPersonaBackupDialog(props: WrappedDialogProps<PersonaPr
     return (
         <DashboardDialogCore {...props}>
             <DashboardDialogWrapper
-                icon={<User />}
-                iconColor="#5FDD97"
                 primary={t('backup_persona')}
                 secondary={t('dashboard_backup_persona_hint')}
                 content={<AbstractTab {...tabProps}></AbstractTab>}></DashboardDialogWrapper>
@@ -382,15 +405,12 @@ export function DashboardPersonaDeleteConfirmDialog(props: WrappedDialogProps<Pe
     return (
         <DashboardDialogCore fullScreen={false} {...props}>
             <DashboardDialogWrapper
-                icon={<UserMinus />}
-                iconColor="#F4637D"
+                alert
                 primary={t('delete_persona')}
                 secondary={t('dashboard_delete_persona_confirm_hint', { name: persona.nickname })}
                 footer={
                     <SpacedButtonGroup>
-                        <Button variant="outlined" color="inherit" onClick={props.onClose}>
-                            {t('cancel')}
-                        </Button>
+                        <ButtonCancel onClose={props.onClose}></ButtonCancel>
                         <DebounceButton variant="contained" onClick={deletePersona} data-testid="confirm_button">
                             {t('confirm')}
                         </DebounceButton>
@@ -420,8 +440,7 @@ export function DashboardPersonaUnlinkConfirmDialog(props: WrappedDialogProps) {
     return (
         <DashboardDialogCore {...props}>
             <DashboardDialogWrapper
-                icon={<LinkOffIcon />}
-                iconColor="#699CF7"
+                alert
                 primary={t('disconnect_profile')}
                 secondary={t('dashboard_disconnect_profile_hint', {
                     persona: nickname,
@@ -430,9 +449,7 @@ export function DashboardPersonaUnlinkConfirmDialog(props: WrappedDialogProps) {
                 })}
                 footer={
                     <SpacedButtonGroup>
-                        <Button variant="outlined" color="inherit" onClick={props.onClose}>
-                            {t('cancel')}
-                        </Button>
+                        <ButtonCancel onClose={props.onClose}></ButtonCancel>
                         <DebounceButton variant="contained" onClick={onClick}>
                             {t('confirm')}
                         </DebounceButton>
