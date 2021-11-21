@@ -55,10 +55,14 @@ const useStyles = makeStyles((theme) => {
             height: '100%',
             display: 'flex',
             flexDirection: 'column',
+            padding: `0 ${theme.typography.pxToRem(70)}`,
             // [theme.breakpoints.up('sm')]: {
             //     display: Flags.has_native_nav_bar ? 'inline' : 'grid',
             //     gridTemplateRows: (props) => (props.isSetup ? '1fr' : '[titleAction] 0fr [divider] 0fr [content] auto'),
             // },
+            [theme.breakpoints.down('sm')]: {
+                padding: `0 ${theme.typography.pxToRem(20)}`,
+            },
         },
         placeholder: {
             top: (props) => theme.typography.pxToRem(props.navHeight),
@@ -96,7 +100,7 @@ const useStyles = makeStyles((theme) => {
             justifyContent: 'space-between',
             alignItems: 'center',
             height: 110,
-            padding: `${theme.spacing(7.5)} 70px ${theme.spacing(4)} 70px`,
+            padding: `${theme.spacing(7.5)} 0 ${theme.spacing(4)} 0`,
         },
         titleContent: {
             color: theme.palette.text.primary,
@@ -130,10 +134,6 @@ const useStyles = makeStyles((theme) => {
             borderRadius: 10,
             [theme.breakpoints.down('sm')]: {
                 height: '100vh',
-            },
-            padding: `0 ${theme.typography.pxToRem(70)}`,
-            [theme.breakpoints.down('sm')]: {
-                padding: `0 ${theme.typography.pxToRem(20)}`,
             },
         },
         contentPadded: {
