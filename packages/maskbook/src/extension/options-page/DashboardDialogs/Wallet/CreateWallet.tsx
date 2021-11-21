@@ -274,7 +274,7 @@ export function WalletCreateDialog(props: WrappedDialogProps<object>) {
         return !!address && !!name && checkSave
     }
     const footer = (
-        <DebounceButton variant="contained" disabled={!checkNext()} onClick={onSubmit}>
+        <DebounceButton fullWidth variant="contained" disabled={!checkNext()} onClick={onSubmit}>
             {t('create')}
         </DebounceButton>
     )
