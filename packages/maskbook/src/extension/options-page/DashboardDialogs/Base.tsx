@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme) =>
     createStyles({
         root: {
             userSelect: 'none',
+            backgroundColor: 'rgba(17, 18, 30, 0.4)',
         },
         close: {
             color: theme.palette.text.primary,
@@ -52,7 +53,7 @@ export function DashboardDialogCore(props: DashboardDialogCoreProps) {
 
     const classes = useStyles()
     const xsMatched = useMatchXS()
-    useBlurContext(dialogProps.open)
+    // useBlurContext(dialogProps.open)
 
     return (
         <Dialog
