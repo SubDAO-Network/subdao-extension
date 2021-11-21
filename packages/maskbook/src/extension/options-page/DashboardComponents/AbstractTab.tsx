@@ -1,19 +1,22 @@
 import { makeStyles } from '@material-ui/core/styles'
 import { Theme, createStyles, Tabs, Tab, Box, BoxProps, Paper } from '@material-ui/core'
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
+const useStyles = makeStyles((theme: Theme) => {
+    const dark = theme.palette.mode === 'dark'
+    return createStyles({
         tab: {
             minWidth: 'unset',
         },
         tabSelected: {
-            background: '#FFF3F9', // TODO dark mode [bridge]
+            background: dark ? '#313768' : '#FFF3F9',
         },
         tabPanel: {
             marginTop: theme.spacing(3),
+            display: 'flex',
+            flexDirection: 'column',
         },
-    }),
-)
+    })
+})
 
 interface TabPanelProps extends BoxProps {
     id?: string

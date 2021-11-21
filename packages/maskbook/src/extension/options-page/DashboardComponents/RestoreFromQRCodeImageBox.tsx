@@ -33,6 +33,10 @@ const useStyles = makeStyles((theme) =>
             marginTop: 0,
             marginBottom: 6,
         },
+        qrcode: {
+            width: 200,
+            height: 200,
+        },
     }),
 )
 
@@ -93,7 +97,9 @@ export function RestoreFromQRCodeImageBox(props: RestoreFromQRCodeImageBoxProps)
                 lightPlaceholderImageURL={new URL('./RestoreFromQRCodeImageBox-light.png', import.meta.url).toString()}
                 data-active={over}
                 onClick={() => inputRef.current && inputRef.current.click()}>
-                {file ? <QRCodeImageScanner src={dataURL} onScan={onScan} onError={onError} /> : null}
+                {file ? (
+                    <QRCodeImageScanner src={dataURL} onScan={onScan} onError={onError} className={classes.qrcode} />
+                ) : null}
             </RestoreBox>
         </div>
     )

@@ -62,6 +62,12 @@ const useStyles = makeStyles((theme) =>
         menu: {
             flex: '0 0 auto',
             cursor: 'pointer',
+            display: theme.palette.mode === 'dark' ? 'none' : 'block',
+        },
+        menuDark: {
+            flex: '0 0 auto',
+            cursor: 'pointer',
+            display: theme.palette.mode === 'dark' ? 'block' : 'none',
         },
         profile: {
             paddingRight: 10,
@@ -114,6 +120,14 @@ export default function PersonaCard({ persona }: Props) {
                     <img
                         src={ToolIconURLs.more.image}
                         className={classes.menu}
+                        width={48}
+                        alt=""
+                        onClick={openMenu}
+                        data-testid="setting_icon"
+                    />
+                    <img
+                        src={ToolIconURLs.more.image}
+                        className={classes.menuDark}
                         width={48}
                         alt=""
                         onClick={openMenu}
