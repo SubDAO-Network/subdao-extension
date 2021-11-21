@@ -78,18 +78,19 @@ const useStyles = makeStyles((theme) => {
             height: '100vh',
             position: 'absolute',
 
-            [theme.breakpoints.up('md')]: {
-                display: 'grid',
-                gridTemplateColumns: '1fr [content-start] 1100px [content-end] 1fr',
-                gridTemplateRows: '32px [content-start] auto [content-end]',
-                placeItems: 'center',
+            display: 'grid',
+            gridTemplateColumns: '1fr [content-start] 1100px [content-end] 1fr',
+            gridTemplateRows: '32px [content-start] auto [content-end]',
+            placeItems: 'center',
+
+            [theme.breakpoints.down('sm')]: {
+                display: 'flex',
+                flexDirection: 'column',
             },
 
             transition: 'filter 0.3s linear',
             willChange: 'filter',
-
-            display: 'flex',
-            flexDirection: 'column',
+            overflowX: 'auto',
         },
         navBar: {
             marginBottom: 20,
