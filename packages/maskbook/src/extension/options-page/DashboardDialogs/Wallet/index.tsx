@@ -80,8 +80,6 @@ export function DashboardWalletBackupDialog(props: WrappedDialogProps<WalletProp
     return (
         <DashboardDialogCore {...props}>
             <DashboardDialogWrapper
-                icon={<CreditCardIcon />}
-                iconColor="#4EE0BC"
                 primary={t('backup_wallet')}
                 secondary={t('backup_wallet_hint')}
                 constraintSecondary={false}
@@ -487,7 +485,7 @@ export function DashboardWalletAddERC20TokenDialog(props: WrappedDialogProps<Wal
                     />
                 }
                 footer={
-                    <DebounceButton disabled={!token} variant="contained" onClick={onSubmit}>
+                    <DebounceButton fullWidth disabled={!token} variant="contained" onClick={onSubmit}>
                         {t('add_token')}
                     </DebounceButton>
                 }

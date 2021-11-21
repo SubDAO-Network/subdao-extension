@@ -52,11 +52,15 @@ const useStyles = makeStyles((theme) =>
         },
         tabs: {},
         addButton: {
+            borderRadius: 8,
             backgroundColor: '#5C5F85',
+            '&:hover': {
+                backgroundColor: '#5C5F85',
+            },
             color: '#FFFFFF',
         },
         moreButton: {
-            backgroundColor: '#F79300',
+            backgroundColor: 'rgba(247, 147, 0, 0.6)',
             color: '#FFFFFF',
             marginLeft: 10,
             height: 36,

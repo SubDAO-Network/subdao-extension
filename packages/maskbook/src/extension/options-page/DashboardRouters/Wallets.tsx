@@ -79,6 +79,9 @@ const useStyles = makeStyles((theme) =>
         title: {
             marginLeft: theme.spacing(1),
         },
+        create: {
+            borderRadius: 8,
+        },
     }),
 )
 
@@ -139,7 +142,12 @@ export default function DashboardWalletsRouter() {
                 title={t('my_wallets')}
                 actions={[
                     <EthereumStatusBar disableEther BoxProps={{ sx: { justifyContent: 'flex-end' } }} />,
-                    <Button variant="contained" onClick={openWalletCreate} data-testid="create_button" size="medium">
+                    <Button
+                        classes={{ root: classes.create }}
+                        variant="contained"
+                        onClick={openWalletCreate}
+                        data-testid="create_button"
+                        size="medium">
                         {t('plugin_wallet_on_create')}
                     </Button>,
                 ]}

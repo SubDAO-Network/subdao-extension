@@ -50,6 +50,7 @@ import { useMenu } from '../../../utils/hooks/useMenu'
 import { useColorStyles } from '../../../utils/theme'
 import { formatBalance } from '@polkadot/util'
 import { useSnackbarCallback } from '../DashboardDialogs/Base'
+import { WalletIconURLs } from '../../../resources/wallet-icon'
 
 const circleIcon = <CircularProgress color="inherit" size={12} />
 const sendIcon = <SendIcon size={12} />
@@ -117,6 +118,34 @@ const useStyles = makeStyles((theme: Theme) => {
             display: 'flex',
             justifyContent: 'center',
             marginTop: theme.spacing(1),
+        },
+        cellButton: {
+            cursor: 'pointer',
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            '&:first-child': {
+                marginRight: theme.spacing(3),
+            },
+        },
+        cellIcon: {
+            marginRight: 8,
+            paddingTop: 3,
+            '& img': {
+                width: 20,
+            },
+        },
+        lightIcon: {
+            display: dark ? 'none' : 'inline',
+        },
+        darkIcon: {
+            display: !dark ? 'none' : 'inline',
+        },
+        transfer: {
+            color: dark ? '' : '#62BA46',
+        },
+        delete: {
+            color: dark ? '' : 'rgba(247, 0, 0, 0.5)',
         },
     })
 })
@@ -257,41 +286,39 @@ function ViewDetailed(props: ViewDetailedProps) {
                         justifyContent: 'flex-start',
                     }}>
                     {!isERC20 ? (
-                        <Button
-                            className={classes.actionButton}
-                            startIcon={btnStartIcon}
-                            color="primary"
-                            disabled={btnDisabled}
-                            onClick={() => openTransferDialogOpen({ wallet, ...detailedToken })}>
-                            {t('wallet_transfer_title')}
-                        </Button>
+                        <div
+                            className={classes.cellButton}
+                            onClick={
+                                !btnDisabled ? () => openTransferDialogOpen({ wallet, ...detailedToken }) : () => {}
+                            }>
+                            <div className={classes.cellIcon}>
+                                <img className={classes.lightIcon} src={WalletIconURLs.transfer.image} alt="" />
+                                <img className={classes.darkIcon} src={WalletIconURLs.transferDark.image} alt="" />
+                            </div>
+                            <Typography className={classes.transfer}>{t('wallet_transfer_title')}</Typography>
+                        </div>
                     ) : (
                         <>
-                            <Button
-                                className={classes.actionButton}
-                                startIcon={btnStartIcon}
-                                color="primary"
-                                disabled={btnDisabled}
-                                onClick={() => openTransferDialogOpen({ wallet, ...detailedToken, token })}>
-                                {t('wallet_transfer_title')}
-                            </Button>
-                            <Button
-                                className={classes.actionButton}
-                                startIcon={btnStartIcon}
-                                color="primary"
-                                disabled={btnDisabled}
-                                onClick={() => removeToken()}>
-                                {t('delete')}
-                            </Button>
-                            {/* <IconButton
-                                className={classes.more}
-                                size="small"
-                                onClick={(e) => {
-                                    e.stopPropagation()
-                                    openMenu(e)
-                                }}>
-                                <MoreHorizIcon />
-                            </IconButton> */}
+                            <div
+                                className={classes.cellButton}
+                                onClick={
+                                    !btnDisabled
+                                        ? () => openTransferDialogOpen({ wallet, ...detailedToken, token })
+                                        : () => {}
+                                }>
+                                <div className={classes.cellIcon}>
+                                    <img className={classes.lightIcon} src={WalletIconURLs.transfer.image} alt="" />
+                                    <img className={classes.darkIcon} src={WalletIconURLs.transferDark.image} alt="" />
+                                </div>
+                                <Typography className={classes.transfer}>{t('wallet_transfer_title')}</Typography>
+                            </div>
+                            <div className={classes.cellButton} onClick={!btnDisabled ? removeToken : () => {}}>
+                                <div className={classes.cellIcon}>
+                                    <img className={classes.lightIcon} src={WalletIconURLs.delete.image} alt="" />
+                                    <img className={classes.darkIcon} src={WalletIconURLs.deleteDark.image} alt="" />
+                                </div>
+                                <Typography className={classes.delete}>{t('delete')}</Typography>
+                            </div>
                             {menu}
                         </>
                     )}
