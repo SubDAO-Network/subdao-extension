@@ -334,7 +334,7 @@ export function RedPacketForm(props: RedPacketFormProps) {
                 />
             </div>
             <SubdaoWalletConnectedBoundary>
-                <ActionButton className={classes.button} fullWidth onClick={createCallback}>
+                <ActionButton className={classes.button} onClick={createCallback}>
                     {validationMessage || `Send ${formatBalance(totalAmount, token.decimals)} ${token.symbol}`}
                 </ActionButton>
                 {/* <SubERC20TokenApprovedBoundary

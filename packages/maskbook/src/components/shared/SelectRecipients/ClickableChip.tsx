@@ -25,7 +25,6 @@ export function ClickableChip(props: ClickableChipProps) {
     const classes = useStyles()
     return (
         <Chip
-            avatar={props.checked ? <DoneIcon className={classes.icon} /> : undefined}
             color={props.checked ? 'primary' : 'default'}
             {...props}
             classes={{

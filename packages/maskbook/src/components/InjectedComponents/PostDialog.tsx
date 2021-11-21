@@ -169,9 +169,7 @@ export function PostDialogUI(props: PostDialogUIProps) {
                         inputProps={{ 'data-testid': 'text_textarea' }}
                     />
 
-                    <Typography style={{ marginBottom: 10 }}>
-                        Plugins <sup>(Experimental)</sup>
-                    </Typography>
+                    <Typography style={{ marginBottom: 10 }}>Plugins(Experimental)</Typography>
                     <Box
                         style={{ marginBottom: 10 }}
                         sx={{
