@@ -33,9 +33,9 @@ const useStyles = makeStyles((theme) =>
                 marginRight: theme.spacing(1.25),
             },
             padding: '17px 7px 17px 20px',
-            background: '#F8F8FB',
+            background: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.08)' : '#F8F8FB',
             borderRadius: 12,
-            border: '1px solid #E7EAF3',
+            border: theme.palette.mode === 'dark' ? 'none' : '1px solid #E7EAF3',
             boxShadow: 'none',
             [theme.breakpoints.down('sm')]: {
                 flex: 'none',
