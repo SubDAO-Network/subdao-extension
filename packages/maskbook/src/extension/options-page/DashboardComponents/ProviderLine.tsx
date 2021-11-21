@@ -120,7 +120,7 @@ export default function ProviderLine(props: ProviderLineProps) {
                 variant="body1"
                 component="div"
                 data-testid={`connect_button_${network.toLowerCase()}`}>
-                {connected ? <span>{userId}</span> : <span>{`${t('connect_to')} ${network}`}</span>}
+                {connected ? <span>@{userId}</span> : <span>{`${t('connect_to')} ${network}`}</span>}
                 {connected ? (
                     <Button className={classes.linkButton} variant="outlined" onClick={onAction}>
                         {t('personas_disconnect')}

@@ -16,6 +16,7 @@ import {
     DashboardPersonaDeleteConfirmDialog,
 } from '../DashboardDialogs/Persona'
 import { useMenu } from '../../../utils/hooks/useMenu'
+import { ToolIconURLs } from '../../../resources/tool-icon'
 
 interface Props {
     persona: Persona
@@ -60,8 +61,13 @@ const useStyles = makeStyles((theme) =>
         },
         menu: {
             flex: '0 0 auto',
-            marginLeft: theme.spacing(1),
             cursor: 'pointer',
+        },
+        profile: {
+            paddingRight: 10,
+        },
+        more: {
+            backgroundColor: '',
         },
     }),
 )
@@ -102,13 +108,23 @@ export default function PersonaCard({ persona }: Props) {
                     <span title={persona.nickname} className={classes.title} data-testid="persona_title">
                         {persona.nickname}
                     </span>
-                    <IconButton size="small" className={classes.menu} onClick={openMenu} data-testid="setting_icon">
+                    {/* <IconButton size="small" className={classes.menu} classes={{root: classes.more}} onClick={openMenu} data-testid="setting_icon">
                         <MoreHorizOutlinedIcon />
-                    </IconButton>
+                    </IconButton> */}
+                    <img
+                        src={ToolIconURLs.more.image}
+                        className={classes.menu}
+                        width={48}
+                        alt=""
+                        onClick={openMenu}
+                        data-testid="setting_icon"
+                    />
                     {menu}
                 </>
             </Typography>
-            <ProfileBox persona={persona} />
+            <div className={classes.profile}>
+                <ProfileBox persona={persona} />
+            </div>
             {deletePersona}
             {backupPersona}
             {renamePersona}

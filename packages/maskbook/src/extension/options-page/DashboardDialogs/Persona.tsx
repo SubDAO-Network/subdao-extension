@@ -165,7 +165,7 @@ export function DashboardImportPersonaDialog(props: WrappedDialogProps) {
                 label: 'Base64',
                 children: (
                     <TextField
-                        inputProps={{ style: { height: 147, caretColor: '#D52473' } }}
+                        inputProps={{ style: { height: 200, caretColor: '#D52473' } }}
                         multiline
                         minRows={1}
                         autoFocus
