@@ -56,7 +56,6 @@ export function EthereumWalletConnectedBoundary(props: EthereumWalletConnectedBo
                 <ActionButton
                     className={classes.button}
                     disabled={!etherBalanceError}
-                    fullWidth
                     variant="contained"
                     size="large"
                     onClick={retryEtherBalance}>

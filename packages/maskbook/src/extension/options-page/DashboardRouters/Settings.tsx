@@ -49,8 +49,8 @@ const useStyles = makeStyles((theme) =>
             backgroundColor: theme.palette.background.paper,
         },
         card: {
-            boxShadow: '0px 0px 6px 4px rgba(239, 240, 246, 0.8)',
-            backgroundColor: 'transparent',
+            boxShadow: theme.palette.mode === 'dark' ? 'none' : '0px 0px 6px 4px rgba(239, 240, 246, 0.8)',
+            backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.08)' : 'transparent',
         },
         title: {
             fontWeight: 'normal',

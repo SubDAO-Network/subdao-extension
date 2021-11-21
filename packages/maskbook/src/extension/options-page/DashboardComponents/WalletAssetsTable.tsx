@@ -130,9 +130,9 @@ const useStyles = makeStyles((theme: Theme) => {
         },
         cellIcon: {
             marginRight: 8,
-            paddingTop: 3,
             '& img': {
                 width: 20,
+                marginTop: 3,
             },
         },
         lightIcon: {

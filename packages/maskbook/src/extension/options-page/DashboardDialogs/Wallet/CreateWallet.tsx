@@ -78,7 +78,7 @@ const useWalletCreateDialogStyle = makeStyles((theme: Theme) =>
         },
         address: {
             padding: theme.spacing(1.25),
-            backgroundColor: '#F7F8FB',
+            backgroundColor: theme.palette.mode === 'dark' ? '#313768' : '#F7F8FB',
             marginBottom: 20,
             borderRadius: 4,
             fontSize: '14px',

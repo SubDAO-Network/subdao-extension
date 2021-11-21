@@ -106,6 +106,7 @@
     "setup_guide_optional": "[可选的]",
     "setup_guide_find_username_title": "查找您的用户名",
     "setup_guide_find_username_text": "SubDAO 需要用户名才能将您的个人资料连接到您的角色。<br />确保它是正确的。",
+    "setup_guide_profile": "Profile",
     "setup_guide_connect_auto": "连接",
     "setup_guide_connect_failed": "失败了… 请重试。",
     "setup_guide_create_post_auto": "现在创建",
