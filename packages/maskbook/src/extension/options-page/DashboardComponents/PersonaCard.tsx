@@ -25,8 +25,9 @@ interface Props {
 const useStyles = makeStyles((theme) =>
     createStyles({
         card: {
-            flex: 1,
+            width: 'calc(50% - 10px)',
             height: 160,
+            marginBottom: 10,
             '&:nth-child(2n)': {
                 marginLeft: theme.spacing(1.25),
             },
