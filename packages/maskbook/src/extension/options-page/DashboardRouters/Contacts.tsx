@@ -15,6 +15,13 @@ import { last } from 'lodash-es'
 import { useModal } from '../DashboardDialogs/Base'
 import { DashboardContactSearchDialog } from '../DashboardDialogs/Contact'
 
+import { experimentalStyled as styled } from '@material-ui/core'
+import { WalletQRCodeProps } from '@subdao/dashboard/dist/src/components/WalletQRCodeContainer'
+
+const SectionBg = styled('section')`
+    height: 100%;
+`
+
 const useStyles = makeStyles((theme) =>
     createStyles({
         title: {
@@ -151,7 +158,7 @@ export default function DashboardContactsRouter() {
             <Typography className={classes.title} variant="body2">
                 {t('people_in_database')}
             </Typography>
-            <section className={classes.list}>
+            <SectionBg className={classes.list}>
                 <AutoResize>
                     {(sizeProps) => (
                         <FixedSizeList
@@ -161,7 +168,7 @@ export default function DashboardContactsRouter() {
                                 if (isPagePending) return
                                 if (data.visibleStopIndex === data.overscanStopIndex) nextPage()
                             }}
-                            itemSize={64}
+                            itemSize={90}
                             itemCount={items.length}
                             {...sizeProps}>
                             {({ index, style }) =>
@@ -178,7 +185,20 @@ export default function DashboardContactsRouter() {
                         </FixedSizeList>
                     )}
                 </AutoResize>
-            </section>
+                {/*<div>*/}
+                {/*    {({ index, style }) =>*/}
+                {/*        items[index] ? (*/}
+                {/*            <ContactLine*/}
+                {/*                style={style as any}*/}
+                {/*                key={index}*/}
+                {/*                contact={items[index]}*/}
+                {/*                onUpdated={mutate}*/}
+                {/*                onDeleted={mutate}*/}
+                {/*            />*/}
+                {/*        ) : null*/}
+                {/*    }*/}
+                {/*</div>*/}
+            </SectionBg>
             {searchContactDialog}
         </DashboardRouterContainer>
     )
