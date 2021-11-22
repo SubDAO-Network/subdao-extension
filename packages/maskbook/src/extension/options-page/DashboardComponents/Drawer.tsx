@@ -60,7 +60,9 @@ const useStyles = makeStyles((theme) => {
                 padding: theme.spacing(3, 0),
             },
             '&.Mui-selected': {
-                color: activeColor,
+                '& span': {
+                    color: activeColor,
+                },
                 backgroundColor: 'transparent',
             },
             '&:hover': {
