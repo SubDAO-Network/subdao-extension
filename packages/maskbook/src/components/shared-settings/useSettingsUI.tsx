@@ -19,10 +19,20 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
 import { useStylesExtends } from '../custom-ui-helper'
 import { getEnumAsArray } from '../../utils/enum'
 
+import { IconsURLs } from '../../resources/icons/index'
+
+import { experimentalStyled as styled } from '@material-ui/core'
+
+const ListItemSecondaryActionPadding = styled(ListItemSecondaryAction)`
+    right: 0 !important;
+`
+
 const useStyles = makeStyles((theme) =>
     createStyles({
         container: { listStyleType: 'none', width: '100%' },
-        secondaryAction: { paddingLeft: theme.spacing(2) },
+        secondaryAction: {
+            paddingLeft: theme.spacing(2),
+        },
         listItemText: {
             fontWeight: 500,
         },
@@ -93,7 +103,7 @@ export function SettingsUI<T>(props: SettingsUIProps<T>) {
                     primary={primary}
                     secondary={secondary}
                     onClick={change}
-                    action={<ListItemSecondaryAction>{ui}</ListItemSecondaryAction>}
+                    action={<ListItemSecondaryActionPadding>{ui}</ListItemSecondaryActionPadding>}
                 />
             )
         }
@@ -111,9 +121,10 @@ export function SettingsUIDummy(props: Omit<SettingsUIProps<null>, 'value'> & { 
             {...props}
             button
             action={
-                <ListItemSecondaryAction onClick={props.onClick}>
-                    <ArrowForwardIosIcon classes={{ root: classes.arrowIcon }} />
-                </ListItemSecondaryAction>
+                <ListItemSecondaryActionPadding onClick={props.onClick}>
+                    {/*<ArrowForwardIosIcon classes={{ root: classes.arrowIcon }} />*/}
+                    <img src={IconsURLs.rightArrow.image} alt="" />
+                </ListItemSecondaryActionPadding>
             }
         />
     )
@@ -141,7 +152,7 @@ export function SettingsUIEnum<T extends object>(
                 xsMatched ? (
                     <div className={classes.listItemActionMobile}>{ui}</div>
                 ) : (
-                    <ListItemSecondaryAction>{ui}</ListItemSecondaryAction>
+                    <ListItemSecondaryActionPadding>{ui}</ListItemSecondaryActionPadding>
                 )
             }
         />

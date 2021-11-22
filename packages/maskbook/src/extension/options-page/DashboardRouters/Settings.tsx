@@ -41,6 +41,22 @@ import { Flags } from '../../../utils/flags'
 import { extendsTheme } from '../../../utils/theme'
 import { SubstrateNetwork } from '../../../polkadot/constants'
 
+import { experimentalStyled as styled } from '@material-ui/core'
+
+const Provide = styled('div')`
+    padding: 0 10px;
+`
+
+const CardPadding = styled(Card)`
+    padding: 0 31px 10px;
+`
+
+const ListBg = styled(List)`
+    &:hover {
+        background: transparent !important;
+    }
+`
+
 const useStyles = makeStyles((theme) =>
     createStyles({
         root: {
@@ -73,6 +89,7 @@ const useStyles = makeStyles((theme) =>
         },
         secondaryAction: {
             paddingRight: 90,
+            paddingLeft: 0,
         },
         list: {
             [theme.breakpoints.down('sm')]: {
@@ -84,10 +101,12 @@ const useStyles = makeStyles((theme) =>
             paddingTop: theme.spacing(1.5),
             paddingBottom: theme.spacing(1.5),
             borderBottom: `1px solid ${theme.palette.divider}`,
+            paddingLeft: 0,
         },
         ListItemRootWithoutBorder: {
             paddingTop: theme.spacing(1.5),
             paddingBottom: theme.spacing(1.5),
+            paddingLeft: 0,
         },
         listItemIcon: {
             color: theme.palette.text.primary,
@@ -182,13 +201,13 @@ export default function DashboardSettingsRouter() {
     return (
         <DashboardRouterContainer title={t('settings')}>
             <ThemeProvider theme={settingsTheme}>
-                <div className="wrapper">
+                <Provide className="wrapper">
                     <Paper component="section" className={classes.section}>
                         <Typography className={classes.title} variant="h6" color="textPrimary">
                             {t('settings_title_general')}
                         </Typography>
-                        <Card elevation={0} className={classes.card}>
-                            <List className={classes.list} disablePadding>
+                        <CardPadding elevation={0} className={classes.card}>
+                            <ListBg className={classes.list} disablePadding>
                                 <SettingsUIEnum
                                     SelectProps={{
                                         classes: {
@@ -212,8 +231,8 @@ export default function DashboardSettingsRouter() {
                                     enumObject={SubstrateNetwork}
                                     value={currentSubstrateNetworkSettings}
                                 />
-                            </List>
-                        </Card>
+                            </ListBg>
+                        </CardPadding>
                     </Paper>
 
                     {Flags.support_settings_advanced_options ? (
@@ -221,13 +240,13 @@ export default function DashboardSettingsRouter() {
                             <Typography className={classes.title} variant="h6" color="textPrimary">
                                 {t('settings_title_advanced_options')}
                             </Typography>
-                            <Card elevation={0} className={classes.card}>
-                                <List className={classes.list} disablePadding>
+                            <CardPadding elevation={0} className={classes.card}>
+                                <ListBg className={classes.list} disablePadding>
                                     <SettingsUI classes={listStyle} value={debugModeSetting} />
                                     <SettingsUI classes={listStyle} value={allPostReplacementSettings} />
                                     <SettingsUI classes={listStyleWithoutBorder} value={enableGroupSharingSettings} />
-                                </List>
-                            </Card>
+                                </ListBg>
+                            </CardPadding>
                         </Paper>
                     ) : null}
 
@@ -235,8 +254,8 @@ export default function DashboardSettingsRouter() {
                         <Typography className={classes.title} variant="h6" color="textPrimary">
                             {t('settings_title_database_management')}
                         </Typography>
-                        <Card elevation={0} className={classes.card}>
-                            <List className={classes.list} disablePadding>
+                        <CardPadding elevation={0} className={classes.card}>
+                            <ListBg className={classes.list} disablePadding>
                                 <SettingsUIDummy
                                     classes={listStyle}
                                     primary={t('backup_database')}
@@ -249,12 +268,12 @@ export default function DashboardSettingsRouter() {
                                     secondary={t('dashboard_import_database_hint')}
                                     onClick={openRestoreDialog}
                                 />
-                            </List>
-                        </Card>
+                            </ListBg>
+                        </CardPadding>
                         {backupDialog}
                         {restoreDialog}
                     </Paper>
-                </div>
+                </Provide>
             </ThemeProvider>
         </DashboardRouterContainer>
     )
