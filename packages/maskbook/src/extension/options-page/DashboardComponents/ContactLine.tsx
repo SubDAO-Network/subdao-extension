@@ -17,6 +17,7 @@ import { useI18N } from '../../../utils/i18n-next-ui'
 import type { DefaultComponentProps } from '@material-ui/core/OverridableComponent'
 import { useMatchXS } from '../../../utils/hooks/useMatchXS'
 import { IconsURLs } from '../../../resources/icons'
+import ActionButton from './ActionButton'
 
 const ListBrdr = styled(ListItem)`
     padding: 0 !important;
@@ -116,7 +117,13 @@ export function ContactLine(props: ContactLineProps) {
     return (
         <>
             {/* // TODO: Use standard ListItemAvatar, ListItemText and ListItemSecondaryAction instead of custom one. */}
-            <ListBrdr button selected={false} onClick={openContactDialog} className={classes.line} {...rest}>
+            <ListBrdr
+                button
+                disableRipple={true}
+                selected={false}
+                onClick={openContactDialog}
+                className={classes.line}
+                {...rest}>
                 <ListBg>
                     <Avatar className={classes.avatar} person={contact} />
                     <Typography className={classes.user}>{contact.nickname || contact.identifier.userId}</Typography>
