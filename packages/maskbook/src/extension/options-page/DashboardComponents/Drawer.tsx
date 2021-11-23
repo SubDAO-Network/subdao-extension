@@ -66,7 +66,7 @@ const useStyles = makeStyles((theme) => {
                 backgroundColor: 'transparent',
             },
             '&:hover': {
-                backgroundColor: 'transparent',
+                backgroundColor: 'transparent!important',
             },
         },
         activeDrawer: {
@@ -199,6 +199,7 @@ export default function Drawer(props: DrawerProps) {
                                             selected={match ? item[1].startsWith(match.url) : false}
                                             component={Link}
                                             to={item[1]}
+                                            disableRipple={true}
                                             button>
                                             <ListItemText
                                                 className={classes.drawerItemText}
