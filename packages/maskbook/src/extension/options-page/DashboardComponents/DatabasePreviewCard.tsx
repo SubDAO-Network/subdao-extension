@@ -5,6 +5,19 @@ import { Table, TableBody, TableRow, TableCell, Typography, makeStyles, Theme, c
 import { useI18N } from '../../../utils/i18n-next-ui'
 import { unreachable } from '../../../utils/utils'
 import { useStylesExtends } from '../../../components/custom-ui-helper'
+import { IconsURLs } from '../../../resources/icons'
+
+import { experimentalStyled as styled } from '@material-ui/core'
+
+const TableCellBg = styled(TableCell)`
+    width: 25px;
+    vertical-align: center;
+    img {
+        width: 16px;
+        display: inline-block;
+        margin-top: 5px;
+    }
+`
 
 const useDatabasePreviewCardStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -77,11 +90,32 @@ export function DatabasePreviewCard(props: DatabasePreviewCardProps) {
         ...record,
         name: resolveRecordName(record.type),
     }))
+
+    const resolveRecordImg = (type: DatabaseRecordType) => {
+        console.log('=type===', type)
+        switch (type) {
+            case DatabaseRecordType.Persona:
+                return IconsURLs.persona.image
+            case DatabaseRecordType.Profile:
+                return IconsURLs.profiles.image
+            case DatabaseRecordType.Post:
+                return IconsURLs.posts.image
+            case DatabaseRecordType.Group:
+                return IconsURLs.Groups.image
+            case DatabaseRecordType.Wallet:
+                return IconsURLs.wallets.image
+            default:
+                return unreachable(type)
+        }
+    }
     return (
         <Table className={classes.table} size="small">
             <TableBody>
                 {resolvedRecords.map((record) => (
                     <TableRow key={record.name}>
+                        <TableCellBg className={classes.cell} component="th" align="left">
+                            <img src={resolveRecordImg(record.type)} alt="" />
+                        </TableCellBg>
                         <TableCell className={classes.cell} component="th" align="left">
                             <Typography className={classes.label} variant="body2" component="span">
                                 {record.name}

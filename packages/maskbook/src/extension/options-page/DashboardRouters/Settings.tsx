@@ -102,11 +102,17 @@ const useStyles = makeStyles((theme) =>
             paddingBottom: theme.spacing(1.5),
             borderBottom: `1px solid ${theme.palette.divider}`,
             paddingLeft: 0,
+            '&:hover': {
+                backgroundColor: 'transparent',
+            },
         },
         ListItemRootWithoutBorder: {
             paddingTop: theme.spacing(1.5),
             paddingBottom: theme.spacing(1.5),
             paddingLeft: 0,
+            '&:hover': {
+                backgroundColor: 'transparent',
+            },
         },
         listItemIcon: {
             color: theme.palette.text.primary,

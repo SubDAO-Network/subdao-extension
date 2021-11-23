@@ -25,6 +25,9 @@ import { experimentalStyled as styled } from '@material-ui/core'
 
 const ListItemSecondaryActionPadding = styled(ListItemSecondaryAction)`
     right: 0 !important;
+    .imgBg {
+        margin-top: 20px;
+    }
 `
 
 const useStyles = makeStyles((theme) =>
@@ -123,7 +126,7 @@ export function SettingsUIDummy(props: Omit<SettingsUIProps<null>, 'value'> & { 
             action={
                 <ListItemSecondaryActionPadding onClick={props.onClick}>
                     {/*<ArrowForwardIosIcon classes={{ root: classes.arrowIcon }} />*/}
-                    <img src={IconsURLs.rightArrow.image} alt="" />
+                    <img src={IconsURLs.rightArrow.image} alt="" class="imgBg" />
                 </ListItemSecondaryActionPadding>
             }
         />
