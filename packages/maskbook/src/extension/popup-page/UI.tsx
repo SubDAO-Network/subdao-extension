@@ -1,10 +1,10 @@
 import '../../social-network-adaptor/popup-page/index'
 import '../../setup.ui'
 
-import { useCallback, memo } from 'react'
+import { useCallback, memo, useEffect } from 'react'
 import { noop } from 'lodash-es'
 import { ThemeProvider, makeStyles, Theme, withStyles, StylesProvider, jssPreset } from '@material-ui/core/styles'
-import { Button, Paper, Typography, Box } from '@material-ui/core'
+import { experimentalStyled as styled, Button, Paper, Typography, Box } from '@material-ui/core'
 import { useMaskbookTheme } from '../../utils/theme'
 import { ChooseIdentity } from '../../components/shared/ChooseIdentity'
 import { activatedSocialNetworkUI } from '../../social-network'
@@ -18,13 +18,20 @@ import { create } from 'jss'
 import { Flags } from '../../utils/flags'
 import { hasSNSAdaptorPermission, requestSNSAdaptorPermission } from '../../social-network/utils/permissions'
 
+const PaperHeight = styled(Paper)`
+    background: #000;
+    height: 0 !important;
+    padding: 0 !important;
+`
+
 const GlobalCss = withStyles({
     '@global': {
         body: {
             overflowX: 'hidden',
-            margin: '0 auto',
-            width: 340,
-            maxWidth: '100%',
+            margin: 0,
+            padding: 0,
+            width: 0,
+            // maxWidth: '100%',
             backgroundColor: 'transparent',
             '&::-webkit-scrollbar': {
                 display: 'none',
@@ -103,8 +110,13 @@ function PopupUI() {
         window.close()
     }, [setSelectProviderDailogOpen])
 
+    useEffect(() => {
+        // browser.runtime.openOptionsPage()
+    }, [])
+    browser.runtime.openOptionsPage()
+
     return (
-        <Paper className={classes.container} elevation={0}>
+        <PaperHeight className={classes.container} elevation={0}>
             {hasPermission === false ? (
                 <>
                     <Box
@@ -140,16 +152,16 @@ function PopupUI() {
                 sx={{
                     display: 'flex',
                 }}>
-                <Button className={classes.button} variant="text" onClick={onEnter}>
-                    {t('popup_enter_dashboard')}
-                </Button>
-                {ui.networkIdentifier === 'localhost' ? null : (
-                    <Button className={classes.button} variant="text" onClick={onConnect}>
-                        {t('popup_connect_wallet')}
-                    </Button>
-                )}
+                {/*<Button className={classes.button} variant="text" onClick={onEnter}>*/}
+                {/*    {t('popup_enter_dashboard')}*/}
+                {/*</Button>*/}
+                {/*{ui.networkIdentifier === 'localhost' ? null : (*/}
+                {/*    <Button className={classes.button} variant="text" onClick={onConnect}>*/}
+                {/*        {t('popup_connect_wallet')}*/}
+                {/*    </Button>*/}
+                {/*)}*/}
             </Box>
-        </Paper>
+        </PaperHeight>
     )
 }
 
