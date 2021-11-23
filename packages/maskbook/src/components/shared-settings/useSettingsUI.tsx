@@ -75,6 +75,7 @@ function SharedListItem(
     const classes = useStylesExtends(useStyles(), props)
     return (
         <ListItem
+            disableRipple={true}
             classes={{
                 root: classes.listItemRoot,
                 container: classes.container,
