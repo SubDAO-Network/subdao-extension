@@ -48,13 +48,13 @@ export function DashboardBlurContextUI({ children }: DashboardBlurContextUIProps
     const xsMatched = useMatchXS()
 
     const blur = useCallback(() => {
-        blurRequest += 1
-        ref.current.classList.add(classes.blur)
-    }, [classes.blur])
+        // blurRequest += 1
+        // ref.current.classList.add(classes.blur)
+    }, [])
     const unblur = useCallback(() => {
-        blurRequest -= 1
-        if (blurRequest <= 0) ref.current.classList.remove(classes.blur)
-    }, [classes.blur])
+        // blurRequest -= 1
+        // if (blurRequest <= 0) ref.current.classList.remove(classes.blur)
+    }, [])
     const toggle = useMemo(
         () => ({
             blur,
