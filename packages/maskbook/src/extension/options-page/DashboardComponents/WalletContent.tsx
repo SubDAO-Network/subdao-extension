@@ -73,7 +73,11 @@ const useStyles = makeStyles((theme) =>
             flex: 1,
         },
         menuItem: {
-            color: theme.palette.text.secondary,
+            color: '#5C5F85',
+            margin: '0 6px',
+            '& span:first-child': {
+                margin: '0 auto',
+            },
         },
     }),
 )
@@ -100,12 +104,16 @@ export const WalletContent = forwardRef<HTMLDivElement, WalletContentProps>(func
     const { state, dispatch } = useSubstrate()
 
     const [menu, openMenu] = useMenu([
-        <MenuItem onClick={() => openWalletRename({ wallet })}>{t('rename')}</MenuItem>,
+        <MenuItem onClick={() => openWalletRename({ wallet })} className={classes.menuItem}>
+            <span>{t('rename')}</span>
+        </MenuItem>,
         wallet._private_key_ || wallet.mnemonic.length ? (
-            <MenuItem onClick={() => openWalletBackup({ wallet })}>{t('backup')}</MenuItem>
+            <MenuItem onClick={() => openWalletBackup({ wallet })} className={classes.menuItem}>
+                <span>{t('backup')}</span>
+            </MenuItem>
         ) : null,
         <MenuItem onClick={() => openWalletDelete({ wallet })} className={classes.menuItem} data-testid="delete_button">
-            {t('delete')}
+            <span>{t('delete')}</span>
         </MenuItem>,
     ])
 
