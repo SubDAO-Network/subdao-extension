@@ -19,11 +19,13 @@ import { useWallet } from '../hooks/useWallet'
 import { WalletMessages } from '../messages'
 import { currentSelectedWalletProviderSettings } from '../settings'
 import { useBlurContext } from '../../../extension/options-page/DashboardContexts/BlurContext'
+import { ToolIconURLs } from '../../../resources/tool-icon'
+import classNames from 'classnames'
 
 const useStyles = makeStyles((theme) =>
     createStyles({
         content: {
-            padding: theme.spacing(2, 4, 3),
+            padding: theme.spacing(2, 2.5, 3),
         },
         footer: {
             fontSize: 12,
@@ -35,9 +37,9 @@ const useStyles = makeStyles((theme) =>
         section: {
             display: 'flex',
             alignItems: 'center',
-            '&:last-child': {
-                paddingTop: theme.spacing(0.5),
-            },
+            // '&:last-child': {
+            //     paddingTop: theme.spacing(0.5),
+            // },
         },
         actions: {},
         actionButton: {
@@ -55,8 +57,7 @@ const useStyles = makeStyles((theme) =>
             fontSize: 14,
         },
         address: {
-            fontSize: 24,
-            padding: theme.spacing(1),
+            fontSize: 14,
             marginRight: theme.spacing(1),
         },
         link: {
@@ -68,6 +69,22 @@ const useStyles = makeStyles((theme) =>
         },
         linkIcon: {
             marginRight: theme.spacing(1),
+        },
+        addressItem: {
+            display: 'flex',
+            alignItems: 'center',
+            position: 'relative',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            backgroundColor: '#F4F4FA',
+            padding: `${theme.spacing(1)} ${theme.spacing(1.25)}`,
+            borderRadius: 4,
+            paddingTop: theme.spacing(1),
+            width: 303,
+        },
+        wallet: {
+            justifyContent: 'space-between',
+            marginTop: 8,
         },
     }),
 )
@@ -148,13 +165,30 @@ export function WalletStatusDialog(props: WalletStatusDialogProps) {
                     <Typography className={classes.tip} color="textSecondary">
                         {t('wallet_status_connect_with', { provider: resolveProviderName(selectedWalletProvider) })}
                     </Typography>
+                </section>
+                {/* 地址 */}
+                <section className={classNames(classes.section, classes.wallet)}>
+                    <section className={classes.addressItem}>
+                        <ProviderIcon
+                            classes={{ icon: classes.icon }}
+                            size={14}
+                            providerType={selectedWalletProvider}
+                        />
+                        <Typography className={classes.address}>
+                            {formatPolkadotAddress(selectedWallet.address, 12)}
+                        </Typography>
+                        <img src={ToolIconURLs.copy.image} onClick={onCopy} style={{ cursor: 'pointer' }} alt="" />
+                    </section>
+                    {/* {chainIdValid && chainId !== ChainId.Mainnet ? (
+                        <EthereumChainChip chainId={chainId} ChipProps={{ variant: 'outlined' }} />
+                    ) : null} */}
                     <section className={classes.actions}>
                         {selectedWalletProvider === ProviderType.WalletConnect ? (
                             <Button
                                 className={classes.actionButton}
                                 color="primary"
-                                size="small"
-                                variant="outlined"
+                                size="medium"
+                                variant="contained"
                                 onClick={onDisconnect}>
                                 {t('wallet_status_button_disconnect')}
                             </Button>
@@ -162,27 +196,12 @@ export function WalletStatusDialog(props: WalletStatusDialogProps) {
                         <Button
                             className={classes.actionButton}
                             color="primary"
-                            size="small"
-                            variant="outlined"
+                            size="medium"
+                            variant="contained"
                             onClick={onChange}>
                             {t('wallet_status_button_change')}
                         </Button>
                     </section>
-                </section>
-                <section className={classes.section}>
-                    <ProviderIcon classes={{ icon: classes.icon }} size={14} providerType={selectedWalletProvider} />
-                    <Typography className={classes.address}>
-                        {formatPolkadotAddress(selectedWallet.address, 4)}
-                    </Typography>
-                    {chainIdValid && chainId !== ChainId.Mainnet ? (
-                        <EthereumChainChip chainId={chainId} ChipProps={{ variant: 'outlined' }} />
-                    ) : null}
-                </section>
-                <section className={classes.section}>
-                    <Link className={classes.link} underline="none" component="button" onClick={onCopy}>
-                        <Copy className={classes.linkIcon} size={14} />
-                        <Typography variant="body2">{t('wallet_status_button_copy_address')}</Typography>
-                    </Link>
                 </section>
             </DialogContent>
             {!chainIdValid ? (
