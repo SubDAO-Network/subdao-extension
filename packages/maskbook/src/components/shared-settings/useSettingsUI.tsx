@@ -48,6 +48,11 @@ const useStyles = makeStyles((theme) =>
         arrowIcon: {
             color: theme.palette.text.primary,
         },
+        centerLayout: {
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+        },
     }),
 )
 
@@ -163,6 +168,18 @@ export function SettingsUIEnum<T extends object>(
     )
 }
 
+const useMenuStyles = makeStyles((theme) =>
+    createStyles({
+        menuItem: {
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+        },
+        menuSelect: {
+            backgroundColor: '#F1F2F8 !important',
+        },
+    }),
+)
 /**
  * Convert a ValueRef<Enum> into a Select element.
  * @param ref - The value ref
@@ -187,6 +204,7 @@ function useEnumSettings<Q extends object>(
             ref.value = value
         })
     }
+    const classes = useMenuStyles()
     return (
         <Select
             fullWidth
@@ -195,7 +213,10 @@ function useEnumSettings<Q extends object>(
             value={useValueRef(ref)}
             onChange={(event) => change(event.target.value)}>
             {enum_.map(({ key, value }) => (
-                <MenuItem value={String(value)} key={String(key)}>
+                <MenuItem
+                    value={String(value)}
+                    key={String(key)}
+                    classes={{ root: classes.menuItem, selected: classes.menuSelect }}>
                     {getText?.(value) ?? String(key)}
                 </MenuItem>
             ))}
