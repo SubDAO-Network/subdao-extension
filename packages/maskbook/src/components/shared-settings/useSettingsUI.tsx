@@ -127,7 +127,7 @@ export function SettingsUIDummy(props: Omit<SettingsUIProps<null>, 'value'> & { 
             action={
                 <ListItemSecondaryActionPadding onClick={props.onClick}>
                     {/*<ArrowForwardIosIcon classes={{ root: classes.arrowIcon }} />*/}
-                    <img src={IconsURLs.rightArrow.image} alt="" class="imgBg" />
+                    <img src={IconsURLs.rightArrow.image} alt="" className="imgBg" />
                 </ListItemSecondaryActionPadding>
             }
         />
