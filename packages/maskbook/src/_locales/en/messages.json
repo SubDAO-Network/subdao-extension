@@ -157,7 +157,7 @@
     "popup_notifications_description": "SubDAO needs permission to access content on {{sns}}.",
     "profiles": "Profiles",
     "posts": "Posts",
-    "post_dialog__button": "Finish",
+    "post_dialog__button": "Send Poll",
     "post_dialog__dismiss_aria": "Dismiss the compose dialog",
     "post_dialog__image_payload": "Image Payload",
     "post_dialog__more_options_title": "More Options",
