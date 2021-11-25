@@ -69,7 +69,7 @@ const useStyles = makeStyles((theme) =>
             backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.08)' : 'transparent',
         },
         title: {
-            fontWeight: 'normal',
+            fontWeight: 300,
             lineHeight: '30px',
             marginBottom: theme.spacing(2.5),
             [theme.breakpoints.down('sm')]: {

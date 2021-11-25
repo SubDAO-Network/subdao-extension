@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) =>
             paddingLeft: theme.spacing(2),
         },
         listItemText: {
-            fontWeight: 500,
+            fontWeight: 300,
         },
         listItemIcon: {
             marginLeft: 0,
