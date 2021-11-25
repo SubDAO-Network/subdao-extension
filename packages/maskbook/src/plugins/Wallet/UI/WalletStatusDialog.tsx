@@ -52,6 +52,10 @@ const useStyles = makeStyles((theme) =>
             height: 24,
             marginRight: theme.spacing(1),
         },
+        title: {
+            fontSize: 24,
+            marginBottom: 20
+        },
         tip: {
             flex: 1,
             fontSize: 14,
@@ -159,8 +163,11 @@ export function WalletStatusDialog(props: WalletStatusDialogProps) {
     if (!selectedWallet) return null
 
     return (
-        <InjectedDialog title={t('wallet_status_title')} open={open} onClose={onClose} DialogProps={{ maxWidth: 'xs' }}>
+        <InjectedDialog title={" "} open={open} onClose={onClose} DialogProps={{ maxWidth: 'xs' }}>
             <DialogContent className={classes.content}>
+                <Typography className={classes.title} color="textPrimary" variant="h5">
+                    {t('wallet_status_title')}
+                </Typography>
                 <section className={classes.section}>
                     <Typography className={classes.tip} color="textSecondary">
                         {t('wallet_status_connect_with', { provider: resolveProviderName(selectedWalletProvider) })}

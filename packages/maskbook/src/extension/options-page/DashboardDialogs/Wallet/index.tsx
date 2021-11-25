@@ -116,10 +116,9 @@ export function DashboardWalletRenameDialog(props: WrappedDialogProps<WalletProp
     return (
         <DashboardDialogCore fullScreen={false} {...props}>
             <DashboardDialogWrapper
-                size="small"
                 primary={t('wallet_rename')}
                 content={
-                    <TextField
+                    <TextInput
                         helperText={
                             checkInputLengthExceed(name)
                                 ? t('input_length_exceed_prompt', {
@@ -138,15 +137,15 @@ export function DashboardWalletRenameDialog(props: WrappedDialogProps<WalletProp
                 }
                 footer={
                     <SpacedButtonGroup>
+                        <Button variant="outlined" color="inherit" onClick={props.onClose}>
+                            {t('cancel')}
+                        </Button>
                         <DebounceButton
                             variant="contained"
                             onClick={renameWallet}
                             disabled={name.length === 0 || checkInputLengthExceed(name)}>
                             {t('ok')}
                         </DebounceButton>
-                        <Button variant="outlined" color="inherit" onClick={props.onClose}>
-                            {t('cancel')}
-                        </Button>
                     </SpacedButtonGroup>
                 }
             />
@@ -154,6 +153,31 @@ export function DashboardWalletRenameDialog(props: WrappedDialogProps<WalletProp
     )
 }
 //#endregion
+const useStyles = makeStyles((theme) =>
+    createStyles({
+        cancel: {
+            border: 'none',
+            color: 'white',
+            '&, &:hover': {
+                backgroundColor: '#5C5F85',
+            },
+        },
+    }),
+)
+function ButtonCancel(props: any) {
+    const classes = useStyles()
+    const { t } = useI18N()
+    return (
+        <Button
+            size="medium"
+            classes={{ root: classes.cancel }}
+            variant="outlined"
+            color="inherit"
+            onClick={props.onClose}>
+            {t('cancel')}
+        </Button>
+    )
+}
 
 //#region wallet delete dialog
 export function DashboardWalletDeleteConfirmDialog(props: WrappedDialogProps<WalletProps>) {
@@ -169,23 +193,15 @@ export function DashboardWalletDeleteConfirmDialog(props: WrappedDialogProps<Wal
     return (
         <DashboardDialogCore fullScreen={false} {...props}>
             <DashboardDialogWrapper
-                size="small"
-                icon={<CreditCardIcon />}
-                iconColor="#F4637D"
+                alert
                 primary={t('delete_wallet')}
                 secondary={t('delete_wallet_hint')}
                 footer={
                     <SpacedButtonGroup>
-                        <DebounceButton
-                            variant="contained"
-                            color="danger"
-                            onClick={onConfirm}
-                            data-testid="confirm_button">
+                        <ButtonCancel onClose={props.onClose}></ButtonCancel>
+                        <DebounceButton variant="contained" onClick={onConfirm} data-testid="confirm_button">
                             {t('confirm')}
                         </DebounceButton>
-                        <Button variant="outlined" color="inherit" onClick={props.onClose}>
-                            {t('cancel')}
-                        </Button>
                     </SpacedButtonGroup>
                 }
             />
