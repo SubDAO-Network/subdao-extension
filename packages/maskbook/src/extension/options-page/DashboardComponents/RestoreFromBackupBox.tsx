@@ -8,9 +8,10 @@ import { useI18N } from '../../../utils/i18n-next-ui'
 const useStyles = makeStyles((theme) =>
     createStyles({
         root: {
-            border: `solid 1px ${theme.palette.divider}`,
-            height: 176,
-            borderRadius: 4,
+            // border: `solid 1px ${theme.palette.divider}`,
+            height: 220,
+            background: '#F7F8FB',
+            // borderRadius: 4,
         },
         file: {
             display: 'none',
@@ -62,7 +63,7 @@ export function RestoreFromBackupBox(props: RestoreFromBackupBoxProps) {
                 enterText={t('restore_database_dragging')}
                 leaveText={t('restore_database_dragged')}
                 darkPlaceholderImageURL={new URL('./RestoreFromBackupBox-dark.png', import.meta.url).toString()}
-                lightPlaceholderImageURL={new URL('./RestoreFromBackupBox-light.png', import.meta.url).toString()}
+                lightPlaceholderImageURL={new URL('./file.png', import.meta.url).toString()}
                 data-active={over}
                 onClick={() => inputRef.current && inputRef.current.click()}
             />

@@ -33,6 +33,9 @@ const useStyle = makeStyles((theme) =>
         button: {
             maxWidth: '90%',
             position: 'relative',
+            fontWeight: 300,
+            color: '#10164B',
+            marginTop: -20,
             '& > span:first-child': {
                 display: 'inline-block',
                 maxWidth: '100%',
@@ -47,6 +50,9 @@ const useStyle = makeStyles((theme) =>
             lineHeight: 1,
             paddingTop: 0,
             paddingBottom: 0,
+            '&:hover': {
+                background: 'transparent',
+            },
         },
         placeholder: {
             display: 'flex',
@@ -61,8 +67,8 @@ const useStyle = makeStyles((theme) =>
             backgroundSize: '64px 64px',
         },
         placeholderImage: {
-            width: 64,
-            height: 64,
+            width: 35,
+            height: 40,
         },
     }),
 )
@@ -93,6 +99,7 @@ export function RestoreBox(props: RestoreBoxProps) {
                 className={classes.button}
                 classes={{ text: classes.buttonText }}
                 variant="text"
+                disableRipple={true}
                 style={{ paddingLeft: entered || file ? 8 : 28 }}
                 onClick={(e: React.MouseEvent<HTMLButtonElement>) => e.preventDefault()}>
                 {entered ? enterText : file ? file.name : leaveText}

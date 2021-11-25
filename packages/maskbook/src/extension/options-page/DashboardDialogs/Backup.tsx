@@ -17,6 +17,16 @@ import { UpgradeBackupJSONFile, BackupJSONFileLatest } from '../../../utils/type
 import { extraPermissions } from '../../../utils/permissions'
 import { green } from '@material-ui/core/colors'
 import { extendsTheme } from '../../../utils/theme'
+import { experimentalStyled as styled } from '@material-ui/core'
+
+const ActionButtonDis = styled(ActionButton)`
+    color: #ffffff !important;
+    font-size: 0.12rem;
+    border-radius: 4px !important;
+    &.Mui-disabled {
+        background: rgba(213, 36, 115, 0.6) !important;
+    }
+`
 
 const useDatabaseStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -128,7 +138,8 @@ const useSelectBackupStyles = makeStyles((theme: Theme) =>
             boxSizing: 'border-box',
             border: `solid 1px ${theme.palette.divider}`,
             borderRadius: 4,
-            height: 176,
+            fontSize: 12,
+            height: 220,
             padding: theme.spacing(2, 3),
             '& > textarea': {
                 overflow: 'auto !important',
@@ -245,7 +256,7 @@ function SelectBackup({ onConfirm }: SelectBackupProps) {
                         }}>
                         <AbstractTab {...tabProps}></AbstractTab>
                     </Box>
-                    <ActionButton
+                    <ActionButtonDis
                         width="100%"
                         className={selectBackupClasses.button}
                         variant="contained"
@@ -258,7 +269,7 @@ function SelectBackup({ onConfirm }: SelectBackupProps) {
                         onClick={restoreDB}
                         data-testid="restore_button">
                         {t('set_up_button_restore')}
-                    </ActionButton>
+                    </ActionButtonDis>
                 </Box>
             }
         />
