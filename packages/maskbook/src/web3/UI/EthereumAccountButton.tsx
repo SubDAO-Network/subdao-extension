@@ -37,6 +37,11 @@ const useStyles = makeStyles((theme) => {
             fontWeight: 300,
             color: '#10164B',
             fontSize: 14,
+            '&:hover': {
+                border: 0,
+                background: '#F1F2F8',
+                borderRadius: 8,
+            },
         },
         buttonTransparent: {
             backgroundColor: 'transparent',
@@ -45,6 +50,7 @@ const useStyles = makeStyles((theme) => {
             fontSize: 24,
             width: 24,
             height: 24,
+            borderRadius: 24,
         },
         chainIcon: {
             fontSize: 18,
