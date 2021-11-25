@@ -104,7 +104,7 @@ const useStyles = makeStyles((theme) => {
         },
         titleContent: {
             color: theme.palette.text.primary,
-            fontWeight: 500,
+            fontWeight: 300,
             fontSize: 32,
             lineHeight: 1.2,
             [theme.breakpoints.down('sm')]: {

@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) =>
             overflow: 'hidden',
             wordBreak: 'break-all',
             whiteSpace: 'nowrap',
-            fontWeight: 500,
+            fontWeight: 300,
         },
         menu: {
             flex: '0 0 auto',

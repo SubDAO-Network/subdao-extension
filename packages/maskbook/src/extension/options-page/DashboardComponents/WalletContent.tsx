@@ -20,6 +20,15 @@ import type { WalletRecord } from '../../../plugins/Wallet/database/types'
 import { WalletAssetsTable } from './WalletAssetsTable'
 import { useSubstrate } from '../../../polkadot/provider'
 
+import { experimentalStyled as styled } from '@material-ui/core'
+
+const TabBg = styled(Tab)`
+    min-width: auto !important;
+    color: #10164b !important;
+    font-size: 18px !important;
+    font-weight: 400 !important;
+`
+
 const useStyles = makeStyles((theme) =>
     createStyles({
         root: {
@@ -63,8 +72,10 @@ const useStyles = makeStyles((theme) =>
             backgroundColor: 'rgba(247, 147, 0, 0.6)',
             color: '#FFFFFF',
             marginLeft: 10,
-            height: 36,
-            width: 36,
+            height: 18,
+            width: 18,
+            padding: 9,
+            boxSizing: 'content-box',
             marginTop: 6,
             borderRadius: 8,
             cursor: 'pointer',
@@ -144,7 +155,7 @@ export const WalletContent = forwardRef<HTMLDivElement, WalletContentProps>(func
                         indicatorColor="primary"
                         textColor="primary"
                         onChange={onTabChange}>
-                        <Tab label={t('dashboard_tab_token')}></Tab>
+                        <TabBg label={t('dashboard_tab_token')}></TabBg>
                     </Tabs>
                 </Box>
 

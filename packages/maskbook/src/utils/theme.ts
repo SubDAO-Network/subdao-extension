@@ -34,8 +34,8 @@ const base: ThemeOptions = {
     },
     typography: {
         fontFamily: 'Roboto',
-        fontWeightRegular: 300,
-        fontWeightBold: 400,
+        fontWeightRegular: 100,
+        fontWeightBold: 300,
     },
     breakpoints: {
         values: {
@@ -52,6 +52,7 @@ const base: ThemeOptions = {
                 root: {
                     textTransform: 'unset',
                     minWidth: '100px',
+                    borderRadius: '8px',
                 },
             },
             defaultProps: {

@@ -52,6 +52,16 @@ import { formatBalance } from '@polkadot/util'
 import { useSnackbarCallback } from '../DashboardDialogs/Base'
 import { WalletIconURLs } from '../../../resources/wallet-icon'
 
+import { experimentalStyled as styled } from '@material-ui/core'
+
+const TokenIconBg = styled(Box)`
+    display: flex;
+    align-items: center;
+`
+const TypographyBG = styled(Typography)`
+    color: #bec0d2;
+`
+
 const circleIcon = <CircularProgress color="inherit" size={12} />
 const sendIcon = <SendIcon size={12} />
 
@@ -79,7 +89,11 @@ const useStyles = makeStyles((theme: Theme) => {
             whiteSpace: 'nowrap',
             borderBottom: 'none',
             textAlign: 'left',
-            flex: 3,
+            // flex: 3,
+            fontWeight: 300,
+            '&:first-child': {
+                width: 400,
+            },
         },
         row: {
             display: 'flex',
@@ -93,8 +107,8 @@ const useStyles = makeStyles((theme: Theme) => {
             display: 'flex',
         },
         coin: {
-            width: 24,
-            height: 24,
+            width: 40,
+            height: 40,
         },
         name: {
             marginLeft: theme.spacing(1),
@@ -212,13 +226,13 @@ function ViewDetailed(props: ViewDetailedProps) {
     balanceAll &&
         (balanceAll as DeriveBalancesAll).availableBalance &&
         allItems.push(
-            <Typography key={1}>
+            <TypographyBG key={1}>
                 {t('transferrable')}
                 <FormatBalance
                     className={classes.balanceMore}
                     value={(balanceAll as DeriveBalancesAll).availableBalance}
                 />
-            </Typography>,
+            </TypographyBG>,
         )
     balanceAll?.reservedBalance?.gtn(0) &&
         allItems.push(
@@ -231,7 +245,7 @@ function ViewDetailed(props: ViewDetailedProps) {
     return (
         <ListItem className={classes.row}>
             {[
-                <Box
+                <TokenIconBg
                     onClick={onCopy}
                     sx={{
                         display: 'flex',
@@ -249,7 +263,7 @@ function ViewDetailed(props: ViewDetailedProps) {
                             {formatPolkadotAddress(address, 4)}
                         </Typography>
                     )}
-                </Box>,
+                </TokenIconBg>,
                 <Box
                     sx={{
                         display: 'flex',
