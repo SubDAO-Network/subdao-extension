@@ -255,12 +255,12 @@ function ViewDetailed(props: ViewDetailedProps) {
                     {!isERC20 ? (
                         <Typography className={classes.name}>{`${wallet.name}(${formatPolkadotAddress(
                             address,
-                            4,
+                            10,
                         )})`}</Typography>
                     ) : (
                         <Typography className={classes.name}>
                             {tokenName}
-                            {formatPolkadotAddress(address, 4)}
+                            {formatPolkadotAddress(address, 10)}
                         </Typography>
                     )}
                 </TokenIconBg>,

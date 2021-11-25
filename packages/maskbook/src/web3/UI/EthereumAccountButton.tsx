@@ -42,9 +42,9 @@ const useStyles = makeStyles((theme) => {
             backgroundColor: 'transparent',
         },
         providerIcon: {
-            fontSize: 18,
-            width: 18,
-            height: 18,
+            fontSize: 24,
+            width: 24,
+            height: 24,
         },
         chainIcon: {
             fontSize: 18,
@@ -103,7 +103,7 @@ export function EthereumAccountButton(props: EthereumAccountButtonProps) {
                 {...props.ButtonProps}>
                 {selectedWallet?.name ?? ''}
                 {selectedWallet?.address
-                    ? ` (${formatPolkadotAddress(selectedWallet.address, 4)})`
+                    ? ` (${formatPolkadotAddress(selectedWallet.address, 10)})`
                     : t('plugin_wallet_on_connect')}
                 {/*{chainId !== ChainId.Mainnet && selectedWallet ? (*/}
                 {/*    <FiberManualRecordIcon*/}
