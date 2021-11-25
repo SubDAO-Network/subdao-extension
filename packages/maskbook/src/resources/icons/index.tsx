@@ -8,6 +8,7 @@ export type IconsTypes =
     | 'Groups'
     | 'wallets'
     | 'user'
+    | 'search'
 export const IconsURLs: Readonly<Record<IconsTypes, { image: string; text: string }>> = {
     feedback: { image: new URL('./feedback.png', import.meta.url).toString(), text: 'feedback' },
     delete: { image: new URL('./delete.png', import.meta.url).toString(), text: 'delete' },
@@ -18,4 +19,5 @@ export const IconsURLs: Readonly<Record<IconsTypes, { image: string; text: strin
     Groups: { image: new URL('./Groups.png', import.meta.url).toString(), text: 'Groups' },
     wallets: { image: new URL('./wallets.png', import.meta.url).toString(), text: 'wallets' },
     user: { image: new URL('./user.png', import.meta.url).toString(), text: 'user' },
+    search: { image: new URL('./search.png', import.meta.url).toString(), text: 'search' },
 }
