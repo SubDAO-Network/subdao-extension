@@ -62,6 +62,7 @@ const useStyles = makeStyles((theme) => {
             '&.Mui-selected': {
                 '& span': {
                     color: activeColor,
+                    fontWeight: 400,
                 },
                 backgroundColor: 'transparent',
             },

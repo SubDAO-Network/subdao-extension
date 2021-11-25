@@ -33,6 +33,7 @@ const useStyles = makeStyles((theme) =>
             display: 'flex',
             flexDirection: 'row',
             justifyContent: 'space-between',
+            alignItems: 'center',
         },
         dialogTitleTypography: {
             fontSize: '18px',
