@@ -8,6 +8,7 @@ import {
     InputAdornment,
     makeStyles,
     TextField,
+    InputBase,
     Theme,
     Typography,
     CircularProgress,
@@ -35,6 +36,8 @@ import { PolkadotTokenType } from '../../../polkadot/types'
 import { useTokenBalance } from '../../../polkadot/hooks/useTokenBalance'
 import { formatAmount } from '../../../polkadot/utils/format'
 import { isSameAddress, isSubdaoAddress } from '../../../polkadot/utils/helpers'
+import TextInput from './TextInput'
+import { ToolIconURLs } from '../../../resources/tool-icon'
 
 const circleIcon = <CircularProgress color="inherit" size={12} />
 
@@ -47,6 +50,10 @@ const useTransferTabStyles = makeStyles((theme) =>
     createStyles({
         root: {
             padding: theme.spacing(1),
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            flex: 1,
         },
         button: {
             marginTop: theme.spacing(3),
@@ -120,37 +127,40 @@ function TransferTab(props: TransferTabProps) {
     //#endregion
     return (
         <div className={classes.root}>
-            <TokenAmountPanel
-                amount={amount}
-                balance={tokenBalance}
-                label={t('wallet_transfer_amount')}
-                token={token}
-                onAmountChange={setAmount}
-                SelectTokenChip={{
-                    readonly: true,
-                }}
-                MaxChipProps={{
-                    classes: {
-                        root: classes.maxChipRoot,
-                        label: classes.maxChipLabel,
-                    },
-                }}
-            />
-            <TextField
-                required
-                label={t('wallet_transfer_to_address')}
-                placeholder={t('wallet_transfer_to_address')}
-                value={address}
-                onChange={(ev) => setAddress(ev.target.value)}
-            />
+            <div>
+                <TokenAmountPanel
+                    amount={amount}
+                    balance={tokenBalance}
+                    label={t('wallet_transfer_amount')}
+                    token={token}
+                    onAmountChange={setAmount}
+                    SelectTokenChip={{
+                        readonly: true,
+                    }}
+                    MaxChipProps={{
+                        classes: {
+                            root: classes.maxChipRoot,
+                            label: classes.maxChipLabel,
+                        },
+                    }}
+                />
+                <TextInput
+                    required
+                    label={t('wallet_transfer_to_address')}
+                    placeholder={t('wallet_transfer_to_address')}
+                    value={address}
+                    onChange={(ev) => setAddress(ev.target.value)}
+                />
+            </div>
             <Button
+                fullWidth
                 className={classes.button}
                 variant="contained"
                 color="primary"
                 startIcon={transferState?.type === StateType.WAIT_FOR_CONFIRMING && circleIcon}
                 disabled={!!validationMessage || transferState.type === StateType.WAIT_FOR_CONFIRMING}
                 onClick={onTransfer}>
-                {validationMessage || t('wallet_transfer_send')}
+                {t('wallet_transfer_send')}
             </Button>
         </div>
     )
@@ -168,6 +178,25 @@ const useReceiveTab = makeStyles((theme: Theme) =>
         },
         form: {
             padding: theme.spacing(1),
+            position: 'relative',
+        },
+        inputArea: {},
+        input: {
+            width: '100%',
+            boxSizing: 'border-box',
+            border: `solid 1px ${theme.palette.divider}`,
+            borderRadius: 4,
+            height: 56,
+            padding: theme.spacing(2, 3),
+            '& > textarea': {
+                overflow: 'auto !important',
+                height: '100% !important',
+            },
+        },
+        btnCopy: {
+            position: 'absolute',
+            right: 5,
+            bottom: 5,
         },
     }),
 )
@@ -186,28 +215,20 @@ function ReceiveTab(props: ReceiveTabProps) {
     const copyWalletAddress = useSnackbarCallback(async (address: string) => copyToClipboard(address), [])
     return (
         <>
-            <form className={classes.form}>
-                <TextField
-                    required
-                    label={t('wallet_address')}
-                    value={wallet.address}
-                    InputProps={{
-                        endAdornment: (
-                            <InputAdornment position="end">
-                                <IconButton
-                                    size="small"
-                                    onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                                        e.stopPropagation()
-                                        copyWalletAddress(wallet.address)
-                                    }}>
-                                    <FileCopyOutlinedIcon />
-                                </IconButton>
-                            </InputAdornment>
-                        ),
+            <div className={classes.form}>
+                <div className={classes.inputArea}>
+                    <Typography color="textSecondary">{t('wallet_address')}</Typography>
+                    <InputBase className={classes.input} value={wallet.address} readOnly multiline maxRows={2} />
+                </div>
+                <img
+                    src={ToolIconURLs.copy.image}
+                    className={classes.btnCopy}
+                    onClick={() => {
+                        copyWalletAddress(wallet.address)
                     }}
-                    variant="outlined"
+                    alt=""
                 />
-            </form>
+            </div>
             <div className={classes.qr}>
                 <QRCode
                     text={`polkadot:${wallet.address}`}
@@ -249,7 +270,7 @@ export function DashboardWalletTransferDialog(props: WrappedDialogProps<Transfer
                 primary={t('wallet_transfer_title')}
                 iconColor="#4EE0BC"
                 size="medium"
-                content={<AbstractTab height={268} {...tabProps} />}
+                content={<AbstractTab height={300} {...tabProps} />}
             />
         </DashboardDialogCore>
     )
