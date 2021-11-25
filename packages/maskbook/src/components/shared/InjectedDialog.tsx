@@ -28,13 +28,24 @@ const useStyles = makeStyles((theme) =>
     createStyles({
         dialogTitle: {
             padding: theme.spacing(1, 2),
-            borderBottom: `1px solid ${theme.palette.divider}`,
+            width: '100%',
+            boxSizing: 'border-box',
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
         },
         dialogTitleTypography: {
+            fontSize: '18px',
             marginLeft: 6,
+            fontWeight: 400,
             verticalAlign: 'middle',
         },
         dialogBackdropRoot: {},
+        close: {
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'flex-end',
+        },
     }),
 )
 
@@ -100,17 +111,19 @@ export function InjectedDialog(props: InjectedDialogProps) {
                 {...props.DialogProps}>
                 <ErrorBoundary>
                     {props.title ? (
-                        <DialogTitle classes={{ root: dialogTitle }}>
-                            <IconButton
-                                classes={{ root: dialogCloseButton }}
-                                aria-label={t('post_dialog__dismiss_aria')}
-                                onClick={props.onClose}>
-                                <DialogDismissIconUI disableArrowBack={props.disableArrowBack} />
-                            </IconButton>
-                            <Typography className={dialogTitleTypography} display="inline" variant="inherit">
+                        <div className={dialogTitle}>
+                            <Typography className={dialogTitleTypography} display="inline" variant="h5">
                                 {props.title}
                             </Typography>
-                        </DialogTitle>
+                            <div className={classes.close}>
+                                <IconButton
+                                    classes={{ root: dialogCloseButton }}
+                                    aria-label={t('post_dialog__dismiss_aria')}
+                                    onClick={props.onClose}>
+                                    <DialogDismissIconUI disableArrowBack={props.disableArrowBack} />
+                                </IconButton>
+                            </div>
+                        </div>
                     ) : null}
                     {content}
                     {actions}
