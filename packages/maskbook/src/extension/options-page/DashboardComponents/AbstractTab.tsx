@@ -1,6 +1,10 @@
 import { makeStyles } from '@material-ui/core/styles'
 import { Theme, createStyles, Tabs, Tab, Box, BoxProps, Paper } from '@material-ui/core'
 
+import { experimentalStyled as styled } from '@material-ui/core'
+
+const PaperBg = styled(Paper)``
+
 const useStyles = makeStyles((theme: Theme) => {
     const dark = theme.palette.mode === 'dark'
     return createStyles({
@@ -14,6 +18,9 @@ const useStyles = makeStyles((theme: Theme) => {
             marginTop: theme.spacing(3),
             display: 'flex',
             flexDirection: 'column',
+            height: 230,
+            overflowY: 'auto',
+            background: '#F7F8FB',
         },
     })
 })
@@ -37,7 +44,7 @@ export default function AbstractTab({ tabs, state, height = 200 }: AbstractTabPr
 
     return (
         <>
-            <Paper square elevation={0}>
+            <Paper elevation={0}>
                 <Tabs
                     value={value}
                     TabIndicatorProps={{ style: tabIndicatorStyle }}

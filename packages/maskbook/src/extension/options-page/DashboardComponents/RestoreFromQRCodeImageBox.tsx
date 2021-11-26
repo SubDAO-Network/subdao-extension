@@ -10,22 +10,23 @@ const useStyles = makeStyles((theme) =>
     createStyles({
         root: {
             width: '100%',
-            height: 112,
+            height: 230,
         },
         file: {
             display: 'none',
         },
         qr: {
-            maxWidth: 64,
-            maxHeight: 64,
+            maxWidth: 211,
+            maxHeight: 211,
             display: 'block',
         },
         restoreBoxRoot: {
             boxSizing: 'border-box',
-            border: `solid 1px ${theme.palette.divider}`,
+            // border: `solid 1px ${theme.palette.divider}`,
+            background: '#F7F8FB',
             display: 'flex',
             justifyContent: 'center',
-            height: 112,
+            height: 230,
             marginBottom: 16,
             borderRadius: 4,
         },
@@ -94,7 +95,7 @@ export function RestoreFromQRCodeImageBox(props: RestoreFromQRCodeImageBoxProps)
                 enterText={t('restore_database_advance_dragging')}
                 leaveText={t('restore_database_advance_dragged')}
                 darkPlaceholderImageURL={new URL('./RestoreFromQRCodeImageBox-dark.png', import.meta.url).toString()}
-                lightPlaceholderImageURL={new URL('./RestoreFromQRCodeImageBox-light.png', import.meta.url).toString()}
+                lightPlaceholderImageURL={new URL('./QR_Code.png', import.meta.url).toString()}
                 data-active={over}
                 onClick={() => inputRef.current && inputRef.current.click()}>
                 {file ? (

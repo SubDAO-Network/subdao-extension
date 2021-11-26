@@ -5,13 +5,13 @@ import { CircularProgress, makeStyles, createStyles, Theme } from '@material-ui/
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         progress: {
-            maxWidth: 64,
-            maxHeight: 64,
+            maxWidth: 180,
+            maxHeight: 180,
             position: 'absolute',
         },
         img: {
-            maxWidth: 64,
-            maxHeight: 64,
+            maxWidth: 180,
+            maxHeight: 180,
         },
     }),
 )

@@ -87,6 +87,70 @@ const NextBtn = styled(ActionButton)`
     }
 `
 
+const FirstBg = styled('div')`
+    width: 1100px;
+    margin: 0 auto;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+`
+
+const FirstHeader = styled('div')`
+    background: #fff;
+    border-radius: 10px;
+    padding: 25px 70px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    span {
+        font-size: 18px;
+        font-weight: 400;
+        color: #10164b;
+        margin-left: 10px;
+    }
+`
+
+const FirstMain = styled('div')`
+    background: #fff;
+    border-radius: 10px;
+    text-align: center;
+    flex-grow: 1;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .maincontent {
+        width: 400px;
+        text-align: left;
+    }
+`
+
+const FirstFoot = styled('div')`
+    font-size: 14px;
+    font-weight: 400;
+    color: #9094af;
+    padding: 26px 0;
+    text-align: center;
+`
+const Contents = styled('div')`
+    font-size: 18px;
+    font-weight: 300;
+    color: rgba(16, 22, 75, 0.6);
+    line-height: 1.2;
+    margin-bottom: 100px;
+`
+
+const BtnBrdr = styled('div')`
+    width: 100%;
+`
+const ActionButtonBg = styled(ActionButton)`
+    background: #d51172 !important;
+    border-radius: 4px !important;
+    width: 100% !important;
+    color: #ffffff !important;
+`
+
 //#region setup form
 const useSetupFormStyles = makeStyles((theme) => {
     const dark = theme.palette.mode === 'dark'
@@ -113,10 +177,12 @@ const useSetupFormStyles = makeStyles((theme) => {
         },
         wrapper2: {
             minHeight: '100vh',
-            backgroundImage: 'linear-gradient(176deg, #DC0D88 0%, #738FF9 100%)',
+            background: '#F7F8FB',
+            // backgroundImage: 'linear-gradient(176deg, #DC0D88 0%, #738FF9 100%)',
         },
         bgi: {
             minHeight: '100vh',
+            // background:'#fff',
             backgroundPosition: 'center bottom' /* Center the image */,
             backgroundRepeat: 'no-repeat' /* Do not repeat the image */,
             display: 'grid',
@@ -260,18 +326,23 @@ function WelcomeWarp(props: SetupFormProps) {
     return (
         <Fade in>
             <div className={classNames(classes.wrapper2)}>
-                <div className={classNames(classes.bgi)}>
-                    <div className={classes.imgContainer}>
+                <FirstBg>
+                    <FirstHeader>
                         <Image src={LogoIconURLs.subdao.image} width={40} height={40} />
-                    </div>
-                    <div className={classes.gridMain}>
-                        <Typography className={classNames(classes.primary, classes.primary2)} variant="h5">
-                            {props.primary}
-                        </Typography>
-                        <Typography className={classes.form2}>{props.content}</Typography>
-                    </div>
-                    <div className={classes.gridAction}>{props.actions}</div>
-                </div>
+                        <span>SubDAO</span>
+                    </FirstHeader>
+                    <FirstMain>
+                        <div className="maincontent">
+                            <div className={classNames(classes.primary, classes.primary2)} variant="h5">
+                                {props.primary}
+                            </div>
+                            <Contents>{props.content}</Contents>
+                            <BtnBrdr>{props.actions}</BtnBrdr>
+                        </div>
+                    </FirstMain>
+
+                    <FirstFoot>subdao.network</FirstFoot>
+                </FirstBg>
             </div>
         </Fade>
     )
@@ -359,13 +430,13 @@ export function ConsentDataCollection() {
             content={t('set_up_consent_data_collection_hint')}
             actions={
                 <>
-                    <ActionButton<typeof Link>
+                    <ActionButtonBg<typeof Link>
                         className={consentDataCollection.whiteButton}
                         variant="contained"
                         component={Link}
                         to={SetupStep.CreatePersona}>
                         {t('set_up_button_get_started')}
-                    </ActionButton>
+                    </ActionButtonBg>
                 </>
             }
         />

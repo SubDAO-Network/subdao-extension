@@ -18,6 +18,7 @@ const useStyle = makeStyles((theme) =>
             cursor: 'pointer',
             transition: '0.4s',
             overflow: 'hidden',
+            position: 'relative',
             '&[data-active=true]': {
                 color: 'black',
             },
@@ -35,7 +36,7 @@ const useStyle = makeStyles((theme) =>
             position: 'relative',
             fontWeight: 300,
             color: '#10164B',
-            marginTop: -20,
+            marginTop: 0,
             '& > span:first-child': {
                 display: 'inline-block',
                 maxWidth: '100%',
@@ -59,16 +60,16 @@ const useStyle = makeStyles((theme) =>
             alignItems: 'center',
             justifyContent: 'center',
             pointerEvents: 'none',
-            width: 64,
-            height: 64,
+            // width: 64,
+            // height: 64,
             margin: '20px auto',
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center',
             backgroundSize: '64px 64px',
         },
         placeholderImage: {
-            width: 35,
-            height: 40,
+            width: 'auto',
+            height: 'auto',
         },
     }),
 )
@@ -85,7 +86,7 @@ export interface RestoreBoxProps extends withClasses<never> {
 }
 
 export function RestoreBox(props: RestoreBoxProps) {
-    const { entered, file, enterText, leaveText, children, onClick } = props
+    const { entered, file, enterText, leaveText, children, onClick, noButton } = props
     const { darkPlaceholderImageURL, lightPlaceholderImageURL } = props
     const classes = useStylesExtends(useStyle(), props)
     const theme = useTheme()

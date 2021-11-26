@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-import { TextField, Button, makeStyles, createStyles } from '@material-ui/core'
+import { experimentalStyled as styled, TextField, Button, makeStyles, createStyles } from '@material-ui/core'
 import { UserPlus, UserCheck, User, UserMinus } from 'react-feather'
 
 import { useI18N } from '../../../utils/i18n-next-ui'
@@ -25,6 +25,16 @@ import { RestoreFromQRCodeCameraBox } from '../DashboardComponents/RestoreFromQR
 import { SetupStep } from '../SetupStep'
 import { useMyPersonas } from '../../../components/DataSource/useMyPersonas'
 import TextInput from '../DashboardComponents/TextInput'
+
+const Btn = styled(DebounceButton)`
+    color: #ffffff !important;
+    border-radius: 4px !important;
+    width: 100% !important;
+    &:disabled {
+        background: rgba(213, 17, 114, 0.5) !important;
+        border-radius: 4px !important;
+    }
+`
 
 const useStyles = makeStyles((theme) =>
     createStyles({
@@ -83,7 +93,7 @@ export function DashboardPersonaCreateDialog(props: WrappedDialogProps) {
                                           })
                                         : undefined
                                 }
-                                style={{ marginBottom: 20 }}
+                                // style={{ marginBottom: 20 }}
                                 autoFocus
                                 required
                                 label={t('name')}
@@ -101,13 +111,13 @@ export function DashboardPersonaCreateDialog(props: WrappedDialogProps) {
                     </>
                 }
                 footer={
-                    <DebounceButton
+                    <Btn
                         type="submit"
                         variant="contained"
                         onClick={createPersonaAndNext}
                         disabled={name.length === 0 || checkInputLengthExceed(name)}>
                         {t('create')}
-                    </DebounceButton>
+                    </Btn>
                 }></DashboardDialogWrapper>
         </DashboardDialogCore>
     )
@@ -243,7 +253,7 @@ export function DashboardImportPersonaDialog(props: WrappedDialogProps) {
                 secondary={t('dashboard_persona_import_dialog_hint')}
                 content={<AbstractTab {...tabProps}></AbstractTab>}
                 footer={
-                    <DebounceButton
+                    <Btn
                         fullWidth
                         variant="contained"
                         disabled={
@@ -268,7 +278,7 @@ export function DashboardImportPersonaDialog(props: WrappedDialogProps) {
                         }}
                         data-testid="import_button">
                         {t('import')}
-                    </DebounceButton>
+                    </Btn>
                 }></DashboardDialogWrapper>
         </DashboardDialogCore>
     )
@@ -294,7 +304,7 @@ export function DashboardPersonaRenameDialog(props: WrappedDialogProps<PersonaPr
             <DashboardDialogWrapper
                 primary={t('persona_rename')}
                 content={
-                    <TextField
+                    <TextInput
                         helperText={
                             checkInputLengthExceed(name)
                                 ? t('input_length_exceed_prompt', {
@@ -313,13 +323,13 @@ export function DashboardPersonaRenameDialog(props: WrappedDialogProps<PersonaPr
                 }
                 footer={
                     <SpacedButtonGroup>
-                        <ButtonCancel onClose={props.onClose}></ButtonCancel>
-                        <DebounceButton
+                        {/*<ButtonCancel onClose={props.onClose}></ButtonCancel>*/}
+                        <Btn
                             variant="contained"
                             onClick={renamePersona}
                             disabled={name.length === 0 || checkInputLengthExceed(name)}>
                             {t('ok')}
-                        </DebounceButton>
+                        </Btn>
                     </SpacedButtonGroup>
                 }
             />

@@ -4,6 +4,7 @@ import classNames from 'classnames'
 const useStyles = makeStyles((theme) =>
     createStyles({
         buttonGroup: {
+            width: '100%',
             flexGrow: 0,
             flexShrink: 0,
             '& > *:not(:last-child)': {
