@@ -1,5 +1,11 @@
 import { useState, useCallback } from 'react'
-import { DashboardDialogCore, DashboardDialogWrapper, WrappedDialogProps, useSnackbarCallback } from '../Base'
+import {
+    DashboardDialogCore,
+    DashboardDialogWrapper,
+    WrappedDialogProps,
+    useSnackbarCallback,
+    DashboardDialogWrapperAlert,
+} from '../Base'
 import {
     CreditCard as CreditCardIcon,
     Hexagon as HexagonIcon,
@@ -30,6 +36,15 @@ import { isETH, isSameAddress } from '../../../../web3/helpers'
 import { useAccount } from '../../../../web3/hooks/useAccount'
 import { WalletRPC } from '../../../../plugins/Wallet/messages'
 import TextInput from '../../DashboardComponents/TextInput'
+import { experimentalStyled as styled } from '@material-ui/core'
+
+const BtnGroup = styled(SpacedButtonGroup)`
+    display: flex;
+    justify-content: flex-end;
+    button {
+        border-radius: 4px !important;
+    }
+`
 
 //#region predefined token selector
 const useERC20PredefinedTokenSelectorStyles = makeStyles((theme) =>
@@ -158,6 +173,7 @@ const useStyles = makeStyles((theme) =>
         cancel: {
             border: 'none',
             color: 'white',
+            background: 'rgba(92, 95, 133, 0.6)!important',
             '&, &:hover': {
                 backgroundColor: '#5C5F85',
             },
@@ -192,17 +208,17 @@ export function DashboardWalletDeleteConfirmDialog(props: WrappedDialogProps<Wal
     )
     return (
         <DashboardDialogCore fullScreen={false} {...props}>
-            <DashboardDialogWrapper
+            <DashboardDialogWrapperAlert
                 alert
                 primary={t('delete_wallet')}
                 secondary={t('delete_wallet_hint')}
                 footer={
-                    <SpacedButtonGroup>
+                    <BtnGroup>
                         <ButtonCancel onClose={props.onClose}></ButtonCancel>
                         <DebounceButton variant="contained" onClick={onConfirm} data-testid="confirm_button">
                             {t('confirm')}
                         </DebounceButton>
-                    </SpacedButtonGroup>
+                    </BtnGroup>
                 }
             />
         </DashboardDialogCore>

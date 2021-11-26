@@ -50,8 +50,6 @@ const BtnGroup = styled(SpacedButtonGroup)`
     }
 `
 
-const Btncancel = styled(ButtonCancel)``
-
 const useStyles = makeStyles((theme) =>
     createStyles({
         cancel: {
