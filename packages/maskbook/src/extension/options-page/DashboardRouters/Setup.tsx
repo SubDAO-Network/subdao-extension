@@ -51,6 +51,42 @@ import { Image } from '../../../components/shared/Image'
 import TextInput from '../DashboardComponents/TextInput'
 import FooterLine from '../DashboardComponents/FooterLine'
 
+const TxtInput = styled(TextInput)`
+    .MuiInputBase-root {
+        background: #f7f8fb !important;
+        border-radius: 8px !important;
+    }
+    label {
+        font-size: 14px;
+        font-weight: 300;
+        color: #bec0d2 !important;
+    }
+    fieldset {
+        border: 0 !important;
+    }
+`
+
+const RestoreBtn = styled(ActionButton)`
+    font-family: Roboto;
+
+    font-size: 14px;
+    font-weight: 300;
+    color: #9094af;
+    line-height: 0.16rem;
+    &:hover {
+        background: transparent !important;
+    }
+`
+
+const NextBtn = styled(ActionButton)`
+    color: #ffffff !important;
+    border-radius: 8px !important;
+    &:disabled {
+        background: rgba(213, 17, 114, 0.5) !important;
+        border-radius: 8px !important;
+    }
+`
+
 //#region setup form
 const useSetupFormStyles = makeStyles((theme) => {
     const dark = theme.palette.mode === 'dark'
@@ -144,9 +180,9 @@ const useSetupFormStyles = makeStyles((theme) => {
         },
         section3: {},
         primary: {
-            fontWeight: 500,
-            fontSize: 41,
-            lineHeight: 1,
+            fontWeight: 300,
+            fontSize: 32,
+            lineHeight: 1.2,
             marginBottom: theme.spacing(2),
             [theme.breakpoints.down('sm')]: {
                 fontSize: 18,
@@ -155,9 +191,10 @@ const useSetupFormStyles = makeStyles((theme) => {
         },
         primary2: {},
         secondary: {
-            fontSize: 20,
-            lineHeight: 1.5,
+            fontSize: 18,
+            lineHeight: 1.2,
             marginBottom: theme.spacing(5),
+            opacity: 0.6,
             [theme.breakpoints.down('sm')]: {
                 fontSize: 14,
                 marginBottom: theme.spacing(2),
@@ -182,10 +219,12 @@ const useSetupFormStyles = makeStyles((theme) => {
                 margin: 0,
             },
         },
+
         button: {
             width: 220,
             height: 40,
             marginBottom: 20,
+            borderRadius: 8,
         },
         restoreButton: {
             marginTop: 44,
@@ -369,8 +408,8 @@ export function CreatePersona() {
             secondary={t('set_up_create_persona_hint')}
             content={
                 <>
-                    <TextInput
-                        required
+                    <TxtInput
+                        // required
                         autoFocus
                         value={name}
                         onChange={(e) => setName(e.target.value)}
@@ -391,7 +430,7 @@ export function CreatePersona() {
             }
             actions={
                 <>
-                    <ActionButton
+                    <NextBtn
                         width="100%"
                         className={setupFormClasses.button}
                         variant="contained"
@@ -399,15 +438,15 @@ export function CreatePersona() {
                         disabled={!name}
                         data-testid="next_button">
                         {t('set_up_button_next')}
-                    </ActionButton>
-                    <ActionButton<typeof Link>
+                    </NextBtn>
+                    <RestoreBtn<typeof Link>
                         disableRipple={true}
                         width="100%"
                         component={Link}
                         to={SetupStep.RestoreDatabase}
                         data-testid="backup_button">
                         {t('set_up_button_from_backup')}
-                    </ActionButton>
+                    </RestoreBtn>
                 </>
             }
         />

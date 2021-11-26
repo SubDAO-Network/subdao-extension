@@ -10,6 +10,8 @@ export type IconsTypes =
     | 'user'
     | 'search'
     | 'file'
+    | 'Twitter'
+    | 'TwitterActive'
 export const IconsURLs: Readonly<Record<IconsTypes, { image: string; text: string }>> = {
     feedback: { image: new URL('./feedback.png', import.meta.url).toString(), text: 'feedback' },
     delete: { image: new URL('./delete.png', import.meta.url).toString(), text: 'delete' },
@@ -22,4 +24,6 @@ export const IconsURLs: Readonly<Record<IconsTypes, { image: string; text: strin
     user: { image: new URL('./user.png', import.meta.url).toString(), text: 'user' },
     search: { image: new URL('./search.png', import.meta.url).toString(), text: 'search' },
     file: { image: new URL('./file.png', import.meta.url).toString(), text: 'file' },
+    Twitter: { image: new URL('./Twitter.png', import.meta.url).toString(), text: 'Twitter' },
+    TwitterActive: { image: new URL('./TwitterActive.png', import.meta.url).toString(), text: 'TwitterActive' },
 }

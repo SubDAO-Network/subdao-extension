@@ -9,6 +9,7 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
 import { facebookDomain } from '../../../social-network-adaptor/facebook.com/utils/isMobile'
 import { twitterDomain } from '../../../social-network-adaptor/twitter.com/utils/isMobile'
 import { Flags } from '../../../utils/flags'
+import { IconsURLs } from '../../../resources/icons'
 
 const useStyles = makeStyles((theme) =>
     createStyles<string, { border: boolean }>({
@@ -17,6 +18,7 @@ const useStyles = makeStyles((theme) =>
             fontSize: 12,
             lineHeight: 1.75,
             marginBottom: 8,
+            color: '#BEC0D2',
         },
         text: {
             fontSize: 14,
@@ -97,11 +99,13 @@ export default function ProviderLine(props: ProviderLineProps) {
                 )}
                 {connected ? (
                     <IconButton size="small" onClick={onAction} className={classes.cursor}>
-                        <LinkOffIcon />
+                        {/*<LinkOffIcon />*/}
+                        <img src={IconsURLs.Twitter.image} alt="" />
                     </IconButton>
                 ) : (
                     <IconButton size="small">
-                        <ArrowForwardIcon color="primary" />
+                        {/*<ArrowForwardIcon color="primary" />*/}
+                        <img src={IconsURLs.TwitterActive.image} alt="" />
                     </IconButton>
                 )}
             </Typography>

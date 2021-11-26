@@ -4,15 +4,17 @@ import classNames from 'classnames'
 const useStyles = makeStyles((theme) => ({
     root: {
         '&:first-child': {
-            marginTop:  theme.spacing(1.25),
+            marginTop: theme.spacing(1.25),
+            fontWeight: 300,
         },
         '& label': {
+            fontSize: 14,
             transform: 'translate(-0, -6px) scale(0.75) !important',
             textAlign: 'left',
             position: 'inherit',
         },
         '& label text': {
-            color: '#D51172',
+            color: 'color: rgba(16, 22, 75, 0.6)',
         },
         '& fieldset': {
             top: 0,
