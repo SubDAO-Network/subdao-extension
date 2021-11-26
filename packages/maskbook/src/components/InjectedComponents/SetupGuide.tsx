@@ -38,6 +38,7 @@ import { extendsTheme } from '../../utils/theme'
 import { makeTypedMessageText } from '../../protocols/typed-message'
 import { Image } from '../shared/Image'
 import { LogoIconURLs } from '../../resources/logo'
+import { SubDAOIcon } from '../../resources/MaskbookIcon'
 
 export enum SetupGuideStep {
     FindUsername = 'find-username',
@@ -107,9 +108,8 @@ const useWizardDialogStyles = makeStyles((theme) =>
         root: {
             padding: '56px 20px 48px',
             position: 'relative',
-            boxShadow: theme.palette.mode === 'dark' ? 'none' : theme.shadows[4],
-            border: `${theme.palette.mode === 'dark' ? 'solid' : 'none'} 1px ${theme.palette.divider}`,
-            borderRadius: 12,
+            boxShadow: theme.palette.mode === 'dark' ? 'none' : '0px 0px 4px 4px #F1F3F4',
+            borderRadius: 10,
             [theme.breakpoints.down('sm')]: {
                 padding: '35px 20px 16px',
                 position: 'fixed',
@@ -117,14 +117,11 @@ const useWizardDialogStyles = makeStyles((theme) =>
                 left: 0,
                 margin: 0,
                 alignSelf: 'center',
-                borderRadius: 0,
-                boxShadow: 'none',
-                border: `solid 1px ${theme.palette.divider}`,
                 width: '100%',
             },
             userSelect: 'none',
             boxSizing: 'border-box',
-            width: 320,
+            width: 325,
             overflow: 'hidden',
         },
         button: {
@@ -154,9 +151,10 @@ const useWizardDialogStyles = makeStyles((theme) =>
             top: 10,
         },
         primary: {
-            fontSize: 30,
-            fontWeight: 500,
-            lineHeight: '37px',
+            fontSize: 24,
+            fontWeight: 400,
+            lineHeight: '29px',
+            color: '#10164B',
         },
         secondary: {
             fontSize: 14,
@@ -169,8 +167,11 @@ const useWizardDialogStyles = makeStyles((theme) =>
         },
         tip: {
             fontSize: 16,
-            lineHeight: 1.75,
             marginBottom: 24,
+            fontFamily: 'Chirp-Regular, Chirp',
+            fontWeight: 400,
+            color: 'rgba(16, 22, 75, 0.6)',
+            lineHeight: '19px',
         },
         textButton: {
             fontSize: 14,
@@ -223,7 +224,6 @@ interface ContentUIProps {
 function ContentUI(props: ContentUIProps) {
     const classes = useStyles(props)
     const xsMatch = useMatchXS()
-    const wizardClasses = useWizardDialogStyles()
     switch (props.dialogType) {
         case SetupGuideStep.FindUsername:
             return (
@@ -303,7 +303,7 @@ function WizardDialog(props: WizardDialogProps) {
                 <Paper className={classes.root}>
                     <header className={classes.header}>
                         <Typography className={classes.primary} color="textPrimary" variant="h1">
-                            <Image src={LogoIconURLs.subdao.image} width={26} height={26} />
+                            <SubDAOIcon />
                             {title}
                         </Typography>
                         {optional ? (
@@ -313,13 +313,6 @@ function WizardDialog(props: WizardDialogProps) {
                         ) : null}
                     </header>
                     <ContentUI dialogType={dialogType} content={content} tip={tip} footer={footer} />
-                    <Hidden only="xs">
-                        <LinearProgress
-                            className={classes.progress}
-                            color="secondary"
-                            variant="determinate"
-                            value={completion}></LinearProgress>
-                    </Hidden>
                     {onBack ? (
                         <IconButton className={classes.back} size="small" onClick={onBack}>
                             <ArrowBackIosOutlinedIcon cursor="pointer" />
