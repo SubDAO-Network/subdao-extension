@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme: Theme) => {
             flexDirection: 'column',
             height: 230,
             overflowY: 'auto',
-            background: '#F7F8FB',
+            // background: '#F7F8FB',
         },
     })
 })
