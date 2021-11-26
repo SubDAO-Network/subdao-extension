@@ -18,7 +18,7 @@ import { DashboardContactSearchDialog } from '../DashboardDialogs/Contact'
 import { IconsURLs } from '../../../resources/icons'
 
 import { experimentalStyled as styled } from '@material-ui/core'
-import { WalletQRCodeProps } from '@subdao/dashboard/dist/src/components/WalletQRCodeContainer'
+// import { WalletQRCodeProps } from '@subdao/dashboard/dist/src/components/WalletQRCodeContainer'
 
 const SectionBg = styled('section')`
     height: 100%;

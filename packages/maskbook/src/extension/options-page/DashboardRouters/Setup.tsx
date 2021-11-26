@@ -333,9 +333,7 @@ function WelcomeWarp(props: SetupFormProps) {
                     </FirstHeader>
                     <FirstMain>
                         <div className="maincontent">
-                            <div className={classNames(classes.primary, classes.primary2)} variant="h5">
-                                {props.primary}
-                            </div>
+                            <div className={classNames(classes.primary, classes.primary2)}>{props.primary}</div>
                             <Contents>{props.content}</Contents>
                             <BtnBrdr>{props.actions}</BtnBrdr>
                         </div>
