@@ -152,9 +152,22 @@ const useDashboardDialogWrapperStyles = makeStyles((theme) =>
             margin: '0 auto',
             backgroundColor: theme.palette.mode === 'dark' ? '#20265C' : 'white',
         },
+        wrapper2: {
+            display: 'flex',
+            flexDirection: 'column',
+            maxWidth: '100%',
+            width: (props) => getWrapperWidth(props.size),
+            padding: '22px !important',
+            margin: '0 auto',
+            backgroundColor: theme.palette.mode === 'dark' ? '#20265C' : 'white',
+        },
         header: {
             textAlign: 'left',
             paddingTop: 22,
+        },
+        header2: {
+            textAlign: 'left',
+            paddingTop: 0,
         },
         content: {
             flex: 1,
@@ -171,12 +184,13 @@ const useDashboardDialogWrapperStyles = makeStyles((theme) =>
         },
         primary: {
             margin: theme.spacing(2, 0, 1),
-            fontWeight: 500,
+            fontWeight: 300,
             fontSize: 24,
             lineHeight: '30px',
             display: 'flex',
             alignItems: 'center',
         },
+
         secondary: {
             lineHeight: '21px',
             fontSize: 18,
@@ -307,6 +321,55 @@ export function DashboardDialogWrapper(props: DashboardDialogWrapperProps) {
         <ThemeProvider theme={dialogTheme}>
             <DialogContent className={classes.wrapper}>
                 <section className={classes.header}>
+                    <Typography className={classes.primary} variant="h5">
+                        {alert && (
+                            <img
+                                src={new URL('./alert.png', import.meta.url).toString()}
+                                style={{ width: 24, height: 24 }}
+                                alt=""
+                            />
+                        )}
+                        {icon && cloneElement(icon, { width: 24, height: 24, stroke: iconColor })}
+                        <span style={icon || alert ? { marginLeft: 8 } : {}}>{primary}</span>
+                    </Typography>
+                    <Typography
+                        className={classNames(
+                            classes.secondary,
+                            size !== 'small' && constraintSecondary ? classes.confineSecondary : '',
+                            icon || alert ? classes.paddingSecondary : '',
+                        )}
+                        color="textSecondary"
+                        variant="body2"
+                        dangerouslySetInnerHTML={{ __html: secondary ?? '' }}></Typography>
+                </section>
+                {content ? <section className={classes.content}>{content}</section> : null}
+                {footer ? (
+                    <section className={classNames(classes.footer, layout === 'center' ? classes.center : null)}>
+                        {footer}
+                    </section>
+                ) : null}
+            </DialogContent>
+        </ThemeProvider>
+    )
+}
+export function DashboardDialogWrapperAlert(props: DashboardDialogWrapperProps) {
+    const {
+        size,
+        icon,
+        iconColor,
+        primary,
+        secondary,
+        constraintSecondary = true,
+        content,
+        footer,
+        layout,
+        alert,
+    } = props
+    const classes = useDashboardDialogWrapperStyles(props)
+    return (
+        <ThemeProvider theme={dialogTheme}>
+            <DialogContent className={classes.wrapper2}>
+                <section className={classes.header2}>
                     <Typography className={classes.primary} variant="h5">
                         {alert && (
                             <img

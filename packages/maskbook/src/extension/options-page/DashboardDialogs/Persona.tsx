@@ -13,7 +13,13 @@ import { QRCode } from '../../../components/shared/qrcode'
 import { useSnackbar } from 'notistack'
 import type { Persona } from '../../../database'
 
-import { DashboardDialogCore, DashboardDialogWrapper, WrappedDialogProps, useSnackbarCallback } from './Base'
+import {
+    DashboardDialogCore,
+    DashboardDialogWrapper,
+    WrappedDialogProps,
+    useSnackbarCallback,
+    DashboardDialogWrapperAlert,
+} from './Base'
 import AbstractTab, { AbstractTabProps } from '../DashboardComponents/AbstractTab'
 import { DebounceButton } from '../DashboardComponents/ActionButton'
 import SpacedButtonGroup from '../DashboardComponents/SpacedButtonGroup'
@@ -36,11 +42,22 @@ const Btn = styled(DebounceButton)`
     }
 `
 
+const BtnGroup = styled(SpacedButtonGroup)`
+    display: flex;
+    justify-content: flex-end;
+    button {
+        border-radius: 4px !important;
+    }
+`
+
+const Btncancel = styled(ButtonCancel)``
+
 const useStyles = makeStyles((theme) =>
     createStyles({
         cancel: {
             border: 'none',
             color: 'white',
+            background: 'rgba(92, 95, 133, 0.6)!important',
             '&, &:hover': {
                 backgroundColor: '#5C5F85',
             },
@@ -414,18 +431,18 @@ export function DashboardPersonaDeleteConfirmDialog(props: WrappedDialogProps<Pe
     )
     return (
         <DashboardDialogCore fullScreen={false} {...props}>
-            <DashboardDialogWrapper
+            <DashboardDialogWrapperAlert
                 alert
                 primary={t('delete_persona')}
                 secondary={t('dashboard_delete_persona_confirm_hint', { name: persona.nickname })}
                 footer={
-                    <SpacedButtonGroup>
+                    <BtnGroup>
                         <ButtonCancel onClose={props.onClose}></ButtonCancel>
                         <DebounceButton variant="contained" onClick={deletePersona} data-testid="confirm_button">
                             {t('confirm')}
                         </DebounceButton>
-                    </SpacedButtonGroup>
-                }></DashboardDialogWrapper>
+                    </BtnGroup>
+                }></DashboardDialogWrapperAlert>
         </DashboardDialogCore>
     )
 }
@@ -449,7 +466,7 @@ export function DashboardPersonaUnlinkConfirmDialog(props: WrappedDialogProps) {
 
     return (
         <DashboardDialogCore {...props}>
-            <DashboardDialogWrapper
+            <DashboardDialogWrapperAlert
                 alert
                 primary={t('disconnect_profile')}
                 secondary={t('dashboard_disconnect_profile_hint', {
@@ -458,13 +475,13 @@ export function DashboardPersonaUnlinkConfirmDialog(props: WrappedDialogProps) {
                     profile: identifier.userId,
                 })}
                 footer={
-                    <SpacedButtonGroup>
+                    <BtnGroup>
                         <ButtonCancel onClose={props.onClose}></ButtonCancel>
                         <DebounceButton variant="contained" onClick={onClick}>
                             {t('confirm')}
                         </DebounceButton>
-                    </SpacedButtonGroup>
-                }></DashboardDialogWrapper>
+                    </BtnGroup>
+                }></DashboardDialogWrapperAlert>
         </DashboardDialogCore>
     )
 }
