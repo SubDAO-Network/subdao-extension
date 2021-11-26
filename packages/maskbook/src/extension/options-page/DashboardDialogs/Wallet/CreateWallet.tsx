@@ -1,7 +1,16 @@
 import { useCopyToClipboard } from 'react-use'
 import { useState, useCallback, useEffect } from 'react'
 import { CreditCard as CreditCardIcon } from 'react-feather'
-import { TextField, makeStyles, createStyles, FormControlLabel, Checkbox, Theme, Typography } from '@material-ui/core'
+import {
+    TextField,
+    makeStyles,
+    createStyles,
+    FormControlLabel,
+    Checkbox,
+    Theme,
+    Typography,
+    InputBase,
+} from '@material-ui/core'
 import FileCopyIcon from '@material-ui/icons/FileCopy'
 import IconButton from '@material-ui/core/IconButton'
 import { mnemonicValidate } from '@polkadot/util-crypto'
@@ -11,7 +20,6 @@ import { DashboardDialogCore, DashboardDialogWrapper, WrappedDialogProps, useSna
 import { DebounceButton } from '../../DashboardComponents/ActionButton'
 import AbstractTab, { AbstractTabProps } from '../../DashboardComponents/AbstractTab'
 import ShowcaseBox from '../../DashboardComponents/ShowcaseBox'
-import TextInput from '../../DashboardComponents/TextInput'
 import { checkInputLengthExceed } from '../../../../utils/utils'
 import { WALLET_OR_PERSONA_NAME_MAX_LEN } from '../../../../utils/constants'
 
@@ -26,6 +34,7 @@ import { keypairType } from '../../../../polkadot/constants'
 import { useValueRef } from '../../../../utils/hooks/useValueRef'
 import { useI18N } from '../../../../utils/i18n-next-ui'
 import { currentSubstrateNetworkSettings } from '../../../../settings/settings'
+import { ToolIconURLs } from '../../../../resources/tool-icon'
 
 const useWalletCreateDialogStyle = makeStyles((theme: Theme) =>
     createStyles({
@@ -71,7 +80,7 @@ const useWalletCreateDialogStyle = makeStyles((theme: Theme) =>
         iconCopy: {
             position: 'absolute',
             right: 6,
-            bottom: 6,
+            bottom: 20,
         },
         section: {
             textAlign: 'left',
@@ -83,14 +92,55 @@ const useWalletCreateDialogStyle = makeStyles((theme: Theme) =>
             borderRadius: 4,
             fontSize: '14px',
         },
-        addressTittle: {
+        inputTitle: {
             fontSize: '14px',
             color: theme.palette.text.secondary,
             marginBottom: 6,
+            textAlign: 'left',
+            '& span': {
+                color: '#D52473',
+            },
         },
-        input: {
-            backgroundColor: '#F7F8FB',
-            fontSize: '14px',
+        mnemonicInput: {
+            height: 80,
+            borderRadius: 4,
+            border: '2px solid rgba(213, 17, 114, 0.2)',
+            padding: theme.spacing(1.25),
+            fontSize: 14,
+            lineHeight: '16px',
+            marginBottom: 16,
+        },
+        mnemonicInner: {
+            height: '100%',
+        },
+        checkLabel: {
+            textAlign: 'left',
+            paddingLeft: 10,
+            marginTop: 8,
+        },
+        privateInput: {
+            height: 80,
+            background: '#F7F8FB',
+            borderRadius: 4,
+            padding: theme.spacing(1.25),
+            fontSize: 14,
+            lineHeight: '16px',
+            marginBottom: 16,
+            '& textarea': {
+                height: '100%',
+            },
+        },
+        walletInput: {
+            height: 40,
+            fontSize: 14,
+            background: '#F7F8FB',
+            padding: 10,
+            borderRadius: 4,
+        },
+        inputHelp: {
+            color: '#D52473',
+            fontSize: 14,
+            textAlign: 'left',
         },
     }),
 )
@@ -155,23 +205,27 @@ export function WalletCreateDialog(props: WrappedDialogProps<object>) {
 
     const f = (
         <>
-            <TextInput
-                helperText={
-                    checkInputLengthExceed(name)
-                        ? t('input_length_exceed_prompt', {
-                              name: t('wallet_name').toLowerCase(),
-                              length: WALLET_OR_PERSONA_NAME_MAX_LEN,
-                          })
-                        : undefined
-                }
-                required
+            <Typography className={classes.inputTitle}>
+                {t('wallet_name')}
+                <span>*</span>
+            </Typography>
+            <InputBase
+                classes={{ root: classes.walletInput }}
+                fullWidth
                 autoFocus
-                label={t('wallet_name')}
+                required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                variant="outlined"
             />
-            <div>
+            <Typography className={classes.inputHelp}>
+                {checkInputLengthExceed(name)
+                    ? t('input_length_exceed_prompt', {
+                          name: t('wallet_name').toLowerCase(),
+                          length: WALLET_OR_PERSONA_NAME_MAX_LEN,
+                      })
+                    : null}
+            </Typography>
+            <div className={classes.checkLabel}>
                 <FormControlLabel
                     control={
                         <Checkbox checked={checkSave} onChange={onCheckboxChange} name="checksave" color="primary" />
@@ -183,29 +237,33 @@ export function WalletCreateDialog(props: WrappedDialogProps<object>) {
     )
 
     const tabProps: AbstractTabProps = {
+        height: 240,
         tabs: [
             {
                 label: t('mnemonic_words'),
                 children: (
                     <>
                         <div className={classes.mnemonic}>
-                            <TextInput
-                                className={classes.input}
+                            <Typography className={classes.inputTitle}>
+                                {t('mnemonic_words')}
+                                <span>*</span>
+                            </Typography>
+                            <InputBase
+                                classes={{ root: classes.mnemonicInput, input: classes.mnemonicInner }}
+                                fullWidth
                                 required
-                                label={t('mnemonic_words')}
                                 value={seed}
                                 onChange={(e) => onChangeSeed(e.target.value)}
                                 multiline
                                 rows={2}
-                                variant="outlined"
                             />
-                            <IconButton
+                            <img
+                                src={ToolIconURLs.copy.image}
+                                onClick={onCopyMnemonic}
                                 className={classes.iconCopy}
-                                color="primary"
-                                size="small"
-                                onClick={onCopyMnemonic}>
-                                <FileCopyIcon fontSize="small" />
-                            </IconButton>
+                                style={{ cursor: 'pointer' }}
+                                alt=""
+                            />
                         </div>
                         {f}
                     </>
@@ -215,15 +273,19 @@ export function WalletCreateDialog(props: WrappedDialogProps<object>) {
                 label: t('private_key'),
                 children: (
                     <div>
-                        <TextInput
-                            disabled
+                        <Typography className={classes.inputTitle}>
+                            {t('private_key')}
+                            <span>*</span>
+                        </Typography>
+                        <InputBase
+                            classes={{ root: classes.privateInput }}
+                            fullWidth
+                            readOnly
                             required
-                            label={t('private_key')}
                             value={seed}
                             onChange={(e) => onChangeSeed(e.target.value)}
                             multiline
                             rows={2}
-                            variant="outlined"
                         />
                         {f}
                     </div>
@@ -238,7 +300,7 @@ export function WalletCreateDialog(props: WrappedDialogProps<object>) {
     const content = (
         <>
             <section className={classes.section}>
-                <Typography className={classes.addressTittle}>{t('wallet_address')}</Typography>
+                <Typography className={classes.inputTitle}>{t('wallet_address')}</Typography>
                 <Typography className={classes.address}>{address}</Typography>
             </section>
             <AbstractTab {...tabProps} />

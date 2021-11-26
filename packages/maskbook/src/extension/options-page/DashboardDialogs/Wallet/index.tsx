@@ -13,7 +13,7 @@ import {
     Info as InfoIcon,
     Trash2 as TrashIcon,
 } from 'react-feather'
-import { Button, TextField, Typography, makeStyles, createStyles, Box, Theme, Chip } from '@material-ui/core'
+import { Button, TextField, Typography, makeStyles, createStyles, Box, Theme, Chip, InputBase } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
 import AbstractTab, { AbstractTabProps } from '../../DashboardComponents/AbstractTab'
 import { useI18N } from '../../../../utils/i18n-next-ui'
@@ -84,6 +84,22 @@ const useBackupDialogStyles = makeStyles((theme: Theme) =>
         section: {
             textAlign: 'left',
         },
+        input: {
+            height: 80,
+            background: '#F7F8FB',
+            borderRadius: 4,
+            fontSize: 14,
+            lineHeight: '16px',
+            padding: 10,
+        },
+        inner: {
+            height: '100%',
+        },
+        inputTitle: {
+            fontSize: 14,
+            color: theme.palette.text.secondary,
+            marginBottom: 6,
+        },
     }),
 )
 
@@ -102,12 +118,28 @@ export function DashboardWalletBackupDialog(props: WrappedDialogProps<WalletProp
                     <>
                         {wallet?.mnemonic.length ? (
                             <section className={classes.section}>
-                                <ShowcaseBox title={t('mnemonic_words')}>{wallet.mnemonic.join(' ')}</ShowcaseBox>
+                                <Typography className={classes.inputTitle}>{t('mnemonic_words')}</Typography>
+                                <InputBase
+                                    classes={{ root: classes.input, input: classes.inner }}
+                                    fullWidth
+                                    readOnly
+                                    value={wallet.mnemonic.join(' ')}
+                                    multiline
+                                    rows={2}
+                                />
                             </section>
                         ) : null}
                         {wallet?._private_key_ ? (
                             <section className={classes.section}>
-                                <ShowcaseBox title={t('private_key')}>{wallet?._private_key_}</ShowcaseBox>
+                                <Typography className={classes.inputTitle}>{t('private_key')}</Typography>
+                                <InputBase
+                                    classes={{ root: classes.input, input: classes.inner }}
+                                    fullWidth
+                                    readOnly
+                                    value={wallet?._private_key_}
+                                    multiline
+                                    rows={2}
+                                />
                             </section>
                         ) : null}
                     </>
