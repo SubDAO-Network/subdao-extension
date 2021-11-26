@@ -9,11 +9,11 @@ import {
     Theme,
     ThemeProvider,
     InputAdornment,
-    LinearProgress,
     unstable_createMuiStrictModeTheme,
     IconButton,
     Box,
     Hidden,
+    Button,
 } from '@material-ui/core'
 import classNames from 'classnames'
 import { ArrowRight } from 'react-feather'
@@ -36,8 +36,6 @@ import { useLastRecognizedIdentity } from '../DataSource/useActivatedUI'
 import { useMatchXS } from '../../utils/hooks/useMatchXS'
 import { extendsTheme } from '../../utils/theme'
 import { makeTypedMessageText } from '../../protocols/typed-message'
-import { Image } from '../shared/Image'
-import { LogoIconURLs } from '../../resources/logo'
 import { SubDAOIcon } from '../../resources/MaskbookIcon'
 
 export enum SetupGuideStep {
@@ -328,6 +326,12 @@ const useFindUsernameStyles = makeStyles((theme) =>
             marginTop: '45px !important',
             marginBottom: 24,
         },
+        inputField: {
+            borderRadius: 4,
+            '& fieldSet': {
+                border: '2px solid rgba(213, 17, 114, 0.2)',
+            },
+        },
         inputFocus: {
             '& svg': {
                 color: theme.palette.primary.main,
@@ -335,6 +339,15 @@ const useFindUsernameStyles = makeStyles((theme) =>
         },
         button: {
             marginLeft: theme.spacing(1),
+            width: 70,
+            height: 40,
+            background: '#1E9BEF',
+            borderRadius: 4,
+            color: '#FFFFFF',
+            fontSize: 14,
+            '&:hover': {
+                background: '#1E9BEF',
+            },
         },
         icon: {
             color: 'inherit',
@@ -390,6 +403,7 @@ function FindUsername({ username, onConnect, onDone, onClose, onUsernameChange =
                             disabled={!username}
                             InputProps={{
                                 classes: {
+                                    root: findUsernameClasses.inputField,
                                     focused: findUsernameClasses.inputFocus,
                                 },
                                 startAdornment: (
@@ -403,13 +417,9 @@ function FindUsername({ username, onConnect, onDone, onClose, onUsernameChange =
                             inputProps={{ 'data-testid': 'username_input' }}></TextField>
                         {gotoProfilePageImpl ? (
                             <Hidden only="xs">
-                                <IconButton
-                                    className={findUsernameClasses.button}
-                                    color={username ? 'primary' : 'default'}
-                                    onClick={onJump}
-                                    disabled={!username}>
-                                    <ArrowRight className={findUsernameClasses.icon} cursor="pinter" />
-                                </IconButton>
+                                <Button className={findUsernameClasses.button} onClick={onJump} disabled={!username}>
+                                    {t('setup_guide_profile')}
+                                </Button>
                             </Hidden>
                         ) : null}
                     </Box>
