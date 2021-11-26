@@ -66,6 +66,28 @@ const useTransferTabStyles = makeStyles((theme) =>
             paddingLeft: 6,
             paddingRight: 6,
         },
+        inputTitle: {
+            textAlign: 'left',
+            fontSize: 14,
+            marginBottom: 6,
+            '& span': {
+                color: '#D52473',
+            },
+        },
+        input: {
+            boxSizing: 'border-box',
+            borderRadius: 4,
+            height: 56,
+            lineHeight: '16px',
+            fontSize: 14,
+            background: '#F7F8FB',
+            padding: 10,
+            paddingRight: 34,
+            '& > textarea': {
+                overflow: 'auto !important',
+                height: '100% !important',
+            },
+        },
     }),
 )
 
@@ -144,13 +166,22 @@ function TransferTab(props: TransferTabProps) {
                         },
                     }}
                 />
-                <TextInput
-                    required
-                    label={t('wallet_transfer_to_address')}
-                    placeholder={t('wallet_transfer_to_address')}
-                    value={address}
-                    onChange={(ev) => setAddress(ev.target.value)}
-                />
+                <div style={{ marginTop: 28 }}>
+                    <Typography className={classes.inputTitle}>
+                        {t('wallet_transfer_to_address')}
+                        <span>*</span>
+                    </Typography>
+                    <InputBase
+                        classes={{ root: classes.input }}
+                        fullWidth
+                        required
+                        multiline
+                        rows={2}
+                        placeholder={t('wallet_transfer_to_address')}
+                        value={address}
+                        onChange={(ev) => setAddress(ev.target.value)}
+                    />
+                </div>
             </div>
             <Button
                 fullWidth
@@ -177,17 +208,26 @@ const useReceiveTab = makeStyles((theme: Theme) =>
             alignItems: 'center',
         },
         form: {
-            padding: theme.spacing(1),
             position: 'relative',
         },
         inputArea: {},
+        inputTitle: {
+            textAlign: 'left',
+            fontSize: 14,
+            marginBottom: 6,
+            '& span': {
+                color: '#D52473',
+            },
+        },
         input: {
-            width: '100%',
             boxSizing: 'border-box',
-            border: `solid 1px ${theme.palette.divider}`,
             borderRadius: 4,
             height: 56,
-            padding: theme.spacing(2, 3),
+            lineHeight: '16px',
+            fontSize: 14,
+            background: '#F7F8FB',
+            padding: 10,
+            paddingRight: 34,
             '& > textarea': {
                 overflow: 'auto !important',
                 height: '100% !important',
@@ -197,6 +237,7 @@ const useReceiveTab = makeStyles((theme: Theme) =>
             position: 'absolute',
             right: 5,
             bottom: 5,
+            cursor: 'pointer',
         },
     }),
 )
@@ -217,8 +258,18 @@ function ReceiveTab(props: ReceiveTabProps) {
         <>
             <div className={classes.form}>
                 <div className={classes.inputArea}>
-                    <Typography color="textSecondary">{t('wallet_address')}</Typography>
-                    <InputBase className={classes.input} value={wallet.address} readOnly multiline maxRows={2} />
+                    <Typography color="textSecondary" className={classes.inputTitle}>
+                        {t('wallet_address')}
+                        <span>*</span>
+                    </Typography>
+                    <InputBase
+                        classes={{ root: classes.input }}
+                        value={wallet.address}
+                        fullWidth
+                        readOnly
+                        multiline
+                        rows={2}
+                    />
                 </div>
                 <img
                     src={ToolIconURLs.copy.image}
@@ -234,7 +285,7 @@ function ReceiveTab(props: ReceiveTabProps) {
                     text={`polkadot:${wallet.address}`}
                     options={{ width: 200 }}
                     canvasProps={{
-                        style: { display: 'block', margin: 'auto' },
+                        style: { display: 'block', margin: 'auto', width: '165px' },
                     }}
                 />
             </div>

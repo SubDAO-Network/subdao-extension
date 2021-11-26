@@ -78,6 +78,8 @@ const useStyles = makeStyles((theme) => {
 
         panel: {
             width: '100%',
+        },
+        panelContent: {
             display: 'flex',
             alignItems: 'flex-end',
         },
@@ -94,6 +96,14 @@ const useStyles = makeStyles((theme) => {
         balanceUnit: {
             fontSize: 14,
             marginLeft: 2,
+        },
+        title: {
+            textAlign: 'left',
+            fontSize: 14,
+            marginBottom: -4,
+            '& span': {
+                color: '#D52473',
+            },
         },
     })
 })
@@ -140,101 +150,116 @@ export function TokenAmountPanel(props: TokenAmountPanelProps) {
 
     return (
         <div className={classes.panel}>
-            <TextField
-                className={classes.root}
-                label={label}
-                fullWidth
-                required
-                type="text"
-                value={amount}
-                variant="outlined"
-                onChange={onChange}
-                InputProps={{
-                    inputProps: {
-                        autoComplete: 'off',
-                        autoCorrect: 'off',
-                        title: 'Token Amount',
-                        inputMode: 'decimal',
-                        min: 0,
-                        minLength: MIN_AMOUNT_LENGTH,
-                        maxLength: MAX_AMOUNT_LENGTH,
-                        pattern: '^[0-9]*[.,]?[0-9]*$',
-                        placeholder: '0.0',
-                        spellCheck: false,
-                        className: classes.input,
-                    },
-                    ...props.InputProps,
-                }}
-                InputLabelProps={{
-                    shrink: true,
-                    classes: {
-                        shrink: classes.inputShrinkLabel,
-                    },
-                }}
-                {...props.TextFieldProps}
-            />
-            {token ? (
-                <Box
-                    className={classes.balanceBox}
-                    sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'center',
-                        alignItems: 'flex-end',
-                    }}>
+            <Typography className={classes.title}>
+                {label}
+                <span>*</span>
+            </Typography>
+            <div className={classes.panelContent}>
+                <TextField
+                    className={classes.root}
+                    fullWidth
+                    required
+                    type="text"
+                    value={amount}
+                    variant="outlined"
+                    onChange={onChange}
+                    InputProps={{
+                        inputProps: {
+                            autoComplete: 'off',
+                            autoCorrect: 'off',
+                            title: 'Token Amount',
+                            inputMode: 'decimal',
+                            min: 0,
+                            minLength: MIN_AMOUNT_LENGTH,
+                            maxLength: MAX_AMOUNT_LENGTH,
+                            pattern: '^[0-9]*[.,]?[0-9]*$',
+                            placeholder: '0.0',
+                            spellCheck: false,
+                            className: classes.input,
+                        },
+                        ...props.InputProps,
+                    }}
+                    InputLabelProps={{
+                        shrink: true,
+                        classes: {
+                            shrink: classes.inputShrinkLabel,
+                        },
+                    }}
+                    {...props.TextFieldProps}
+                />
+                {token ? (
                     <Box
+                        className={classes.balanceBox}
                         sx={{
                             display: 'flex',
-                            alignItems: 'center',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            alignItems: 'flex-end',
                         }}>
-                        {balance !== '0' && !disableBalance ? (
-                            <Chip
-                                classes={{
-                                    root: classNames(classes.max, MaxChipProps?.classes?.root),
-                                    ...MaxChipProps?.classes,
-                                }}
-                                size="small"
-                                label="MAX"
-                                clickable
-                                color="primary"
-                                variant="outlined"
-                                onClick={() => {
-                                    onAmountChange(formatBalance(new BigNumber(maxAmount ?? balance), token.decimals))
-                                }}
-                                {...MaxChipProps}
-                            />
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                            }}>
+                            {balance !== '0' && !disableBalance ? (
+                                <Chip
+                                    classes={{
+                                        root: classNames(classes.max, MaxChipProps?.classes?.root),
+                                        ...MaxChipProps?.classes,
+                                    }}
+                                    size="small"
+                                    label="MAX"
+                                    clickable
+                                    color="primary"
+                                    variant="outlined"
+                                    onClick={() => {
+                                        onAmountChange(
+                                            formatBalance(new BigNumber(maxAmount ?? balance), token.decimals),
+                                        )
+                                    }}
+                                    {...MaxChipProps}
+                                />
+                            ) : null}
+                            <SelectTokenChip token={token} {...props.SelectTokenChip} />
+                        </Box>
+
+                        {!disableBalance ? (
+                            <Typography
+                                className={classes.balance}
+                                color="textSecondary"
+                                variant="body2"
+                                component="span">
+                                Balance:
+                                <Typography color="textPrimary" component="span" className={classes.balanceUnit}>
+                                    {formatBalance(new BigNumber(balance), token.decimals, 6)}
+                                    {token.symbol}
+                                </Typography>
+                            </Typography>
+                        ) : null}
+                    </Box>
+                ) : (
+                    <Box
+                        className={classes.balanceBox}
+                        sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            alignItems: 'flex-end',
+                            marginTop: 2,
+                        }}>
+                        {!disableBalance ? (
+                            <Typography
+                                className={classes.balance}
+                                color="textSecondary"
+                                variant="body2"
+                                component="span">
+                                -
+                            </Typography>
                         ) : null}
                         <SelectTokenChip token={token} {...props.SelectTokenChip} />
                     </Box>
-
-                    {!disableBalance ? (
-                        <Typography className={classes.balance} color="textSecondary" variant="body2" component="span">
-                            Balance:
-                            <Typography color="textPrimary" component="span" className={classes.balanceUnit}>
-                                {formatBalance(new BigNumber(balance), token.decimals, 6)}
-                                {token.symbol}
-                            </Typography>
-                        </Typography>
-                    ) : null}
-                </Box>
-            ) : (
-                <Box
-                    className={classes.balanceBox}
-                    sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'center',
-                        alignItems: 'flex-end',
-                        marginTop: 2,
-                    }}>
-                    {!disableBalance ? (
-                        <Typography className={classes.balance} color="textSecondary" variant="body2" component="span">
-                            -
-                        </Typography>
-                    ) : null}
-                    <SelectTokenChip token={token} {...props.SelectTokenChip} />
-                </Box>
-            )}
+                )}
+            </div>
         </div>
     )
 }
