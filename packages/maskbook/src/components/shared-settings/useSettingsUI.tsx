@@ -19,12 +19,25 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
 import { useStylesExtends } from '../custom-ui-helper'
 import { getEnumAsArray } from '../../utils/enum'
 
+import { IconsURLs } from '../../resources/icons/index'
+
+import { experimentalStyled as styled } from '@material-ui/core'
+
+const ListItemSecondaryActionPadding = styled(ListItemSecondaryAction)`
+    right: 0 !important;
+    .imgBg {
+        margin-top: 20px;
+    }
+`
+
 const useStyles = makeStyles((theme) =>
     createStyles({
         container: { listStyleType: 'none', width: '100%' },
-        secondaryAction: { paddingLeft: theme.spacing(2) },
+        secondaryAction: {
+            paddingLeft: theme.spacing(2),
+        },
         listItemText: {
-            fontWeight: 500,
+            fontWeight: 300,
         },
         listItemIcon: {
             marginLeft: 0,
@@ -34,6 +47,11 @@ const useStyles = makeStyles((theme) =>
         },
         arrowIcon: {
             color: theme.palette.text.primary,
+        },
+        centerLayout: {
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
         },
     }),
 )
@@ -62,6 +80,7 @@ function SharedListItem(
     const classes = useStylesExtends(useStyles(), props)
     return (
         <ListItem
+            disableRipple={true}
             classes={{
                 root: classes.listItemRoot,
                 container: classes.container,
@@ -93,7 +112,7 @@ export function SettingsUI<T>(props: SettingsUIProps<T>) {
                     primary={primary}
                     secondary={secondary}
                     onClick={change}
-                    action={<ListItemSecondaryAction>{ui}</ListItemSecondaryAction>}
+                    action={<ListItemSecondaryActionPadding>{ui}</ListItemSecondaryActionPadding>}
                 />
             )
         }
@@ -111,9 +130,10 @@ export function SettingsUIDummy(props: Omit<SettingsUIProps<null>, 'value'> & { 
             {...props}
             button
             action={
-                <ListItemSecondaryAction onClick={props.onClick}>
-                    <ArrowForwardIosIcon classes={{ root: classes.arrowIcon }} />
-                </ListItemSecondaryAction>
+                <ListItemSecondaryActionPadding onClick={props.onClick}>
+                    {/*<ArrowForwardIosIcon classes={{ root: classes.arrowIcon }} />*/}
+                    <img src={IconsURLs.rightArrow.image} alt="" className="imgBg" />
+                </ListItemSecondaryActionPadding>
             }
         />
     )
@@ -141,13 +161,25 @@ export function SettingsUIEnum<T extends object>(
                 xsMatched ? (
                     <div className={classes.listItemActionMobile}>{ui}</div>
                 ) : (
-                    <ListItemSecondaryAction>{ui}</ListItemSecondaryAction>
+                    <ListItemSecondaryActionPadding>{ui}</ListItemSecondaryActionPadding>
                 )
             }
         />
     )
 }
 
+const useMenuStyles = makeStyles((theme) =>
+    createStyles({
+        menuItem: {
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+        },
+        menuSelect: {
+            backgroundColor: '#F1F2F8 !important',
+        },
+    }),
+)
 /**
  * Convert a ValueRef<Enum> into a Select element.
  * @param ref - The value ref
@@ -172,6 +204,7 @@ function useEnumSettings<Q extends object>(
             ref.value = value
         })
     }
+    const classes = useMenuStyles()
     return (
         <Select
             fullWidth
@@ -180,7 +213,10 @@ function useEnumSettings<Q extends object>(
             value={useValueRef(ref)}
             onChange={(event) => change(event.target.value)}>
             {enum_.map(({ key, value }) => (
-                <MenuItem value={String(value)} key={String(key)}>
+                <MenuItem
+                    value={String(value)}
+                    key={String(key)}
+                    classes={{ root: classes.menuItem, selected: classes.menuSelect }}>
                     {getText?.(value) ?? String(key)}
                 </MenuItem>
             ))}

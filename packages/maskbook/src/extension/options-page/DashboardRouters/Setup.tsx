@@ -48,23 +48,141 @@ import { extendsTheme } from '../../../utils/theme'
 import { LogoIconURLs } from '../../../resources/logo'
 import { Image } from '../../../components/shared/Image'
 
+import TextInput from '../DashboardComponents/TextInput'
+import FooterLine from '../DashboardComponents/FooterLine'
+
+const TxtInput = styled(TextInput)`
+    .MuiInputBase-root {
+        background: #f7f8fb !important;
+        border-radius: 8px !important;
+    }
+    label {
+        font-size: 14px;
+        font-weight: 300;
+        color: #bec0d2 !important;
+    }
+    fieldset {
+        border: 0 !important;
+    }
+`
+
+const RestoreBtn = styled(ActionButton)`
+    font-family: Roboto;
+
+    font-size: 14px;
+    font-weight: 300;
+    color: #9094af;
+    line-height: 0.16rem;
+    &:hover {
+        background: transparent !important;
+    }
+`
+
+const NextBtn = styled(ActionButton)`
+    color: #ffffff !important;
+    border-radius: 8px !important;
+    &:disabled {
+        background: rgba(213, 17, 114, 0.5) !important;
+        border-radius: 8px !important;
+    }
+`
+
+const FirstBg = styled('div')`
+    width: 1100px;
+    margin: 0 auto;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+`
+
+const FirstHeader = styled('div')`
+    background: #fff;
+    border-radius: 10px;
+    padding: 25px 70px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    span {
+        font-size: 18px;
+        font-weight: 400;
+        color: #10164b;
+        margin-left: 10px;
+    }
+`
+
+const FirstMain = styled('div')`
+    background: #fff;
+    border-radius: 10px;
+    text-align: center;
+    flex-grow: 1;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .maincontent {
+        width: 400px;
+        text-align: left;
+    }
+`
+
+const FirstFoot = styled('div')`
+    font-size: 14px;
+    font-weight: 400;
+    color: #9094af;
+    padding: 26px 0;
+    text-align: center;
+`
+const Contents = styled('div')`
+    font-size: 18px;
+    font-weight: 300;
+    color: rgba(16, 22, 75, 0.6);
+    line-height: 1.2;
+    margin-bottom: 100px;
+`
+
+const BtnBrdr = styled('div')`
+    width: 100%;
+`
+const ActionButtonBg = styled(ActionButton)`
+    background: #d51172 !important;
+    border-radius: 4px !important;
+    width: 100% !important;
+    color: #ffffff !important;
+`
+
 //#region setup form
 const useSetupFormStyles = makeStyles((theme) => {
     const dark = theme.palette.mode === 'dark'
     return createStyles({
+        root: {
+            width: '100vw',
+            height: '100vh',
+            backgroundColor: dark ? '#141946' : '#F1F2F8',
+
+            [theme.breakpoints.up('md')]: {
+                display: 'grid',
+                gridTemplateColumns: '1fr [content-start] 1100px [content-end] 1fr',
+                gridTemplateRows: '32px [content-start] auto [content-end]',
+                placeItems: 'center',
+            },
+        },
         wrapper: {
-            flex: 1,
-            minHeight: '100vh',
+            gridRow: 'content-start / content-end',
+            gridColumn: 'content-start / content-end',
+            width: '100%',
+            height: '100%',
             display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
+            flexDirection: 'column',
         },
         wrapper2: {
             minHeight: '100vh',
-            backgroundImage: 'linear-gradient(176deg, #DC0D88 0%, #738FF9 100%)',
+            background: '#F7F8FB',
+            // backgroundImage: 'linear-gradient(176deg, #DC0D88 0%, #738FF9 100%)',
         },
         bgi: {
             minHeight: '100vh',
+            // background:'#fff',
             backgroundPosition: 'center bottom' /* Center the image */,
             backgroundRepeat: 'no-repeat' /* Do not repeat the image */,
             display: 'grid',
@@ -80,21 +198,44 @@ const useSetupFormStyles = makeStyles((theme) => {
             margin: `${theme.typography.pxToRem(55)} ${theme.typography.pxToRem(80)}`,
         },
         imgContainer2: {
-            backgroundImage: 'linear-gradient(176deg, #DC0D88 0%, #738FF9 100%)',
-            padding: `${theme.typography.pxToRem(55)} ${theme.typography.pxToRem(80)}`,
-            borderRadius: '12px 0 0 12px',
+            paddingLeft: theme.typography.pxToRem(70),
+            paddingTop: theme.typography.pxToRem(24),
+            paddingBottom: theme.typography.pxToRem(24),
+            borderRadius: 10,
+            backgroundColor: dark ? '#20265C' : '#FFFFFF',
+            display: 'flex',
+            justifyContent: 'flex-start',
+            boxShadow: '0px 0px 10px 0px rgba(23, 23, 23, 0.1)',
+        },
+        logoText: {
+            marginLeft: 10,
+            lineHeight: '40px',
+            fontSize: '18px',
         },
         mainContainer: {
+            flex: 1,
+            marginTop: 20,
+            backgroundColor: dark ? '#20265C' : '#FFFFFF',
+            borderRadius: 10,
+            boxShadow: '0px 0px 10px 0px rgba(23, 23, 23, 0.1)',
+            overflowY: 'auto',
+            '& *::-webkit-scrollbar': {
+                display: 'none',
+            },
+        },
+        sectionContainer: {
+            margin: '0 auto',
+            height: '100%',
+            width: theme.typography.pxToRem(400),
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
+            '&:first-child': {
+                width: theme.typography.pxToRem(370),
+            },
         },
-        section: {
-            marginLeft: theme.typography.pxToRem(68),
-        },
-        section2: {
-            margin: `0 ${theme.typography.pxToRem(80)}`,
-        },
+        section: {},
+        section2: {},
         gridMain: {
             gridArea: 'main',
             margin: `0 ${theme.typography.pxToRem(80)}`,
@@ -103,13 +244,11 @@ const useSetupFormStyles = makeStyles((theme) => {
             gridArea: 'action',
             margin: `0 ${theme.typography.pxToRem(80)}`,
         },
-        section3: {
-            margin: `0 ${theme.typography.pxToRem(80)}`,
-        },
+        section3: {},
         primary: {
-            fontWeight: 500,
-            fontSize: 41,
-            lineHeight: 1,
+            fontWeight: 300,
+            fontSize: 32,
+            lineHeight: 1.2,
             marginBottom: theme.spacing(2),
             [theme.breakpoints.down('sm')]: {
                 fontSize: 18,
@@ -118,17 +257,16 @@ const useSetupFormStyles = makeStyles((theme) => {
         },
         primary2: {},
         secondary: {
-            fontSize: 20,
-            lineHeight: 1.5,
+            fontSize: 18,
+            lineHeight: 1.2,
             marginBottom: theme.spacing(5),
+            opacity: 0.6,
             [theme.breakpoints.down('sm')]: {
                 fontSize: 14,
                 marginBottom: theme.spacing(2),
             },
         },
         form: {
-            width: 368,
-            minHeight: 200,
             [theme.breakpoints.down('sm')]: {
                 width: '100%',
             },
@@ -140,11 +278,6 @@ const useSetupFormStyles = makeStyles((theme) => {
                 width: '100%',
             },
         },
-        input: {
-            [`& fieldset`]: {
-                borderRadius: '23px',
-            },
-        },
         or: {
             marginTop: 28,
             marginBottom: 10,
@@ -152,11 +285,12 @@ const useSetupFormStyles = makeStyles((theme) => {
                 margin: 0,
             },
         },
+
         button: {
             width: 220,
             height: 40,
-            borderRadius: '23px',
             marginBottom: 20,
+            borderRadius: 8,
         },
         restoreButton: {
             marginTop: 44,
@@ -173,6 +307,10 @@ const useSetupFormStyles = makeStyles((theme) => {
                 backgroundColor: green[700],
             },
         },
+        footer: {
+            padding: `${theme.typography.pxToRem(20)} 0`,
+            marginTop: 6,
+        },
     })
 })
 
@@ -188,18 +326,23 @@ function WelcomeWarp(props: SetupFormProps) {
     return (
         <Fade in>
             <div className={classNames(classes.wrapper2)}>
-                <div className={classNames(classes.bgi)}>
-                    <div className={classes.imgContainer}>
-                        <Image src={LogoIconURLs.subdao.image} width={152} height={31} />
-                    </div>
-                    <div className={classes.gridMain}>
-                        <Typography className={classNames(classes.primary, classes.primary2)} variant="h5">
-                            {props.primary}
-                        </Typography>
-                        <Typography className={classes.form2}>{props.content}</Typography>
-                    </div>
-                    <div className={classes.gridAction}>{props.actions}</div>
-                </div>
+                <FirstBg>
+                    <FirstHeader>
+                        <Image src={LogoIconURLs.subdao.image} width={40} height={40} />
+                        <span>SubDAO</span>
+                    </FirstHeader>
+                    <FirstMain>
+                        <div className="maincontent">
+                            <div className={classNames(classes.primary, classes.primary2)} variant="h5">
+                                {props.primary}
+                            </div>
+                            <Contents>{props.content}</Contents>
+                            <BtnBrdr>{props.actions}</BtnBrdr>
+                        </div>
+                    </FirstMain>
+
+                    <FirstFoot>subdao.network</FirstFoot>
+                </FirstBg>
             </div>
         </Fade>
     )
@@ -209,25 +352,33 @@ function SetupForm(props: SetupFormProps) {
     const classes = useStylesExtends(useSetupFormStyles(), props)
     return (
         <Fade in>
-            <div className={classes.wrapper}>
-                <div className={classes.imgContainer2}>
-                    <Image src={LogoIconURLs.subdao.image} width={152} height={31} />
-                </div>
-                <div className={classes.mainContainer}>
-                    <div className={classes.section}>
-                        <Typography className={classes.primary} variant="h5" color="textPrimary">
-                            {props.primary}
-                        </Typography>
-                        {props.secondary ? (
-                            <Typography className={classes.secondary} variant="body1" color="textPrimary">
-                                {props.secondary}
-                            </Typography>
-                        ) : null}
+            <div className={classes.root}>
+                <div className={classes.wrapper}>
+                    <div className={classes.imgContainer2}>
+                        <Image src={LogoIconURLs.subdao.image} width={40} height={40} />
+                        <span className={classes.logoText}>SubDAO</span>
                     </div>
-                    <div className={classes.section}>
-                        <form className={classes.form}>{props.content}</form>
+                    <div className={classes.mainContainer}>
+                        <div className={classes.sectionContainer}>
+                            <div className={classes.section}>
+                                <Typography className={classes.primary} variant="h5" color="textPrimary">
+                                    {props.primary}
+                                </Typography>
+                                {props.secondary ? (
+                                    <Typography className={classes.secondary} variant="body1" color="textPrimary">
+                                        {props.secondary}
+                                    </Typography>
+                                ) : null}
+                            </div>
+                            <div className={classes.section}>
+                                <form className={classes.form}>{props.content}</form>
+                            </div>
+                            <div className={classes.section}>{props.actions}</div>
+                        </div>
                     </div>
-                    <div className={classes.section}>{props.actions}</div>
+                    <footer className={classes.footer}>
+                        <FooterLine />
+                    </footer>
                 </div>
             </div>
         </Fade>
@@ -279,13 +430,13 @@ export function ConsentDataCollection() {
             content={t('set_up_consent_data_collection_hint')}
             actions={
                 <>
-                    <ActionButton<typeof Link>
+                    <ActionButtonBg<typeof Link>
                         className={consentDataCollection.whiteButton}
                         variant="contained"
                         component={Link}
                         to={SetupStep.CreatePersona}>
                         {t('set_up_button_get_started')}
-                    </ActionButton>
+                    </ActionButtonBg>
                 </>
             }
         />
@@ -297,7 +448,8 @@ export function ConsentDataCollection() {
 const userCreatePersonaStyles = makeStyles((theme) =>
     createStyles({
         form: {
-            minHeight: 130,
+            marginRight: 0,
+            marginBottom: 20,
         },
     }),
 )
@@ -327,10 +479,9 @@ export function CreatePersona() {
             secondary={t('set_up_create_persona_hint')}
             content={
                 <>
-                    <TextField
-                        required
+                    <TxtInput
+                        // required
                         autoFocus
-                        className={setupFormClasses.input}
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         onKeyDown={(e) => {
@@ -350,24 +501,23 @@ export function CreatePersona() {
             }
             actions={
                 <>
-                    <ActionButton
+                    <NextBtn
+                        width="100%"
                         className={setupFormClasses.button}
                         variant="contained"
                         onClick={createPersonaAndNext}
                         disabled={!name}
                         data-testid="next_button">
                         {t('set_up_button_next')}
-                    </ActionButton>
-                    <Typography className={setupFormClasses.or} variant="body1">
-                        {t('set_up_tip_or')}
-                    </Typography>
-                    <ActionButton<typeof Link>
-                        variant="text"
+                    </NextBtn>
+                    <RestoreBtn<typeof Link>
+                        disableRipple={true}
+                        width="100%"
                         component={Link}
                         to={SetupStep.RestoreDatabase}
                         data-testid="backup_button">
                         {t('set_up_button_from_backup')}
-                    </ActionButton>
+                    </RestoreBtn>
                 </>
             }
         />
@@ -427,32 +577,32 @@ export function ConnectNetwork() {
                     />
                 </>
             }
-            actions={
-                <>
-                    <ActionButton
-                        className={classes.button}
-                        variant="contained"
-                        disabled={persona?.linkedProfiles.size === 0}
-                        onClick={async () => {
-                            const [_, address] = await Promise.all([
-                                Services.Identity.setupPersona(persona.identifier),
-                                WalletRPC.importFirstWallet({
-                                    name: persona.nickname ?? t('untitled_wallet'),
-                                    mnemonic: persona.mnemonic?.words.split(' '),
-                                    passphrase: '',
-                                }),
-                            ])
-                            if (address) currentSelectedWalletAddressSettings.value = address
-                            await delay(300)
-                            history.replace(Flags.has_no_browser_tab_ui ? DashboardRoute.Nav : DashboardRoute.Personas)
-                        }}>
-                        {t('set_up_button_finish')}
-                    </ActionButton>
-                    <ActionButton color="inherit" variant="text" onClick={() => history.goBack()}>
-                        {t('set_up_button_cancel')}
-                    </ActionButton>
-                </>
-            }
+            // actions={
+            //     <>
+            //         <ActionButton
+            //             className={classes.button}
+            //             variant="contained"
+            //             disabled={persona?.linkedProfiles.size === 0}
+            //             onClick={async () => {
+            //                 const [_, address] = await Promise.all([
+            //                     Services.Identity.setupPersona(persona.identifier),
+            //                     WalletRPC.importFirstWallet({
+            //                         name: persona.nickname ?? t('untitled_wallet'),
+            //                         mnemonic: persona.mnemonic?.words.split(' '),
+            //                         passphrase: '',
+            //                     }),
+            //                 ])
+            //                 if (address) currentSelectedWalletAddressSettings.value = address
+            //                 await delay(300)
+            //                 history.replace(Flags.has_no_browser_tab_ui ? DashboardRoute.Nav : DashboardRoute.Personas)
+            //             }}>
+            //             {t('set_up_button_finish')}
+            //         </ActionButton>
+            //         <ActionButton color="inherit" variant="text" onClick={() => history.goBack()}>
+            //             {t('set_up_button_cancel')}
+            //         </ActionButton>
+            //     </>
+            // }
         />
     )
 }
@@ -1011,9 +1161,10 @@ const CurrentStep = () => {
 
 const Container = styled('div')(
     ({ theme }) => `
-    color: white;
+    color: 'white'
 `,
 )
+// color: ${theme.palette.mode === 'dark' ? 'white' : '#10164B'};
 
 export interface DashboardSetupRouterProps {}
 

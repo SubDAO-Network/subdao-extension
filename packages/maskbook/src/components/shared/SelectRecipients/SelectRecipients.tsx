@@ -16,6 +16,9 @@ const useStyles = makeStyles({
         display: 'inline-flex',
         flexWrap: 'wrap',
     },
+    label: {
+        paddingRight: 0,
+    },
 })
 
 export interface SelectRecipientsUIProps<T extends Group | Profile = Group | Profile>
@@ -68,10 +71,11 @@ export function SelectRecipientsUI<T extends Group | Profile = Group | Profile>(
             ))}
             {children}
             <Chip
-                label={t('post_dialog__select_specific_friends_title', {
-                    selected: new Set([...selectedGroupMembers, ...selectedProfiles.map((x) => x.identifier.toText())])
-                        .size,
-                })}
+                // label={t('post_dialog__select_specific_friends_title', {
+                //     selected: new Set([...selectedGroupMembers, ...selectedProfiles.map((x) => x.identifier.toText())])
+                //         .size,
+                // })}
+                classes={{ label: classes.label }}
                 avatar={<AddIcon />}
                 disabled={props.disabled || profileItems.length === 0}
                 onClick={() => setOpen(true)}

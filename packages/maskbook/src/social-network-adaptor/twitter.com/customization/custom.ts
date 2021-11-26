@@ -135,7 +135,7 @@ export const useInjectedDialogClassesOverwriteTwitter = makeStyles((theme) =>
             alignItems: 'center',
         },
         paper: {
-            width: '600px !important',
+            width: '450px !important',
             boxShadow: 'none',
             [`@media (max-width: ${theme.breakpoints.width('sm')}px)`]: {
                 '&': {
@@ -147,8 +147,10 @@ export const useInjectedDialogClassesOverwriteTwitter = makeStyles((theme) =>
         dialogTitle: {
             display: 'flex',
             alignItems: 'center',
-            padding: '10px 15px',
-            borderBottom: `1px solid ${theme.palette.mode === 'dark' ? '#2f3336' : '#ccd6dd'}`,
+            padding: '15px 20px',
+            color: '#212121',
+            fontWeight: 400,
+            fontSize: '18px',
             '& > h2': {
                 display: 'inline-block',
                 whiteSpace: 'nowrap',
@@ -166,6 +168,7 @@ export const useInjectedDialogClassesOverwriteTwitter = makeStyles((theme) =>
             },
         },
         dialogContent: {
+            padding: '24px 20px',
             [`@media (max-width: ${theme.breakpoints.width('sm')}px)`]: {
                 display: 'flex',
                 flexDirection: 'column',
@@ -175,7 +178,7 @@ export const useInjectedDialogClassesOverwriteTwitter = makeStyles((theme) =>
             },
         },
         dialogActions: {
-            padding: '10px 15px',
+            padding: '20px',
             [`@media (max-width: ${theme.breakpoints.width('sm')}px)`]: {
                 display: 'flex',
                 flexDirection: 'column',

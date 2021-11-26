@@ -1,5 +1,7 @@
 import React, { useEffect, useMemo } from 'react'
 import {
+    List,
+    ListItem,
     Box,
     Button,
     IconButton,
@@ -17,6 +19,7 @@ import {
     MenuItem,
     Typography,
 } from '@material-ui/core'
+import { createStyles } from '@material-ui/core/styles'
 import { useCopyToClipboard } from 'react-use'
 import classNames from 'classnames'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
@@ -47,60 +50,119 @@ import { useMenu } from '../../../utils/hooks/useMenu'
 import { useColorStyles } from '../../../utils/theme'
 import { formatBalance } from '@polkadot/util'
 import { useSnackbarCallback } from '../DashboardDialogs/Base'
+import { WalletIconURLs } from '../../../resources/wallet-icon'
+
+import { experimentalStyled as styled } from '@material-ui/core'
+
+const TokenIconBg = styled(Box)`
+    display: flex;
+    align-items: center;
+`
+const TypographyBG = styled(Typography)`
+    color: #bec0d2;
+`
 
 const circleIcon = <CircularProgress color="inherit" size={12} />
 const sendIcon = <SendIcon size={12} />
 
-const useStyles = makeStyles((theme: Theme) => ({
-    container: {
-        '&::-webkit-scrollbar': {
-            display: 'none',
+const useStyles = makeStyles((theme: Theme) => {
+    const dark = theme.palette.mode == 'dark'
+    return createStyles({
+        container: {
+            '&::-webkit-scrollbar': {
+                display: 'none',
+            },
+            padding: theme.spacing(0),
         },
-        padding: theme.spacing(0),
-    },
-    table: {},
-    actionCell: {
-        minWidth: '10rem',
-    },
-    head: {
-        backgroundColor: theme.palette.mode === 'light' ? theme.palette.common.white : 'var(--drawerBody)',
-    },
-    cell: {
-        paddingLeft: theme.spacing(2),
-        paddingRight: theme.spacing(1.5),
-        whiteSpace: 'nowrap',
-    },
-    record: {
-        display: 'flex',
-    },
-    coin: {
-        width: 24,
-        height: 24,
-    },
-    name: {
-        marginLeft: theme.spacing(1),
-    },
-    balanceMore: {
-        marginLeft: theme.spacing(0.5),
-    },
-    balanceName: {
-        minWidth: '15rem',
-    },
-    actionButton: {
-        '&:hover': {
-            backgroundColor: theme.palette.primary.main,
-            color: 'white',
+        table: {},
+        actionCell: {
+            minWidth: '10rem',
+            flex: 2,
         },
-    },
-    more: {
-        color: theme.palette.text.primary,
-    },
-    lessButton: {
-        display: 'flex',
-        justifyContent: 'center',
-        marginTop: theme.spacing(1),
-    },
-}))
+        head: {
+            backgroundColor: theme.palette.mode === 'light' ? theme.palette.common.white : 'var(--drawerBody)',
+            padding: `${theme.spacing(1.25)} ${theme.spacing(3.75)}`,
+        },
+        cell: {
+            // paddingLeft: theme.spacing(2),
+            // paddingRight: theme.spacing(1.5),
+            whiteSpace: 'nowrap',
+            borderBottom: 'none',
+            textAlign: 'left',
+            // flex: 3,
+            fontWeight: 300,
+            '&:first-child': {
+                width: 400,
+            },
+        },
+        row: {
+            display: 'flex',
+            borderRadius: 12,
+            background: dark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(241, 242, 248, 0.5)',
+            border: `1px solid ${dark ? '#1F2452' : '#E7EAF3'}`,
+            padding: `${theme.spacing(3)} ${theme.spacing(3.75)}`,
+            marginBottom: 15,
+        },
+        record: {
+            display: 'flex',
+        },
+        coin: {
+            width: 40,
+            height: 40,
+        },
+        name: {
+            marginLeft: theme.spacing(1),
+        },
+        balanceMore: {
+            marginLeft: theme.spacing(0.5),
+        },
+        balanceName: {
+            minWidth: '15rem',
+        },
+        actionButton: {
+            '&:hover': {
+                backgroundColor: theme.palette.primary.main,
+                color: 'white',
+            },
+        },
+        more: {
+            color: theme.palette.text.primary,
+        },
+        lessButton: {
+            display: 'flex',
+            justifyContent: 'center',
+            marginTop: theme.spacing(1),
+        },
+        cellButton: {
+            cursor: 'pointer',
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            '&:first-child': {
+                marginRight: theme.spacing(3),
+            },
+        },
+        cellIcon: {
+            marginRight: 8,
+            '& img': {
+                width: 20,
+                marginTop: 3,
+            },
+        },
+        lightIcon: {
+            display: dark ? 'none' : 'inline',
+        },
+        darkIcon: {
+            display: !dark ? 'none' : 'inline',
+        },
+        transfer: {
+            color: dark ? '' : '#62BA46',
+        },
+        delete: {
+            color: dark ? '' : 'rgba(247, 0, 0, 0.5)',
+        },
+    })
+})
 
 //#region view detailed
 interface ViewDetailedProps extends withClasses<KeysInferFromUseStyles<typeof useStyles>> {
@@ -164,13 +226,13 @@ function ViewDetailed(props: ViewDetailedProps) {
     balanceAll &&
         (balanceAll as DeriveBalancesAll).availableBalance &&
         allItems.push(
-            <Typography key={1}>
+            <TypographyBG key={1}>
                 {t('transferrable')}
                 <FormatBalance
                     className={classes.balanceMore}
                     value={(balanceAll as DeriveBalancesAll).availableBalance}
                 />
-            </Typography>,
+            </TypographyBG>,
         )
     balanceAll?.reservedBalance?.gtn(0) &&
         allItems.push(
@@ -181,9 +243,9 @@ function ViewDetailed(props: ViewDetailedProps) {
         )
 
     return (
-        <TableRow className={classes.cell}>
+        <ListItem className={classes.row}>
             {[
-                <Box
+                <TokenIconBg
                     onClick={onCopy}
                     sx={{
                         display: 'flex',
@@ -193,18 +255,21 @@ function ViewDetailed(props: ViewDetailedProps) {
                     {!isERC20 ? (
                         <Typography className={classes.name}>{`${wallet.name}(${formatPolkadotAddress(
                             address,
-                            4,
+                            10,
                         )})`}</Typography>
                     ) : (
-                        <Typography className={classes.name}>{tokenName}</Typography>
+                        <Typography className={classes.name}>
+                            {tokenName}
+                            {formatPolkadotAddress(address, 10)}
+                        </Typography>
                     )}
-                </Box>,
+                </TokenIconBg>,
                 <Box
                     sx={{
                         display: 'flex',
-                        justifyContent: 'flex-end',
+                        justifyContent: 'flex-start',
                         flexDirection: 'column',
-                        textAlign: 'right',
+                        textAlign: 'left',
                         flex: 1,
                     }}>
                     {!isERC20 ? (
@@ -213,13 +278,14 @@ function ViewDetailed(props: ViewDetailedProps) {
                                 <FormatBalance
                                     value={balanceAll && balanceAll.freeBalance.add(balanceAll.reservedBalance)}
                                 />
-                                <IconButton color="inherit" size="small" onClick={togglePopupOpen}>
+                                {/* <IconButton color="inherit" size="small" onClick={togglePopupOpen}>
                                     {!isPopupOpen ? <ExpandMoreIcon /> : <ExpandLessIcon />}
-                                </IconButton>
+                                </IconButton> */}
                             </Typography>
-                            <Collapse in={isPopupOpen} timeout="auto" unmountOnExit>
+                            {/* <Collapse in={isPopupOpen} timeout="auto" unmountOnExit>
                                 {allItems}
-                            </Collapse>
+                            </Collapse> */}
+                            <Typography color="textSecondary">{allItems}</Typography>
                         </>
                     ) : (
                         <Typography className={classes.balanceName} color="textPrimary" component="span">
@@ -231,36 +297,42 @@ function ViewDetailed(props: ViewDetailedProps) {
                     className={classes.actionCell}
                     sx={{
                         display: 'flex',
-                        justifyContent: 'flex-end',
+                        justifyContent: 'flex-start',
                     }}>
                     {!isERC20 ? (
-                        <Button
-                            className={classes.actionButton}
-                            startIcon={btnStartIcon}
-                            color="primary"
-                            disabled={btnDisabled}
-                            onClick={() => openTransferDialogOpen({ wallet, ...detailedToken })}>
-                            {t('wallet_transfer_title')}
-                        </Button>
+                        <div
+                            className={classes.cellButton}
+                            onClick={
+                                !btnDisabled ? () => openTransferDialogOpen({ wallet, ...detailedToken }) : () => {}
+                            }>
+                            <div className={classes.cellIcon}>
+                                <img className={classes.lightIcon} src={WalletIconURLs.transfer.image} alt="" />
+                                <img className={classes.darkIcon} src={WalletIconURLs.transferDark.image} alt="" />
+                            </div>
+                            <Typography className={classes.transfer}>{t('wallet_transfer_title')}</Typography>
+                        </div>
                     ) : (
                         <>
-                            <Button
-                                className={classes.actionButton}
-                                startIcon={btnStartIcon}
-                                color="primary"
-                                disabled={btnDisabled}
-                                onClick={() => openTransferDialogOpen({ wallet, ...detailedToken, token })}>
-                                {t('wallet_transfer_title')}
-                            </Button>
-                            <IconButton
-                                className={classes.more}
-                                size="small"
-                                onClick={(e) => {
-                                    e.stopPropagation()
-                                    openMenu(e)
-                                }}>
-                                <MoreHorizIcon />
-                            </IconButton>
+                            <div
+                                className={classes.cellButton}
+                                onClick={
+                                    !btnDisabled
+                                        ? () => openTransferDialogOpen({ wallet, ...detailedToken, token })
+                                        : () => {}
+                                }>
+                                <div className={classes.cellIcon}>
+                                    <img className={classes.lightIcon} src={WalletIconURLs.transfer.image} alt="" />
+                                    <img className={classes.darkIcon} src={WalletIconURLs.transferDark.image} alt="" />
+                                </div>
+                                <Typography className={classes.transfer}>{t('wallet_transfer_title')}</Typography>
+                            </div>
+                            <div className={classes.cellButton} onClick={!btnDisabled ? removeToken : () => {}}>
+                                <div className={classes.cellIcon}>
+                                    <img className={classes.lightIcon} src={WalletIconURLs.delete.image} alt="" />
+                                    <img className={classes.darkIcon} src={WalletIconURLs.deleteDark.image} alt="" />
+                                </div>
+                                <Typography className={classes.delete}>{t('delete')}</Typography>
+                            </div>
                             {menu}
                         </>
                     )}
@@ -268,12 +340,12 @@ function ViewDetailed(props: ViewDetailedProps) {
             ]
                 .filter(Boolean)
                 .map((y, i) => (
-                    <TableCell className={classes.cell} key={i}>
+                    <Box className={classes.cell} key={i}>
                         {y}
-                    </TableCell>
+                    </Box>
                 ))}
             {transeferDialog}
-        </TableRow>
+        </ListItem>
     )
 }
 //#endregion
@@ -349,87 +421,79 @@ export function WalletAssetsTable(props: WalletAssetsTableProps) {
     return (
         <>
             <TableContainer className={classes.container}>
-                <Table className={classes.table} component="table" size="medium" stickyHeader>
-                    <TableHead className={classes.head}>
-                        <TableRow>
-                            {LABELS.map((x, i) => (
-                                <TableCell
-                                    className={classNames(classes.head, classes.cell)}
-                                    key={i}
-                                    align={i === 0 ? 'left' : 'right'}>
-                                    {x}
-                                </TableCell>
-                            ))}
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {detailedTokensLoading ? (
-                            new Array(3).fill(0).map((_, i) => (
-                                <TableRow className={classes.cell} key={i}>
-                                    <TableCell>
-                                        <Skeleton
-                                            animation="wave"
-                                            variant="rectangular"
-                                            width="100%"
-                                            height={30}></Skeleton>
-                                    </TableCell>
-                                    <TableCell>
-                                        <Skeleton
-                                            animation="wave"
-                                            variant="rectangular"
-                                            width="100%"
-                                            height={30}></Skeleton>
-                                    </TableCell>
-                                    <TableCell>
-                                        <Skeleton
-                                            animation="wave"
-                                            variant="rectangular"
-                                            width="100%"
-                                            height={30}></Skeleton>
-                                    </TableCell>
-                                    <TableCell>
-                                        <Skeleton
-                                            animation="wave"
-                                            variant="rectangular"
-                                            width="100%"
-                                            height={30}></Skeleton>
-                                    </TableCell>
-                                    <TableCell>
-                                        <Skeleton
-                                            animation="wave"
-                                            variant="rectangular"
-                                            width="100%"
-                                            height={30}></Skeleton>
-                                    </TableCell>
-                                </TableRow>
-                            ))
-                        ) : (
-                            <>
+                <List className={classes.table}>
+                    <ListItem className={classes.head}>
+                        {LABELS.map((x, i) => (
+                            <Box className={classes.cell} key={i}>
+                                {x}
+                            </Box>
+                        ))}
+                    </ListItem>
+                    {detailedTokensLoading ? (
+                        new Array(3).fill(0).map((_, i) => (
+                            <ListItem classes={{ root: classes.row }} key={i}>
+                                <Box>
+                                    <Skeleton
+                                        animation="wave"
+                                        variant="rectangular"
+                                        width="100%"
+                                        height={30}></Skeleton>
+                                </Box>
+                                <Box>
+                                    <Skeleton
+                                        animation="wave"
+                                        variant="rectangular"
+                                        width="100%"
+                                        height={30}></Skeleton>
+                                </Box>
+                                <Box>
+                                    <Skeleton
+                                        animation="wave"
+                                        variant="rectangular"
+                                        width="100%"
+                                        height={30}></Skeleton>
+                                </Box>
+                                <Box>
+                                    <Skeleton
+                                        animation="wave"
+                                        variant="rectangular"
+                                        width="100%"
+                                        height={30}></Skeleton>
+                                </Box>
+                                <Box>
+                                    <Skeleton
+                                        animation="wave"
+                                        variant="rectangular"
+                                        width="100%"
+                                        height={30}></Skeleton>
+                                </Box>
+                            </ListItem>
+                        ))
+                    ) : (
+                        <>
+                            <ViewDetailed
+                                address={address}
+                                balanceAll={balanceAll}
+                                key={address}
+                                detailedToken={detailedToken}
+                                token={token}
+                                wallet={wallet}
+                                transferState={transferState}
+                            />
+                            {erc20Tokens?.map((o, idx) => (
                                 <ViewDetailed
-                                    address={address}
-                                    balanceAll={balanceAll}
-                                    key={address}
-                                    detailedToken={detailedToken}
-                                    token={token}
-                                    wallet={wallet}
+                                    isERC20
+                                    key={idx}
+                                    token={o}
                                     transferState={transferState}
+                                    wallet={wallet}
                                 />
-                                {more &&
-                                    erc20Tokens?.map((o, idx) => (
-                                        <ViewDetailed
-                                            isERC20
-                                            key={idx}
-                                            token={o}
-                                            transferState={transferState}
-                                            wallet={wallet}
-                                        />
-                                    ))}
-                            </>
-                        )}
-                    </TableBody>
-                </Table>
+                            ))}
+                        </>
+                    )}
+                </List>
             </TableContainer>
-            {Boolean(erc20Tokens?.length) && (
+            {/* {Boolean(erc20Tokens?.length) && (
                 <div className={classes.lessButton}>
                     <IconButton
                         onClick={() => {
@@ -438,7 +502,7 @@ export function WalletAssetsTable(props: WalletAssetsTableProps) {
                         {more ? <ExpandLessIcon /> : <ExpandMoreIcon />}
                     </IconButton>
                 </div>
-            )}
+            )} */}
         </>
     )
 }

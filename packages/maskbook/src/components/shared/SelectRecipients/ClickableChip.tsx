@@ -8,6 +8,13 @@ export interface ClickableChipProps extends ChipProps {
 }
 
 const useStyles = makeStyles({
+    base: {
+        marginRight: 6,
+        marginBottom: 6,
+        cursor: 'pointer',
+        backgroundColor: '#F8F8F8',
+        border: '1px solid #E5E5E5',
+    },
     root: {
         marginRight: 6,
         marginBottom: 6,
@@ -25,12 +32,11 @@ export function ClickableChip(props: ClickableChipProps) {
     const classes = useStyles()
     return (
         <Chip
-            avatar={props.checked ? <DoneIcon className={classes.icon} /> : undefined}
             color={props.checked ? 'primary' : 'default'}
             {...props}
             classes={{
                 ...props.classes,
-                root: classNames(classes.root, props.classes?.root),
+                root: props.checked ? classes.root : classes.base,
                 label: classNames(classes.label, props.classes?.label),
             }}
         />

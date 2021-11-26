@@ -2,7 +2,7 @@ import { forwardRef, useCallback, useState } from 'react'
 import { Button, Box, IconButton, MenuItem, Tabs, Tab } from '@material-ui/core'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 import AddIcon from '@material-ui/icons/Add'
-import MoreVertOutlinedIcon from '@material-ui/icons/MoreVertOutlined'
+import MoreHorizOutlinedIcon from '@material-ui/icons/MoreHorizOutlined'
 import { useModal } from '../DashboardDialogs/Base'
 import {
     DashboardWalletHistoryDialog,
@@ -19,6 +19,15 @@ import { useMatchXS } from '../../../utils/hooks/useMatchXS'
 import type { WalletRecord } from '../../../plugins/Wallet/database/types'
 import { WalletAssetsTable } from './WalletAssetsTable'
 import { useSubstrate } from '../../../polkadot/provider'
+
+import { experimentalStyled as styled } from '@material-ui/core'
+
+const TabBg = styled(Tab)`
+    min-width: auto !important;
+    color: #10164b !important;
+    font-size: 18px !important;
+    font-weight: 400 !important;
+`
 
 const useStyles = makeStyles((theme) =>
     createStyles({
@@ -52,13 +61,34 @@ const useStyles = makeStyles((theme) =>
         },
         tabs: {},
         addButton: {
-            color: theme.palette.primary.main,
+            borderRadius: 8,
+            backgroundColor: '#5C5F85',
+            '&:hover': {
+                backgroundColor: '#5C5F85',
+            },
+            color: '#FFFFFF',
         },
         moreButton: {
-            color: theme.palette.text.primary,
+            backgroundColor: 'rgba(247, 147, 0, 0.6)',
+            color: '#FFFFFF',
+            marginLeft: 10,
+            height: 18,
+            width: 18,
+            padding: 9,
+            boxSizing: 'content-box',
+            marginTop: 6,
+            borderRadius: 8,
+            cursor: 'pointer',
         },
         assetsTable: {
             flex: 1,
+        },
+        menuItem: {
+            color: '#5C5F85',
+            margin: '0 6px',
+            '& span:first-child': {
+                margin: '0 auto',
+            },
         },
     }),
 )
@@ -85,12 +115,16 @@ export const WalletContent = forwardRef<HTMLDivElement, WalletContentProps>(func
     const { state, dispatch } = useSubstrate()
 
     const [menu, openMenu] = useMenu([
-        <MenuItem onClick={() => openWalletRename({ wallet })}>{t('rename')}</MenuItem>,
+        <MenuItem onClick={() => openWalletRename({ wallet })} className={classes.menuItem}>
+            <span>{t('rename')}</span>
+        </MenuItem>,
         wallet._private_key_ || wallet.mnemonic.length ? (
-            <MenuItem onClick={() => openWalletBackup({ wallet })}>{t('backup')}</MenuItem>
+            <MenuItem onClick={() => openWalletBackup({ wallet })} className={classes.menuItem}>
+                <span>{t('backup')}</span>
+            </MenuItem>
         ) : null,
-        <MenuItem onClick={() => openWalletDelete({ wallet })} className={color.error} data-testid="delete_button">
-            {t('delete')}
+        <MenuItem onClick={() => openWalletDelete({ wallet })} className={classes.menuItem} data-testid="delete_button">
+            <span>{t('delete')}</span>
         </MenuItem>,
     ])
 
@@ -121,7 +155,7 @@ export const WalletContent = forwardRef<HTMLDivElement, WalletContentProps>(func
                         indicatorColor="primary"
                         textColor="primary"
                         onChange={onTabChange}>
-                        <Tab label={t('dashboard_tab_token')}></Tab>
+                        <TabBg label={t('dashboard_tab_token')}></TabBg>
                     </Tabs>
                 </Box>
 
@@ -133,20 +167,32 @@ export const WalletContent = forwardRef<HTMLDivElement, WalletContentProps>(func
                     }}>
                     {!xsMatched && tabIndex === 0 ? (
                         <Button
-                            className={classes.addButton}
-                            variant="text"
+                            classes={{ root: classes.addButton }}
+                            variant="contained"
+                            size="medium"
                             onClick={() => openAddToken({ wallet })}
                             startIcon={<AddIcon />}>
                             {t('add_token')}
                         </Button>
                     ) : null}
-                    <IconButton
+                    {/* <Button
+                        classes={{root: classes.moreButton}}
+                        variant="contained"
+                        size="medium"
+                        onClick={openMenu}
+                        startIcon={<MoreHorizOutlinedIcon />}>
+                    </Button> */}
+                    <div onClick={openMenu}>
+                        <MoreHorizOutlinedIcon classes={{ root: classes.moreButton }} />
+                    </div>
+
+                    {/* <IconButton
                         className={classes.moreButton}
                         size="small"
                         onClick={openMenu}
                         data-testid="setting_icon">
-                        <MoreVertOutlinedIcon />
-                    </IconButton>
+                        <MoreHorizOutlinedIcon />
+                    </IconButton> */}
                 </Box>
             </Box>
 

@@ -31,16 +31,26 @@ const useStyles = makeStyles((theme) => {
             marginRight: theme.spacing(1),
         },
         button: {
-            borderRadius: 16,
+            // borderRadius: 16,
             backgroundColor: theme.palette.background.paper,
+            border: 0,
+            fontWeight: 300,
+            color: '#10164B',
+            fontSize: 14,
+            '&:hover': {
+                border: 0,
+                background: '#F1F2F8',
+                borderRadius: 8,
+            },
         },
         buttonTransparent: {
             backgroundColor: 'transparent',
         },
         providerIcon: {
-            fontSize: 18,
-            width: 18,
-            height: 18,
+            fontSize: 24,
+            width: 24,
+            height: 24,
+            borderRadius: 24,
         },
         chainIcon: {
             fontSize: 18,
@@ -99,16 +109,16 @@ export function EthereumAccountButton(props: EthereumAccountButtonProps) {
                 {...props.ButtonProps}>
                 {selectedWallet?.name ?? ''}
                 {selectedWallet?.address
-                    ? ` (${formatPolkadotAddress(selectedWallet.address, 4)})`
+                    ? ` (${formatPolkadotAddress(selectedWallet.address, 10)})`
                     : t('plugin_wallet_on_connect')}
-                {chainId !== ChainId.Mainnet && selectedWallet ? (
-                    <FiberManualRecordIcon
-                        className={classes.chainIcon}
-                        style={{
-                            color: resolveChainColor(chainId),
-                        }}
-                    />
-                ) : null}
+                {/*{chainId !== ChainId.Mainnet && selectedWallet ? (*/}
+                {/*    <FiberManualRecordIcon*/}
+                {/*        className={classes.chainIcon}*/}
+                {/*        style={{*/}
+                {/*            color: resolveChainColor(chainId),*/}
+                {/*        }}*/}
+                {/*    />*/}
+                {/*) : null}*/}
             </Button>
         </div>
     )

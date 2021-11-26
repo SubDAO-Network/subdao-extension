@@ -1,4 +1,4 @@
-import { Typography, IconButton, Link } from '@material-ui/core'
+import { Typography, IconButton, Link, Button } from '@material-ui/core'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 import classNames from 'classnames'
 import { capitalize } from 'lodash-es'
@@ -9,6 +9,7 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
 import { facebookDomain } from '../../../social-network-adaptor/facebook.com/utils/isMobile'
 import { twitterDomain } from '../../../social-network-adaptor/twitter.com/utils/isMobile'
 import { Flags } from '../../../utils/flags'
+import { IconsURLs } from '../../../resources/icons'
 
 const useStyles = makeStyles((theme) =>
     createStyles<string, { border: boolean }>({
@@ -16,13 +17,17 @@ const useStyles = makeStyles((theme) =>
             fontWeight: 500,
             fontSize: 12,
             lineHeight: 1.75,
+            marginBottom: 8,
+            color: '#BEC0D2',
         },
         text: {
             fontSize: 14,
             lineHeight: '24px',
-            borderWidth: (props) => (props.border ? '1px' : '0 0 1px 0'),
-            borderColor: (props) => (props.border ? theme.palette.primary.main : theme.palette.divider),
+            borderWidth: (props) => (props.border ? '2px' : '0 0 1px 0'),
+            borderColor: 'rgba(213, 17, 114, 0.2)',
             borderStyle: 'solid',
+            borderRadius: 8,
+            backgroundColor: '#FFF3F9',
             display: 'flex',
             alignItems: 'center',
             padding: theme.spacing(1, 2),
@@ -42,6 +47,18 @@ const useStyles = makeStyles((theme) =>
         control: {
             marginBottom: theme.spacing(2),
         },
+        simpleControl: {},
+        simpleText: {
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+        },
+        simpleTitle: {
+            marginBottom: 0,
+        },
+        linkButton: {
+            backgroundColor: '#FFFFFF',
+        },
     }),
 )
 
@@ -59,7 +76,7 @@ export default function ProviderLine(props: ProviderLineProps) {
     // TODO: internal name should not be used to display
     const { internalName, network, connected, userId, onAction, border } = props
     const classes = useStyles({ border })
-    return (
+    return border ? (
         <div className={classes.control}>
             <Typography className={classes.title} variant="body2" color="textSecondary">
                 {capitalize(internalName)}
@@ -82,12 +99,40 @@ export default function ProviderLine(props: ProviderLineProps) {
                 )}
                 {connected ? (
                     <IconButton size="small" onClick={onAction} className={classes.cursor}>
-                        <LinkOffIcon />
+                        {/*<LinkOffIcon />*/}
+                        <img src={IconsURLs.Twitter.image} alt="" />
                     </IconButton>
                 ) : (
                     <IconButton size="small">
-                        <ArrowForwardIcon color="primary" />
+                        {/*<ArrowForwardIcon color="primary" />*/}
+                        <img src={IconsURLs.TwitterActive.image} alt="" />
                     </IconButton>
+                )}
+            </Typography>
+        </div>
+    ) : (
+        <div className={classes.simpleControl}>
+            <Typography
+                className={classNames(classes.title, classes.simpleTitle)}
+                variant="body2"
+                color="textSecondary">
+                {capitalize(internalName)}
+            </Typography>
+            <Typography
+                className={classNames(classes.simpleText)}
+                color="textPrimary"
+                variant="body1"
+                component="div"
+                data-testid={`connect_button_${network.toLowerCase()}`}>
+                {connected ? <span>@{userId}</span> : <span>{`${t('connect_to')} ${network}`}</span>}
+                {connected ? (
+                    <Button className={classes.linkButton} variant="outlined" onClick={onAction}>
+                        {t('personas_disconnect')}
+                    </Button>
+                ) : (
+                    <Button className={classes.linkButton} variant="outlined" onClick={onAction}>
+                        {t('personas_connect')}
+                    </Button>
                 )}
             </Typography>
         </div>

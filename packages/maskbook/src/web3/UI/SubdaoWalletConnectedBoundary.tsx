@@ -56,7 +56,6 @@ export function SubdaoWalletConnectedBoundary(props: SubdaoWalletConnectedBounda
                 <ActionButton
                     className={classes.button}
                     disabled={!subdaoBalanceError}
-                    fullWidth
                     variant="contained"
                     size="large"
                     onClick={retrySubdaoBalance}>

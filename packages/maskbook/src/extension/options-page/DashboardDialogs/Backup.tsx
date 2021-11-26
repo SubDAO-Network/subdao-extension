@@ -17,6 +17,16 @@ import { UpgradeBackupJSONFile, BackupJSONFileLatest } from '../../../utils/type
 import { extraPermissions } from '../../../utils/permissions'
 import { green } from '@material-ui/core/colors'
 import { extendsTheme } from '../../../utils/theme'
+import { experimentalStyled as styled } from '@material-ui/core'
+
+const ActionButtonDis = styled(ActionButton)`
+    color: #ffffff !important;
+    font-size: 0.12rem;
+    border-radius: 4px !important;
+    &.Mui-disabled {
+        background: rgba(213, 36, 115, 0.6) !important;
+    }
+`
 
 const useDatabaseStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -70,7 +80,6 @@ export function DashboardBackupDialog(props: WrappedDialogProps) {
         <DashboardDialogCore {...props}>
             <DashboardDialogWrapper
                 size="medium"
-                icon={<DatabaseIcon />}
                 iconColor="#699CF7"
                 primary={t('backup_database')}
                 secondary={t('dashboard_backup_database_hint')}
@@ -103,6 +112,7 @@ export function DashboardBackupDialog(props: WrappedDialogProps) {
                             )
                         ) : (
                             <ActionButton
+                                width="100%"
                                 loading={loading}
                                 disabled={loading || records.every((r) => !r.length)}
                                 variant="contained"
@@ -128,13 +138,19 @@ const useSelectBackupStyles = makeStyles((theme: Theme) =>
             boxSizing: 'border-box',
             border: `solid 1px ${theme.palette.divider}`,
             borderRadius: 4,
-            height: 176,
+            fontSize: 12,
+            height: 220,
             padding: theme.spacing(2, 3),
             '& > textarea': {
                 overflow: 'auto !important',
                 height: '100% !important',
             },
+            caretColor: '#D52473',
+            '&.focused': {
+                border: '2px solid rgba(213, 17, 114, 0.2)',
+            },
         },
+
         button: {
             marginTop: theme.spacing(3),
         },
@@ -221,7 +237,6 @@ function SelectBackup({ onConfirm }: SelectBackupProps) {
     return (
         <DashboardDialogWrapper
             size="medium"
-            icon={<DatabaseIcon />}
             iconColor="#699CF7"
             primary={t('set_up_restore')}
             secondary={t('set_up_restore_hint')}
@@ -241,7 +256,8 @@ function SelectBackup({ onConfirm }: SelectBackupProps) {
                         }}>
                         <AbstractTab {...tabProps}></AbstractTab>
                     </Box>
-                    <ActionButton
+                    <ActionButtonDis
+                        width="100%"
                         className={selectBackupClasses.button}
                         variant="contained"
                         disabled={
@@ -253,7 +269,7 @@ function SelectBackup({ onConfirm }: SelectBackupProps) {
                         onClick={restoreDB}
                         data-testid="restore_button">
                         {t('set_up_button_restore')}
-                    </ActionButton>
+                    </ActionButtonDis>
                 </Box>
             }
         />
@@ -322,7 +338,6 @@ function ConfirmBackup({ restoreId, date, backup, onDone }: ConfirmBackupProps) 
     return (
         <DashboardDialogWrapper
             size="medium"
-            icon={<DatabaseIcon />}
             iconColor="#699CF7"
             primary={t('restore_database')}
             secondary={

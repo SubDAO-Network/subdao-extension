@@ -15,6 +15,38 @@ import { last } from 'lodash-es'
 import { useModal } from '../DashboardDialogs/Base'
 import { DashboardContactSearchDialog } from '../DashboardDialogs/Contact'
 
+import { IconsURLs } from '../../../resources/icons'
+
+import { experimentalStyled as styled } from '@material-ui/core'
+import { WalletQRCodeProps } from '@subdao/dashboard/dist/src/components/WalletQRCodeContainer'
+
+const SectionBg = styled('section')`
+    height: 100%;
+`
+
+const Tips = styled(Typography)`
+    font-size: 18px;
+    font-weight: 300;
+    color: #10164b !important;
+`
+const IconButtonBg = styled('div')`
+    padding: 0.5rem 6px 0 0;
+`
+
+const TextFieldBg = styled(TextField)`
+    input {
+        &::placeholder {
+            font-size: 14px;
+            font-weight: 400;
+            color: #e2e2e2;
+        }
+    }
+    fieldset {
+        border-radius: 8px;
+        border: 2px solid #f1f1f1;
+    }
+`
+
 const useStyles = makeStyles((theme) =>
     createStyles({
         title: {
@@ -118,7 +150,7 @@ export default function DashboardContactsRouter() {
     const [searchContactDialog, , openSearchContactDialog] = useModal(DashboardContactSearchDialog)
 
     const actions = [
-        <TextField
+        <TextFieldBg
             placeholder={t('search')}
             size="small"
             value={searchUI}
@@ -127,10 +159,13 @@ export default function DashboardContactsRouter() {
                 setSearch(e.target.value)
             }}
             InputProps={{
-                endAdornment: (
-                    <IconButton size="small" onClick={() => setSearch('')}>
-                        {search ? <ClearIcon /> : <SearchIcon />}
-                    </IconButton>
+                startAdornment: (
+                    // <IconButton size="small" onClick={() => setSearch('')}>
+                    //     {search ? <ClearIcon /> : <SearchIcon />}
+                    // </IconButton>
+                    <IconButtonBg>
+                        <img src={IconsURLs.search.image} alt="" />
+                    </IconButtonBg>
                 ),
             }}
         />,
@@ -140,6 +175,7 @@ export default function DashboardContactsRouter() {
         <DashboardRouterContainer
             title={t('contacts')}
             empty={items.length === 0}
+            emptyText={t('search_result_empty')}
             actions={actions}
             floatingButtons={[
                 {
@@ -147,10 +183,10 @@ export default function DashboardContactsRouter() {
                     handler: () => openSearchContactDialog({ onSearch: setSearch }),
                 },
             ]}>
-            <Typography className={classes.title} variant="body2">
+            <Tips className={classes.title} variant="body2">
                 {t('people_in_database')}
-            </Typography>
-            <section className={classes.list}>
+            </Tips>
+            <SectionBg className={classes.list}>
                 <AutoResize>
                     {(sizeProps) => (
                         <FixedSizeList
@@ -160,7 +196,7 @@ export default function DashboardContactsRouter() {
                                 if (isPagePending) return
                                 if (data.visibleStopIndex === data.overscanStopIndex) nextPage()
                             }}
-                            itemSize={64}
+                            itemSize={90}
                             itemCount={items.length}
                             {...sizeProps}>
                             {({ index, style }) =>
@@ -177,7 +213,20 @@ export default function DashboardContactsRouter() {
                         </FixedSizeList>
                     )}
                 </AutoResize>
-            </section>
+                {/*<div>*/}
+                {/*    {({ index, style }) =>*/}
+                {/*        items[index] ? (*/}
+                {/*            <ContactLine*/}
+                {/*                style={style as any}*/}
+                {/*                key={index}*/}
+                {/*                contact={items[index]}*/}
+                {/*                onUpdated={mutate}*/}
+                {/*                onDeleted={mutate}*/}
+                {/*            />*/}
+                {/*        ) : null*/}
+                {/*    }*/}
+                {/*</div>*/}
+            </SectionBg>
             {searchContactDialog}
         </DashboardRouterContainer>
     )

@@ -61,33 +61,53 @@ cryptoWaitReady().then(() => {
 })
 
 const useStyles = makeStyles((theme) => {
-    const dark = theme.palette.mode === 'dark'
+    const dark = theme.palette.mode == 'dark'
     return createStyles({
         root: {
             '--monospace': 'SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace',
-            '--drawerHeader': dark ? '#121212' : theme.palette.primary.main,
-            '--drawerBody': dark ? '#121212' : theme.palette.primary.main,
+            '--drawerHeader': dark ? '#20265C' : '#FFFFFF',
+            '--drawerBody': dark ? '#20265C' : '#FFFFFF',
 
             [theme.breakpoints.down('sm')]: {
                 '--drawerBody': 'transparent',
             },
 
-            backgroundColor: dark ? grey[900] : grey[50],
+            backgroundColor: dark ? '#141946' : '#F1F2F8',
             userSelect: 'none',
             width: '100vw',
             height: '100vh',
             position: 'absolute',
 
-            [theme.breakpoints.up('md')]: {
-                display: 'grid',
-                gridTemplateColumns: '1fr [content-start] 1110px [content-end] 1fr',
-                gridTemplateRows: '32px [content-start] auto [content-end] 50px',
-                placeItems: 'center',
+            display: 'grid',
+            gridTemplateColumns: '1fr [content-start] 1100px [content-end] 1fr',
+            gridTemplateRows: '32px [content-start] auto [content-end]',
+            placeItems: 'center',
+
+            [theme.breakpoints.down('sm')]: {
+                display: 'flex',
+                flexDirection: 'column',
             },
 
             transition: 'filter 0.3s linear',
             willChange: 'filter',
-
+            overflowX: 'auto',
+        },
+        navBar: {
+            marginBottom: 20,
+            width: '100%',
+        },
+        content: {
+            flex: 1,
+            width: '100%',
+            height: '100%',
+            backgroundColor: dark ? '#20265C' : '#FFFFFF',
+            borderRadius: 10,
+        },
+        scroll: {
+            width: '100%',
+            height: '100%',
+            overflow: 'auto',
+            borderRadius: 10,
             '& *::-webkit-scrollbar': {
                 display: 'none',
             },
@@ -95,15 +115,14 @@ const useStyles = makeStyles((theme) => {
         container: {
             width: '100%',
             height: '100%',
-            overflow: 'auto',
-            borderRadius: 12,
-            backgroundColor: dark ? '#121212' : '#FFFFFF',
+            margin: '0 auto',
             gridRow: 'content-start / content-end',
             gridColumn: 'content-start / content-end',
-            display: 'flex',
             [theme.breakpoints.down('sm')]: {
                 borderRadius: 0,
             },
+            display: 'flex',
+            flexDirection: 'column',
         },
         suspend: {
             display: 'flex',
@@ -113,8 +132,8 @@ const useStyles = makeStyles((theme) => {
             flexDirection: 'column',
         },
         footer: {
-            gridRow: 'content-end / span 1',
-            gridColumn: 'content-start / content-end',
+            padding: `${theme.typography.pxToRem(20)} 0`,
+            marginTop: 6,
         },
         blur: {
             filter: 'blur(3px)',
@@ -184,16 +203,20 @@ function DashboardUI() {
         return (
             <div className={classes.root}>
                 <div className={classes.container}>
-                    {xsMatched ? null : drawer}
-                    <ErrorBoundary>
-                        <Component {...props} />
-                    </ErrorBoundary>
+                    <div className={classes.navBar}>{xsMatched ? null : drawer}</div>
+                    <div className={classes.content}>
+                        {/* <div className={classes.scroll}>
+                        </div> */}
+                        <ErrorBoundary>
+                            <Component {...props} />
+                        </ErrorBoundary>
+                    </div>
+                    {xsMatched ? null : (
+                        <footer className={classes.footer}>
+                            <FooterLine />
+                        </footer>
+                    )}
                 </div>
-                {xsMatched ? null : (
-                    <footer className={classes.footer}>
-                        <FooterLine />
-                    </footer>
-                )}
             </div>
         )
     }

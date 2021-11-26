@@ -52,7 +52,8 @@
     "react-dom": "=0.0.0-experimental-553440bd1",
     "react-i18next": "^11.8.7",
     "ts-jest": "^27.0.5",
-    "webcrypto": "^0.1.1"
+    "webcrypto": "^0.1.1",
+    "@fontsource/roboto": "4.5.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^12.1.1",

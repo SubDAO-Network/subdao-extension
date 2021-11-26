@@ -13,6 +13,7 @@ import {
     CircularProgress,
     DialogContent,
     DialogActions,
+    experimentalStyled as styled,
 } from '@material-ui/core'
 import { CompositionEvent, MaskMessage } from '../../utils/messages'
 import { useStylesExtends, or } from '../custom-ui-helper'
@@ -49,20 +50,48 @@ import { SteganographyTextPayload } from './SteganographyTextPayload'
 import { useMaskbookTheme } from '../../utils/theme'
 
 const useStyles = makeStyles({
-    MUIInputRoot: {
-        minHeight: 108,
-        flexDirection: 'column',
-        padding: 10,
+    inputBox: {
+        border: '1px solid #E5E5E5',
+        background: '#F8F8F8',
+        width: 408,
+        height: 110,
+        margin: '0 auto',
+        paddingBottom: 6,
         boxSizing: 'border-box',
+        marginBottom: 15,
     },
-    MUIInputInput: {
-        fontSize: 18,
-        minHeight: '8em',
+    MUIInputRoot: {
+        flexDirection: 'column',
+        padding: '12px 6px 6px 20px',
+        boxSizing: 'border-box',
+        fontSize: 14,
+        fontWeight: 400,
+        lineHeight: '16px',
+        color: '#212121',
     },
+    MUIInputInput: {},
     sup: {
         paddingLeft: 2,
     },
 })
+
+const SelectTitle = styled(Typography)(({ theme }) => ({
+    fontSize: '12px',
+    color: 'rgba(33, 33, 33, 0.4)',
+    marginBottom: theme.spacing(1),
+    paddingRight: 6,
+    fontWeight: 400,
+}))
+
+const InputLength = styled(Typography)(({ theme }) => ({
+    fontSize: '14px',
+    fontWeight: 400,
+    textAlign: 'right',
+    paddingRight: 6,
+    span: {
+        color: '#666666',
+    },
+}))
 
 export interface PostDialogUIProps extends withClasses<never> {
     theme?: Theme
@@ -93,6 +122,7 @@ export function PostDialogUI(props: PostDialogUIProps) {
     const isDebug = useValueRef(debugModeSetting)
     const [showPostMetadata, setShowPostMetadata] = useState(false)
     const defaultTheme = useMaskbookTheme()
+    const PostContentLen = props.maxLength
     const onPostContentChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>): void => {
         const newText = e.target.value
         const msg = props.postContent
@@ -135,8 +165,8 @@ export function PostDialogUI(props: PostDialogUIProps) {
                         <ClickableChip
                             label={
                                 <>
-                                    {opt.label}
-                                    {plugin.stage === PluginStage.Beta && <sup className={classes.sup}>(Beta)</sup>}
+                                    {opt.label}(Beta)
+                                    {/* {plugin.stage === PluginStage.Beta && <sup className={classes.sup}>(Beta)</sup>} */}
                                 </>
                             }
                             onClick={opt.onClick}
@@ -155,23 +185,27 @@ export function PostDialogUI(props: PostDialogUIProps) {
                 title={t('post_dialog__title')}>
                 <DialogContent>
                     {metadataBadge}
-                    <InputBase
-                        classes={{
-                            root: classes.MUIInputRoot,
-                            input: classes.MUIInputInput,
-                        }}
-                        autoFocus
-                        value={props.postContent.content}
-                        onChange={onPostContentChange}
-                        fullWidth
-                        multiline
-                        placeholder={t('post_dialog__placeholder')}
-                        inputProps={{ 'data-testid': 'text_textarea' }}
-                    />
+                    <div className={classes.inputBox}>
+                        <InputBase
+                            classes={{
+                                root: classes.MUIInputRoot,
+                                input: classes.MUIInputInput,
+                            }}
+                            autoFocus
+                            value={props.postContent.content}
+                            onChange={onPostContentChange}
+                            fullWidth
+                            multiline
+                            rows={4}
+                            placeholder={t('post_dialog__placeholder')}
+                            inputProps={{ 'data-testid': 'text_textarea' }}
+                        />
+                        <InputLength>
+                            {props.postContent.content.length}/<span>{PostContentLen}</span>
+                        </InputLength>
+                    </div>
 
-                    <Typography style={{ marginBottom: 10 }}>
-                        Plugins <sup>(Experimental)</sup>
-                    </Typography>
+                    <SelectTitle>Plugins(Experimental)</SelectTitle>
                     <Box
                         style={{ marginBottom: 10 }}
                         sx={{
@@ -180,7 +214,7 @@ export function PostDialogUI(props: PostDialogUIProps) {
                         }}>
                         {pluginEntries}
                     </Box>
-                    <Typography style={{ marginBottom: 10 }}>{t('post_dialog__select_recipients_title')}</Typography>
+                    <SelectTitle>{t('post_dialog__select_recipients_title')}</SelectTitle>
                     <Box
                         style={{ marginBottom: 10 }}
                         sx={{
@@ -207,7 +241,7 @@ export function PostDialogUI(props: PostDialogUIProps) {
                         </SelectRecipientsUI>
                     </Box>
 
-                    <Typography style={{ marginBottom: 10 }}>{t('post_dialog__more_options_title')}</Typography>
+                    <SelectTitle>{t('post_dialog__more_options_title')}</SelectTitle>
                     <Box
                         style={{ marginBottom: 10 }}
                         sx={{

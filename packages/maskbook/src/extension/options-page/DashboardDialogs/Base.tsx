@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme) =>
     createStyles({
         root: {
             userSelect: 'none',
+            backgroundColor: theme.palette.mode === 'dark' ? 'rgba(17, 18, 30, 0.6)' : 'rgba(17, 18, 30, 0.4)',
         },
         close: {
             color: theme.palette.text.primary,
@@ -52,7 +53,7 @@ export function DashboardDialogCore(props: DashboardDialogCoreProps) {
 
     const classes = useStyles()
     const xsMatched = useMatchXS()
-    useBlurContext(dialogProps.open)
+    // useBlurContext(dialogProps.open)
 
     return (
         <Dialog
@@ -134,12 +135,10 @@ const getWrapperWidth = (size: string = '') => {
     switch (size) {
         case 'small':
             return 280
-        case 'large':
-            return 560
         default:
             break
     }
-    return 440
+    return 450
 }
 
 const useDashboardDialogWrapperStyles = makeStyles((theme) =>
@@ -149,15 +148,13 @@ const useDashboardDialogWrapperStyles = makeStyles((theme) =>
             flexDirection: 'column',
             maxWidth: '100%',
             width: (props) => getWrapperWidth(props.size),
-            padding: (props) => (props.size === 'small' ? '40px 24px !important' : '40px 36px !important'),
+            padding: (props) => (props.size === 'small' ? '40px 24px !important' : '40px 22px !important'),
             margin: '0 auto',
+            backgroundColor: theme.palette.mode === 'dark' ? '#20265C' : 'white',
         },
         header: {
-            textAlign: 'center',
-            margin: '0 auto',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            textAlign: 'left',
+            paddingTop: 22,
         },
         content: {
             flex: 1,
@@ -165,25 +162,36 @@ const useDashboardDialogWrapperStyles = makeStyles((theme) =>
         },
         footer: {
             display: 'flex',
-            justifyContent: 'space-around',
             marginTop: theme.spacing(3),
+            justifyContent: 'flex-end',
+        },
+        center: {
+            textAlign: 'right',
+            justifyContent: 'space-around',
         },
         primary: {
             margin: theme.spacing(2, 0, 1),
             fontWeight: 500,
-            fontSize: 20,
+            fontSize: 24,
             lineHeight: '30px',
+            display: 'flex',
+            alignItems: 'center',
         },
         secondary: {
-            lineHeight: 1.75,
-            fontSize: 14,
-            textAlign: 'center',
+            lineHeight: '21px',
+            fontSize: 18,
+            textAlign: 'left',
             wordBreak: 'break-word',
             marginBottom: 18,
+            padding: 0,
+        },
+        paddingSecondary: {
+            paddingLeft: 32,
+            fontSize: 14,
         },
         confineSecondary: {
-            paddingLeft: (props) => (props.size === 'small' ? 24 : 46),
-            paddingRight: (props) => (props.size === 'small' ? 24 : 46),
+            // paddingLeft: (props) => (props.size === 'small' ? 24 : 46),
+            // paddingRight: (props) => (props.size === 'small' ? 24 : 46),
         },
     }),
 )
@@ -277,30 +285,55 @@ interface DashboardDialogWrapperProps {
     size?: 'small' | 'medium' | 'large'
     content?: React.ReactNode
     footer?: React.ReactNode
+    layout?: 'center'
+    alert?: boolean
 }
 
 export function DashboardDialogWrapper(props: DashboardDialogWrapperProps) {
-    const { size, icon, iconColor, primary, secondary, constraintSecondary = true, content, footer } = props
+    const {
+        size,
+        icon,
+        iconColor,
+        primary,
+        secondary,
+        constraintSecondary = true,
+        content,
+        footer,
+        layout,
+        alert,
+    } = props
     const classes = useDashboardDialogWrapperStyles(props)
     return (
         <ThemeProvider theme={dialogTheme}>
             <DialogContent className={classes.wrapper}>
                 <section className={classes.header}>
-                    {icon && cloneElement(icon, { width: 64, height: 64, stroke: iconColor })}
                     <Typography className={classes.primary} variant="h5">
-                        {primary}
+                        {alert && (
+                            <img
+                                src={new URL('./alert.png', import.meta.url).toString()}
+                                style={{ width: 24, height: 24 }}
+                                alt=""
+                            />
+                        )}
+                        {icon && cloneElement(icon, { width: 24, height: 24, stroke: iconColor })}
+                        <span style={icon || alert ? { marginLeft: 8 } : {}}>{primary}</span>
                     </Typography>
                     <Typography
                         className={classNames(
                             classes.secondary,
                             size !== 'small' && constraintSecondary ? classes.confineSecondary : '',
+                            icon || alert ? classes.paddingSecondary : '',
                         )}
                         color="textSecondary"
                         variant="body2"
                         dangerouslySetInnerHTML={{ __html: secondary ?? '' }}></Typography>
                 </section>
                 {content ? <section className={classes.content}>{content}</section> : null}
-                {footer ? <section className={classes.footer}>{footer}</section> : null}
+                {footer ? (
+                    <section className={classNames(classes.footer, layout === 'center' ? classes.center : null)}>
+                        {footer}
+                    </section>
+                ) : null}
             </DialogContent>
         </ThemeProvider>
     )

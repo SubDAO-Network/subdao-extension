@@ -10,15 +10,15 @@ const useStyle = makeStyles((theme) =>
     createStyles({
         title: {
             fontSize: 12,
-            lineHeight: 1.75,
+            lineHeight: '16px',
             marginTop: theme.spacing(2),
         },
         paper: {
             height: '100%',
-            border: `solid 1px ${theme.palette.divider}`,
-            backgroundColor: theme.palette.mode === 'light' ? '#FAFAFA' : '',
+            // border: `solid 1px ${theme.palette.divider}`,
+            backgroundColor: theme.palette.mode === 'light' ? '#F7F8FB' : '',
             boxShadow: 'none',
-            padding: theme.spacing(2, 3),
+            padding: theme.spacing(1.25),
         },
         scroller: {
             userSelect: 'text',

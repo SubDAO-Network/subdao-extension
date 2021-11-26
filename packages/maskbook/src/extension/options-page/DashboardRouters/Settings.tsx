@@ -41,6 +41,22 @@ import { Flags } from '../../../utils/flags'
 import { extendsTheme } from '../../../utils/theme'
 import { SubstrateNetwork } from '../../../polkadot/constants'
 
+import { experimentalStyled as styled } from '@material-ui/core'
+
+const Provide = styled('div')`
+    padding: 0 10px;
+`
+
+const CardPadding = styled(Card)`
+    padding: 0 31px 10px;
+`
+
+const ListBg = styled(List)`
+    &:hover {
+        background: transparent !important;
+    }
+`
+
 const useStyles = makeStyles((theme) =>
     createStyles({
         root: {
@@ -48,23 +64,32 @@ const useStyles = makeStyles((theme) =>
             maxWidth: 360,
             backgroundColor: theme.palette.background.paper,
         },
+        card: {
+            boxShadow: theme.palette.mode === 'dark' ? 'none' : '0px 0px 6px 4px rgba(239, 240, 246, 0.8)',
+            backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.08)' : 'transparent',
+        },
         title: {
-            fontWeight: 'normal',
+            fontWeight: 300,
             lineHeight: '30px',
-            marginBottom: theme.spacing(1.5),
+            marginBottom: theme.spacing(2.5),
             [theme.breakpoints.down('sm')]: {
                 marginBottom: 0,
             },
+            '&:first-child': {
+                marginTop: 20,
+            },
         },
         section: {
-            padding: '26px 40px',
-            margin: theme.spacing(3, 0),
+            marginBottom: theme.spacing(4),
+            backgroundColor: 'transparent',
+            boxShadow: 'none',
             [theme.breakpoints.down('sm')]: {
                 padding: theme.spacing(2),
             },
         },
         secondaryAction: {
             paddingRight: 90,
+            paddingLeft: 0,
         },
         list: {
             [theme.breakpoints.down('sm')]: {
@@ -76,6 +101,18 @@ const useStyles = makeStyles((theme) =>
             paddingTop: theme.spacing(1.5),
             paddingBottom: theme.spacing(1.5),
             borderBottom: `1px solid ${theme.palette.divider}`,
+            paddingLeft: 0,
+            '&:hover': {
+                backgroundColor: 'transparent',
+            },
+        },
+        ListItemRootWithoutBorder: {
+            paddingTop: theme.spacing(1.5),
+            paddingBottom: theme.spacing(1.5),
+            paddingLeft: 0,
+            '&:hover': {
+                backgroundColor: 'transparent',
+            },
         },
         listItemIcon: {
             color: theme.palette.text.primary,
@@ -85,6 +122,13 @@ const useStyles = makeStyles((theme) =>
             marginRight: theme.spacing(3),
             [theme.breakpoints.down('sm')]: {
                 display: 'none',
+            },
+        },
+        selectRoot: {
+            backgroundColor: '#D51172',
+            color: '#fff',
+            '&:focus': {
+                backgroundColor: '#D51172',
             },
         },
     }),
@@ -145,8 +189,6 @@ export default function DashboardSettingsRouter() {
     }).current
 
     const classes = useStyles()
-    const theme = useTheme()
-    const elevation = theme.palette.mode === 'dark' ? 1 : 0
 
     const [backupDialog, openBackupDialog] = useModal(DashboardBackupDialog)
     const [restoreDialog, openRestoreDialog] = useModal(DashboardRestoreDialog)
@@ -156,93 +198,88 @@ export default function DashboardSettingsRouter() {
         listItemRoot: classes.listItemRoot,
         listItemIcon: classes.listItemIcon,
     }
+    const listStyleWithoutBorder = {
+        secondaryAction: classes.secondaryAction,
+        listItemRoot: classes.ListItemRootWithoutBorder,
+        listItemIcon: classes.listItemIcon,
+    }
+
     return (
         <DashboardRouterContainer title={t('settings')}>
             <ThemeProvider theme={settingsTheme}>
-                <div className="wrapper">
-                    <Paper component="section" className={classes.section} elevation={elevation}>
+                <Provide className="wrapper">
+                    <Paper component="section" className={classes.section}>
                         <Typography className={classes.title} variant="h6" color="textPrimary">
                             {t('settings_title_general')}
                         </Typography>
-                        <Card elevation={0}>
-                            <List className={classes.list} disablePadding>
+                        <CardPadding elevation={0} className={classes.card}>
+                            <ListBg className={classes.list} disablePadding>
                                 <SettingsUIEnum
+                                    SelectProps={{
+                                        classes: {
+                                            root: classes.selectRoot,
+                                            select: classes.selectRoot,
+                                        },
+                                    }}
                                     classes={listStyle}
                                     enumObject={Language}
                                     getText={langMapper}
-                                    icon={<LanguageIcon />}
                                     value={languageSettings}
                                 />
                                 <SettingsUIEnum
                                     classes={listStyle}
                                     enumObject={Appearance}
                                     getText={appearanceMapper}
-                                    icon={<PaletteIcon />}
                                     value={appearanceSettings}
                                 />
                                 <SettingsUIEnum
-                                    classes={listStyle}
+                                    classes={listStyleWithoutBorder}
                                     enumObject={SubstrateNetwork}
-                                    icon={<WifiIcon />}
                                     value={currentSubstrateNetworkSettings}
                                 />
-                            </List>
-                        </Card>
+                            </ListBg>
+                        </CardPadding>
                     </Paper>
 
                     {Flags.support_settings_advanced_options ? (
-                        <Paper component="section" className={classes.section} elevation={elevation}>
+                        <Paper component="section" className={classes.section}>
                             <Typography className={classes.title} variant="h6" color="textPrimary">
                                 {t('settings_title_advanced_options')}
                             </Typography>
-                            <Card elevation={0}>
-                                <List className={classes.list} disablePadding>
-                                    <SettingsUI
-                                        classes={listStyle}
-                                        icon={<MemoryOutlinedIcon />}
-                                        value={debugModeSetting}
-                                    />
-                                    <SettingsUI
-                                        classes={listStyle}
-                                        icon={<FlipToFrontIcon />}
-                                        value={allPostReplacementSettings}
-                                    />
-                                    <SettingsUI
-                                        classes={listStyle}
-                                        icon={<ShareIcon />}
-                                        value={enableGroupSharingSettings}
-                                    />
-                                </List>
-                            </Card>
+                            <CardPadding elevation={0} className={classes.card}>
+                                <ListBg className={classes.list} disablePadding>
+                                    <SettingsUI classes={listStyle} value={debugModeSetting} />
+                                    <SettingsUI classes={listStyle} value={allPostReplacementSettings} />
+                                    <SettingsUI classes={listStyleWithoutBorder} value={enableGroupSharingSettings} />
+                                </ListBg>
+                            </CardPadding>
                         </Paper>
                     ) : null}
 
-                    <Paper component="section" className={classes.section} elevation={elevation}>
+                    <Paper component="section" className={classes.section}>
                         <Typography className={classes.title} variant="h6" color="textPrimary">
                             {t('settings_title_database_management')}
                         </Typography>
-                        <Card elevation={0}>
-                            <List className={classes.list} disablePadding>
+                        <CardPadding elevation={0} className={classes.card}>
+                            <ListBg className={classes.list} disablePadding>
                                 <SettingsUIDummy
                                     classes={listStyle}
-                                    icon={<UnarchiveOutlinedIcon />}
                                     primary={t('backup_database')}
                                     secondary={t('dashboard_backup_database_hint')}
                                     onClick={openBackupDialog}
                                 />
                                 <SettingsUIDummy
-                                    classes={listStyle}
-                                    icon={<ArchiveOutlinedIcon />}
+                                    classes={listStyleWithoutBorder}
                                     primary={t('restore_database')}
                                     secondary={t('dashboard_import_database_hint')}
                                     onClick={openRestoreDialog}
                                 />
-                            </List>
-                        </Card>
+                            </ListBg>
+                        </CardPadding>
                         {backupDialog}
                         {restoreDialog}
                     </Paper>
-                </div>
+                </Provide>
             </ThemeProvider>
         </DashboardRouterContainer>
     )

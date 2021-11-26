@@ -36,6 +36,8 @@ import { useLastRecognizedIdentity } from '../DataSource/useActivatedUI'
 import { useMatchXS } from '../../utils/hooks/useMatchXS'
 import { extendsTheme } from '../../utils/theme'
 import { makeTypedMessageText } from '../../protocols/typed-message'
+import { Image } from '../shared/Image'
+import { LogoIconURLs } from '../../resources/logo'
 
 export enum SetupGuideStep {
     FindUsername = 'find-username',
@@ -301,6 +303,7 @@ function WizardDialog(props: WizardDialogProps) {
                 <Paper className={classes.root}>
                     <header className={classes.header}>
                         <Typography className={classes.primary} color="textPrimary" variant="h1">
+                            <Image src={LogoIconURLs.subdao.image} width={26} height={26} />
                             {title}
                         </Typography>
                         {optional ? (
@@ -487,7 +490,6 @@ function SayHelloWorld({ createStatus, onCreate, onSkip, onBack, onClose }: SayH
             completion={100}
             dialogType={SetupGuideStep.SayHelloWorld}
             status={createStatus}
-            optional
             title={t('setup_guide_say_hello_title')}
             tip={
                 <form>

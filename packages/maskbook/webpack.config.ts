@@ -139,6 +139,11 @@ function config(opts: {
                         }),
                     },
                 },
+                { test: /\.css$/, loader: require.resolve('css-loader') },
+                {
+                    test: /\.(woff|woff2|eot|ttf|otf)$/,
+                    loader: 'file-loader',
+                },
             ],
             //#region Dismiss warning in gun
             wrappedContextCritical: false,

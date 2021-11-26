@@ -12,6 +12,7 @@ import { safeUnreachable } from './utils'
 import { or } from '../components/custom-ui-helper'
 import { activatedSocialNetworkUI } from '../social-network'
 import { ValueRef } from '@dimensiondev/holoflows-kit'
+import '@fontsource/roboto'
 
 function getFontFamily(monospace?: boolean) {
     // We want to look native.
@@ -32,7 +33,9 @@ const base: ThemeOptions = {
         text: { hint: 'rgba(0, 0, 0, 0.38)' },
     },
     typography: {
-        fontFamily: getFontFamily(),
+        fontFamily: 'Roboto',
+        fontWeightRegular: 100,
+        fontWeightBold: 300,
     },
     breakpoints: {
         values: {
@@ -49,6 +52,7 @@ const base: ThemeOptions = {
                 root: {
                     textTransform: 'unset',
                     minWidth: '100px',
+                    borderRadius: '8px',
                 },
             },
             defaultProps: {
@@ -72,6 +76,10 @@ const base: ThemeOptions = {
 const lightThemePatch: Partial<ThemeOptions> = {
     palette: {
         mode: 'light',
+        text: {
+            primary: '#10164B',
+            secondary: 'rgba(16, 22, 75, 0.6)',
+        },
     },
 }
 
@@ -80,6 +88,10 @@ const darkThemePatch: Partial<ThemeOptions> = {
         mode: 'dark',
         background: {
             paper: grey[900],
+        },
+        text: {
+            primary: '#F0F2FF',
+            secondary: '#DADEFA',
         },
     },
 }

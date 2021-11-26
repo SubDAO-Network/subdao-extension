@@ -29,15 +29,21 @@ import WalletLine from '../WalletLine'
 import { isETH, isSameAddress } from '../../../../web3/helpers'
 import { useAccount } from '../../../../web3/hooks/useAccount'
 import { WalletRPC } from '../../../../plugins/Wallet/messages'
+import TextInput from '../../DashboardComponents/TextInput'
 
 //#region predefined token selector
 const useERC20PredefinedTokenSelectorStyles = makeStyles((theme) =>
     createStyles({
         list: {
-            scrollbarWidth: 'none',
-            '&::-webkit-scrollbar': {
-                display: 'none',
-            },
+            // scrollbarWidth: 'none',
+            // '&::-webkit-scrollbar': {
+            //     display: 'none',
+            // },
+            backgroundColor: '#F4F4FA',
+            borderRadius: 12,
+        },
+        content: {
+            paddingTop: theme.spacing(1),
         },
         search: {
             marginBottom: theme.spacing(1),
@@ -74,8 +80,6 @@ export function DashboardWalletBackupDialog(props: WrappedDialogProps<WalletProp
     return (
         <DashboardDialogCore {...props}>
             <DashboardDialogWrapper
-                icon={<CreditCardIcon />}
-                iconColor="#4EE0BC"
                 primary={t('backup_wallet')}
                 secondary={t('backup_wallet_hint')}
                 constraintSecondary={false}
@@ -112,10 +116,9 @@ export function DashboardWalletRenameDialog(props: WrappedDialogProps<WalletProp
     return (
         <DashboardDialogCore fullScreen={false} {...props}>
             <DashboardDialogWrapper
-                size="small"
                 primary={t('wallet_rename')}
                 content={
-                    <TextField
+                    <TextInput
                         helperText={
                             checkInputLengthExceed(name)
                                 ? t('input_length_exceed_prompt', {
@@ -134,15 +137,15 @@ export function DashboardWalletRenameDialog(props: WrappedDialogProps<WalletProp
                 }
                 footer={
                     <SpacedButtonGroup>
+                        <Button variant="outlined" color="inherit" onClick={props.onClose}>
+                            {t('cancel')}
+                        </Button>
                         <DebounceButton
                             variant="contained"
                             onClick={renameWallet}
                             disabled={name.length === 0 || checkInputLengthExceed(name)}>
                             {t('ok')}
                         </DebounceButton>
-                        <Button variant="outlined" color="inherit" onClick={props.onClose}>
-                            {t('cancel')}
-                        </Button>
                     </SpacedButtonGroup>
                 }
             />
@@ -150,6 +153,31 @@ export function DashboardWalletRenameDialog(props: WrappedDialogProps<WalletProp
     )
 }
 //#endregion
+const useStyles = makeStyles((theme) =>
+    createStyles({
+        cancel: {
+            border: 'none',
+            color: 'white',
+            '&, &:hover': {
+                backgroundColor: '#5C5F85',
+            },
+        },
+    }),
+)
+function ButtonCancel(props: any) {
+    const classes = useStyles()
+    const { t } = useI18N()
+    return (
+        <Button
+            size="medium"
+            classes={{ root: classes.cancel }}
+            variant="outlined"
+            color="inherit"
+            onClick={props.onClose}>
+            {t('cancel')}
+        </Button>
+    )
+}
 
 //#region wallet delete dialog
 export function DashboardWalletDeleteConfirmDialog(props: WrappedDialogProps<WalletProps>) {
@@ -165,23 +193,15 @@ export function DashboardWalletDeleteConfirmDialog(props: WrappedDialogProps<Wal
     return (
         <DashboardDialogCore fullScreen={false} {...props}>
             <DashboardDialogWrapper
-                size="small"
-                icon={<CreditCardIcon />}
-                iconColor="#F4637D"
+                alert
                 primary={t('delete_wallet')}
                 secondary={t('delete_wallet_hint')}
                 footer={
                     <SpacedButtonGroup>
-                        <DebounceButton
-                            variant="contained"
-                            color="danger"
-                            onClick={onConfirm}
-                            data-testid="confirm_button">
+                        <ButtonCancel onClose={props.onClose}></ButtonCancel>
+                        <DebounceButton variant="contained" onClick={onConfirm} data-testid="confirm_button">
                             {t('confirm')}
                         </DebounceButton>
-                        <Button variant="outlined" color="inherit" onClick={props.onClose}>
-                            {t('cancel')}
-                        </Button>
                     </SpacedButtonGroup>
                 }
             />
@@ -428,10 +448,11 @@ export function ERC20PredefinedTokenSelector(props: ERC20PredefinedTokenSelector
 
     return (
         <Box
+            className={classes.content}
             sx={{
                 textAlign: 'left',
             }}>
-            <TextField
+            <TextInput
                 className={classes.search}
                 label={t('add_token_search_hint')}
                 autoFocus
@@ -471,7 +492,6 @@ export function DashboardWalletAddERC20TokenDialog(props: WrappedDialogProps<Wal
     return (
         <DashboardDialogCore {...props}>
             <DashboardDialogWrapper
-                icon={<HexagonIcon />}
                 iconColor="#699CF7"
                 primary={t('add_token')}
                 content={
@@ -481,7 +501,7 @@ export function DashboardWalletAddERC20TokenDialog(props: WrappedDialogProps<Wal
                     />
                 }
                 footer={
-                    <DebounceButton disabled={!token} variant="contained" onClick={onSubmit}>
+                    <DebounceButton fullWidth disabled={!token} variant="contained" onClick={onSubmit}>
                         {t('add_token')}
                     </DebounceButton>
                 }

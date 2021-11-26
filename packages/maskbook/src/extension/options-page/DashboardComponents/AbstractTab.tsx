@@ -1,16 +1,29 @@
 import { makeStyles } from '@material-ui/core/styles'
 import { Theme, createStyles, Tabs, Tab, Box, BoxProps, Paper } from '@material-ui/core'
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
+import { experimentalStyled as styled } from '@material-ui/core'
+
+const PaperBg = styled(Paper)``
+
+const useStyles = makeStyles((theme: Theme) => {
+    const dark = theme.palette.mode === 'dark'
+    return createStyles({
         tab: {
             minWidth: 'unset',
         },
+        tabSelected: {
+            background: dark ? '#313768' : '#FFF3F9',
+        },
         tabPanel: {
             marginTop: theme.spacing(3),
+            display: 'flex',
+            flexDirection: 'column',
+            height: 230,
+            overflowY: 'auto',
+            background: '#F7F8FB',
         },
-    }),
-)
+    })
+})
 
 interface TabPanelProps extends BoxProps {
     id?: string
@@ -27,11 +40,11 @@ export interface AbstractTabProps {
 export default function AbstractTab({ tabs, state, height = 200 }: AbstractTabProps) {
     const classes = useStyles()
     const [value, setValue] = state
-    const tabIndicatorStyle = tabs.length ? { width: 100 / tabs.length + '%' } : undefined
+    const tabIndicatorStyle = tabs.length ? { width: 100 / tabs.length + '%', height: 2 } : undefined
 
     return (
         <>
-            <Paper square elevation={0}>
+            <Paper elevation={0}>
                 <Tabs
                     value={value}
                     TabIndicatorProps={{ style: tabIndicatorStyle }}
@@ -42,6 +55,9 @@ export default function AbstractTab({ tabs, state, height = 200 }: AbstractTabPr
                     {tabs.map((tab) => (
                         <Tab
                             className={classes.tab}
+                            classes={{
+                                selected: classes.tabSelected,
+                            }}
                             label={tab.label}
                             key={tab.label}
                             data-testid={`${tab.id?.toLowerCase()}_tab`}
@@ -54,7 +70,6 @@ export default function AbstractTab({ tabs, state, height = 200 }: AbstractTabPr
                 role="tabpanel"
                 {...tabs.find((_, index) => index === value)}
                 sx={{
-                    height: height,
                     minHeight: height,
                 }}
             />

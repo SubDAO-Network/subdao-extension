@@ -1,4 +1,11 @@
-import { Typography, IconButton, MenuItem, ListItem, ListItemTypeMap } from '@material-ui/core'
+import {
+    experimentalStyled as styled,
+    Typography,
+    IconButton,
+    MenuItem,
+    ListItem,
+    ListItemTypeMap,
+} from '@material-ui/core'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 import type { Profile } from '../../../database'
@@ -9,6 +16,39 @@ import { useMenu } from '../../../utils/hooks/useMenu'
 import { useI18N } from '../../../utils/i18n-next-ui'
 import type { DefaultComponentProps } from '@material-ui/core/OverridableComponent'
 import { useMatchXS } from '../../../utils/hooks/useMatchXS'
+import { IconsURLs } from '../../../resources/icons'
+import ActionButton from './ActionButton'
+
+const ListBrdr = styled(ListItem)`
+    padding: 0 !important;
+    border-bottom: 0 !important;
+    &:hover {
+        background: transparent !important;
+    }
+`
+
+const ListBg = styled(`div`)`
+    background: rgba(241, 242, 248, 0.5);
+    border-radius: 12px;
+    border: 1px solid #e7eaf3;
+    box-sizing: border-box;
+    height: 70px;
+    margin-bottom: 20px;
+    display: flex;
+    padding: 16px;
+
+    align-items: center;
+    width: 100%;
+    &:hover {
+        background: rgba(0, 0, 0, 0.04);
+    }
+`
+
+const IconBg = styled('div')`
+    width: 15%;
+    flex-shrink: 1;
+    text-align: right;
+`
 
 const useStyles = makeStyles((theme) =>
     createStyles({
@@ -77,25 +117,41 @@ export function ContactLine(props: ContactLineProps) {
     return (
         <>
             {/* // TODO: Use standard ListItemAvatar, ListItemText and ListItemSecondaryAction instead of custom one. */}
-            <ListItem button selected={false} onClick={openContactDialog} className={classes.line} {...rest}>
-                <Avatar className={classes.avatar} person={contact} />
-                <Typography className={classes.user}>{contact.nickname || contact.identifier.userId}</Typography>
-                <Typography className={classes.provider}>@{contact.identifier.network}</Typography>
-                {xsMatched ? null : (
-                    <Typography className={classes.fingerprint} component="code">
-                        {contact.linkedPersona?.fingerprint}
-                    </Typography>
-                )}
-                <IconButton
-                    className={classes.more}
-                    size="small"
-                    onClick={(e) => {
-                        e.stopPropagation()
-                        openMenu(e)
-                    }}>
-                    <MoreHorizIcon />
-                </IconButton>
-            </ListItem>
+            <ListBrdr
+                button
+                disableRipple={true}
+                selected={false}
+                onClick={openContactDialog}
+                className={classes.line}
+                {...rest}>
+                <ListBg>
+                    <Avatar className={classes.avatar} person={contact} />
+                    <Typography className={classes.user}>{contact.nickname || contact.identifier.userId}</Typography>
+                    <Typography className={classes.provider}>@{contact.identifier.network}</Typography>
+                    {xsMatched ? null : (
+                        <Typography className={classes.fingerprint} component="code">
+                            {contact.linkedPersona?.fingerprint}
+                        </Typography>
+                    )}
+                    <IconBg
+                        onClick={(e) => {
+                            e.stopPropagation()
+                            openMenu(e)
+                        }}>
+                        <img src={IconsURLs.delete.image} alt="" />
+                    </IconBg>
+                    {/*<IconButton*/}
+                    {/*    className={classes.more}*/}
+                    {/*    size="small"*/}
+                    {/*    onClick={(e) => {*/}
+                    {/*        e.stopPropagation()*/}
+                    {/*        openMenu(e)*/}
+                    {/*    }}>*/}
+                    {/*    dfs*/}
+                    {/*    /!*<MoreHorizIcon />*!/*/}
+                    {/*</IconButton>*/}
+                </ListBg>
+            </ListBrdr>
             {menu}
             {contactDialog}
             {deleteContactConfirmDialog}

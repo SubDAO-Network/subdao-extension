@@ -25,6 +25,7 @@ interface DashboardRouterContainerProps {
      * add or remove the placeholder
      */
     empty?: boolean
+    emptyText?: string
     /**
      * add or remove the padding of scroller
      */
@@ -50,12 +51,17 @@ const FAB_COLORS: PropTypes.Color[] = ['primary', 'secondary', 'default']
 const useStyles = makeStyles((theme) => {
     return createStyles<string, { isSetup: boolean; navHeight: number }>({
         wrapper: {
-            flex: 1,
             width: '100%',
             height: '100%',
-            [theme.breakpoints.up('sm')]: {
-                display: Flags.has_native_nav_bar ? 'inline' : 'grid',
-                gridTemplateRows: (props) => (props.isSetup ? '1fr' : '[titleAction] 0fr [divider] 0fr [content] auto'),
+            display: 'flex',
+            flexDirection: 'column',
+            padding: `0 ${theme.typography.pxToRem(70)}`,
+            // [theme.breakpoints.up('sm')]: {
+            //     display: Flags.has_native_nav_bar ? 'inline' : 'grid',
+            //     gridTemplateRows: (props) => (props.isSetup ? '1fr' : '[titleAction] 0fr [divider] 0fr [content] auto'),
+            // },
+            [theme.breakpoints.down('sm')]: {
+                padding: `0 ${theme.typography.pxToRem(20)}`,
             },
         },
         placeholder: {
@@ -64,24 +70,25 @@ const useStyles = makeStyles((theme) => {
             right: 0,
             bottom: 0,
             position: 'absolute',
-            backgroundSize: '185px 128px',
-            backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'center center',
-            backgroundImage: `url(${
-                theme.palette.mode === 'light'
-                    ? new URL('./dashboard-placeholder.png', import.meta.url)
-                    : new URL('./dashboard-placeholder-dark.png', import.meta.url)
-            })`,
-            [theme.breakpoints.down('sm')]: {
-                backgroundSize: '100px 70px',
-            },
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+        },
+        emptyText: {
+            marginTop: 20,
         },
         scroller: {
             height: '100%',
+            width: '100%',
+            position: 'absolute',
+            left: 0,
+            top: 0,
             scrollbarWidth: 'none',
             '&::-webkit-scrollbar': {
                 display: 'none',
             },
+            overflow: 'auto',
         },
         scrollerCompact: {
             paddingLeft: '0 !important',
@@ -93,11 +100,11 @@ const useStyles = makeStyles((theme) => {
             justifyContent: 'space-between',
             alignItems: 'center',
             height: 110,
-            padding: theme.spacing(4, 3),
+            padding: `${theme.spacing(7.5)} 0 ${theme.spacing(4)} 0`,
         },
         titleContent: {
             color: theme.palette.text.primary,
-            fontWeight: 500,
+            fontWeight: 300,
             fontSize: 32,
             lineHeight: 1.2,
             [theme.breakpoints.down('sm')]: {
@@ -122,10 +129,9 @@ const useStyles = makeStyles((theme) => {
             flex: 1,
         },
         content: {
-            display: 'flex',
-            flexDirection: 'column',
-            overflow: 'hidden',
+            flex: 1,
             position: 'relative',
+            borderRadius: 10,
             [theme.breakpoints.down('sm')]: {
                 height: '100vh',
             },
@@ -133,8 +139,6 @@ const useStyles = makeStyles((theme) => {
         contentPadded: {
             '& > *': {
                 overflow: 'auto',
-                display: 'flex',
-                flexDirection: 'column',
                 padding: theme.spacing(0, 3),
                 scrollbarWidth: 'none',
                 '&::-webkit-scrollbar': {
@@ -164,7 +168,7 @@ const useStyles = makeStyles((theme) => {
         buttons: {
             display: 'flex',
             '& > *': {
-                margin: theme.spacing(0, 1),
+                margin: '0 5px',
             },
         },
         floatButtonContainer: {
@@ -182,7 +186,17 @@ const useStyles = makeStyles((theme) => {
 })
 
 export default function DashboardRouterContainer(props: DashboardRouterContainerProps) {
-    const { title, actions, children, padded, navHeight = 0, empty, compact = false, floatingButtons = [] } = props
+    const {
+        title,
+        actions,
+        children,
+        padded,
+        navHeight = 0,
+        empty,
+        emptyText,
+        compact = false,
+        floatingButtons = [],
+    } = props
     const isSetup = location.hash.includes('/setup')
     const classes = useStyles({
         isSetup,
@@ -208,23 +222,25 @@ export default function DashboardRouterContainer(props: DashboardRouterContainer
                                         </div>
                                     )}
                                 </section>
-                                <div
-                                    className={classNames({
-                                        [classes.dividerPadded]: padded !== false,
-                                        [classes.dividerCompact]: xsMatched,
-                                    })}>
-                                    <Divider className={classes.divider} />
-                                </div>
                             </>
                         )}
                     </>
                 )}
-                <main className={classNames(classes.content, { [classes.contentPadded]: padded !== false })}>
+                <div className={classNames(classes.content)}>
                     <div className={classNames(classes.scroller, { [classes.scrollerCompact]: compact !== false })}>
                         {children}
                     </div>
-                    {empty ? <div className={classes.placeholder}></div> : null}
-                </main>
+                    {empty ? (
+                        <div className={classes.placeholder}>
+                            <img alt="" src={new URL('./dashboard-placeholder.png', import.meta.url).toString()} />
+                            {emptyText ? (
+                                <Typography className={classes.emptyText} color="textPrimary">
+                                    {emptyText}
+                                </Typography>
+                            ) : null}
+                        </div>
+                    ) : null}
+                </div>
                 <div className={classes.floatButtonContainer}>
                     {Flags.has_native_nav_bar
                         ? floatingButtons?.map((floatingButton, index) => (

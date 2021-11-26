@@ -3,8 +3,8 @@ import { makeStyles, createStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import type { Persona } from '../../../database'
 import { MenuItem, Card, IconButton } from '@material-ui/core'
+import MoreHorizOutlinedIcon from '@material-ui/icons/MoreHorizOutlined'
 import Services from '../../service'
-import MoreVertIcon from '@material-ui/icons/MoreVert'
 import { useColorStyles } from '../../../utils/theme'
 import { useI18N } from '../../../utils/i18n-next-ui'
 import ProfileBox from './ProfileBox'
@@ -16,6 +16,7 @@ import {
     DashboardPersonaDeleteConfirmDialog,
 } from '../DashboardDialogs/Persona'
 import { useMenu } from '../../../utils/hooks/useMenu'
+import { ToolIconURLs } from '../../../resources/tool-icon'
 
 interface Props {
     persona: Persona
@@ -24,19 +25,26 @@ interface Props {
 const useStyles = makeStyles((theme) =>
     createStyles({
         card: {
-            width: 350,
-            flex: '0 0 auto',
-            marginRight: theme.spacing(6),
-            marginBottom: theme.spacing(5),
-            padding: theme.spacing(4, 3, 5, 3),
-            boxShadow:
-                theme.palette.mode === 'dark'
-                    ? 'none'
-                    : '0px 2px 4px rgba(96, 97, 112, 0.16), 0px 0px 1px rgba(40, 41, 61, 0.04)',
-
+            width: 'calc(50% - 10px)',
+            height: 160,
+            marginBottom: 10,
+            '&:nth-child(2n)': {
+                marginLeft: theme.spacing(1.25),
+            },
+            '&:nth-child(2n-1)': {
+                marginRight: theme.spacing(1.25),
+            },
+            padding: '17px 7px 17px 20px',
+            background: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.08)' : '#F8F8FB',
+            borderRadius: 12,
+            border: theme.palette.mode === 'dark' ? 'none' : '1px solid #E7EAF3',
+            boxShadow: 'none',
             [theme.breakpoints.down('sm')]: {
+                flex: 'none',
                 width: '100%',
-                marginRight: 0,
+                marginRight: '0 !important',
+                marginLeft: '0 !important',
+                marginBottom: 10,
             },
         },
         header: {
@@ -50,12 +58,23 @@ const useStyles = makeStyles((theme) =>
             overflow: 'hidden',
             wordBreak: 'break-all',
             whiteSpace: 'nowrap',
-            fontWeight: 500,
+            fontWeight: 300,
         },
         menu: {
             flex: '0 0 auto',
-            marginLeft: theme.spacing(1),
             cursor: 'pointer',
+            display: theme.palette.mode === 'dark' ? 'none' : 'block',
+        },
+        menuDark: {
+            flex: '0 0 auto',
+            cursor: 'pointer',
+            display: theme.palette.mode === 'dark' ? 'block' : 'none',
+        },
+        profile: {
+            paddingRight: 10,
+        },
+        more: {
+            backgroundColor: '',
         },
     }),
 )
@@ -96,13 +115,31 @@ export default function PersonaCard({ persona }: Props) {
                     <span title={persona.nickname} className={classes.title} data-testid="persona_title">
                         {persona.nickname}
                     </span>
-                    <IconButton size="small" className={classes.menu} onClick={openMenu} data-testid="setting_icon">
-                        <MoreVertIcon />
-                    </IconButton>
+                    {/* <IconButton size="small" className={classes.menu} classes={{root: classes.more}} onClick={openMenu} data-testid="setting_icon">
+                        <MoreHorizOutlinedIcon />
+                    </IconButton> */}
+                    <img
+                        src={ToolIconURLs.more.image}
+                        className={classes.menu}
+                        width={48}
+                        alt=""
+                        onClick={openMenu}
+                        data-testid="setting_icon"
+                    />
+                    <img
+                        src={ToolIconURLs.more.image}
+                        className={classes.menuDark}
+                        width={48}
+                        alt=""
+                        onClick={openMenu}
+                        data-testid="setting_icon"
+                    />
                     {menu}
                 </>
             </Typography>
-            <ProfileBox persona={persona} />
+            <div className={classes.profile}>
+                <ProfileBox persona={persona} />
+            </div>
             {deletePersona}
             {backupPersona}
             {renamePersona}

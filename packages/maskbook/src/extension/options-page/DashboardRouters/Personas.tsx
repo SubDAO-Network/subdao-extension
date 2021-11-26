@@ -40,6 +40,17 @@ const useStyles = makeStyles((theme) =>
         placeholder: {
             flex: 1,
         },
+        btnCreate: {
+            borderRadius: 8,
+        },
+        btnImport: {
+            borderRadius: 8,
+            color: 'white',
+            backgroundColor: '#5C5F85',
+            '&:hover': {
+                backgroundColor: '#5C5F85',
+            },
+        },
     }),
 )
 
@@ -65,13 +76,14 @@ export default function DashboardPersonasRouter() {
 
     const actions = useMemo(
         () => [
-            <Button variant="outlined" onClick={openImportPersona}>
+            <Button size="medium" variant="contained" onClick={openImportPersona} classes={{ root: classes.btnImport }}>
                 {t('import')}
             </Button>,
             <Button
+                size="medium"
                 variant="contained"
                 onClick={openCreatePersona}
-                endIcon={<AddCircleIcon />}
+                classes={{ root: classes.btnCreate }}
                 data-testid="create_button">
                 {t('create_persona')}
             </Button>,
