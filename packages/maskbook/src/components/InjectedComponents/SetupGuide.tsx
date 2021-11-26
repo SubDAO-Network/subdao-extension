@@ -106,7 +106,7 @@ const wizardTheme = extendsTheme((theme: Theme) => ({
 const useWizardDialogStyles = makeStyles((theme) =>
     createStyles({
         root: {
-            padding: '56px 20px 48px',
+            padding: '65px 20px 50px',
             position: 'relative',
             boxShadow: theme.palette.mode === 'dark' ? 'none' : '0px 0px 4px 4px #F1F3F4',
             borderRadius: 10,
@@ -125,17 +125,20 @@ const useWizardDialogStyles = makeStyles((theme) =>
             overflow: 'hidden',
         },
         button: {
-            width: 200,
+            width: 285,
             height: 40,
+            background: '#D52473',
+            borderRadius: 4,
             marginLeft: 0,
-            marginTop: 0,
+            marginTop: 64,
             [theme.breakpoints.down('sm')]: {
                 width: '100%',
                 height: '45px !important',
                 marginTop: 20,
                 borderRadius: 0,
             },
-            fontSize: 16,
+            fontSize: 14,
+            fontWeight: 400,
             wordBreak: 'keep-all',
         },
         back: {
@@ -155,6 +158,8 @@ const useWizardDialogStyles = makeStyles((theme) =>
             fontWeight: 400,
             lineHeight: '29px',
             color: '#10164B',
+            fontFamily: 'Chirp-Regular, Chirp',
+            marginLeft: 10,
         },
         secondary: {
             fontSize: 14,
@@ -168,7 +173,6 @@ const useWizardDialogStyles = makeStyles((theme) =>
         tip: {
             fontSize: 16,
             marginBottom: 24,
-            fontFamily: 'Chirp-Regular, Chirp',
             fontWeight: 400,
             color: 'rgba(16, 22, 75, 0.6)',
             lineHeight: '19px',
@@ -180,16 +184,11 @@ const useWizardDialogStyles = makeStyles((theme) =>
         },
         header: {
             marginBottom: 0,
+            display: 'flex',
+            alignItems: 'center',
         },
         content: {},
         footer: {},
-        progress: {
-            left: 0,
-            right: 0,
-            bottom: 0,
-            height: 8,
-            position: 'absolute',
-        },
     }),
 )
 
@@ -274,7 +273,6 @@ interface WizardDialogProps {
 }
 
 function WizardDialog(props: WizardDialogProps) {
-    const { t } = useI18N()
     const { title, dialogType, optional = false, completion, status, content, tip, footer, onBack, onClose } = props
     const classes = useWizardDialogStyles(props)
 
@@ -302,15 +300,8 @@ function WizardDialog(props: WizardDialogProps) {
                 }}>
                 <Paper className={classes.root}>
                     <header className={classes.header}>
-                        <Typography className={classes.primary} color="textPrimary" variant="h1">
-                            <SubDAOIcon />
-                            {title}
-                        </Typography>
-                        {optional ? (
-                            <Typography className={classes.secondary} color="textSecondary" variant="body2">
-                                {t('setup_guide_optional')}
-                            </Typography>
-                        ) : null}
+                        <SubDAOIcon />
+                        <div className={classes.primary}>{title}</div>
                     </header>
                     <ContentUI dialogType={dialogType} content={content} tip={tip} footer={footer} />
                     {onBack ? (
