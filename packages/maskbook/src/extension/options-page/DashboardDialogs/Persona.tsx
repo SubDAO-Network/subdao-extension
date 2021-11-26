@@ -392,13 +392,15 @@ export function DashboardPersonaBackupDialog(props: WrappedDialogProps<PersonaPr
                 id: 'qr',
                 label: t('qr_code'),
                 children: compressedQRString ? (
-                    <QRCode
-                        text={compressedQRString}
-                        options={{ width: 200 }}
-                        canvasProps={{
-                            style: { display: 'block', margin: 'auto' },
-                        }}
-                    />
+                    <ShowcaseBox>
+                        <QRCode
+                            text={compressedQRString}
+                            options={{ width: 200 }}
+                            canvasProps={{
+                                style: { display: 'block', margin: 'auto' },
+                            }}
+                        />
+                    </ShowcaseBox>
                 ) : null,
             },
         ],
