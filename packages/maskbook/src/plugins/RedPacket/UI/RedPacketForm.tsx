@@ -8,6 +8,9 @@ import {
     Select,
     MenuItem,
     MenuProps,
+    InputBase,
+    Typography,
+    experimentalStyled as styled,
 } from '@material-ui/core'
 import { omit } from 'lodash-es'
 import { v4 as uuid } from 'uuid'
@@ -41,11 +44,10 @@ const useStyles = makeStyles((theme) =>
     createStyles({
         line: {
             display: 'flex',
-            marginTop: theme.spacing(2),
+            margin: theme.spacing(1),
         },
         input: {
             flex: 1,
-            padding: theme.spacing(0.5),
         },
         tip: {
             fontSize: 12,
@@ -61,8 +63,55 @@ const useStyles = makeStyles((theme) =>
         inputShrinkLabel: {
             transform: 'translate(17px, -3px) scale(0.75) !important',
         },
+        wishesInput: {
+            background: '#F8F8F8',
+            border: '1px solid #E5E5E5',
+            fontSize: 14,
+            lineHeight: '16px',
+            height: 60,
+            padding: 10,
+            '& textarea': {
+                height: '100%',
+            },
+        },
+        modeSelect: {
+            color: '#212121',
+            '& fieldset': {
+                border: 'none !important',
+            },
+        },
+        modeInput: {
+            background: '#F8F8F8',
+            border: '1px solid #E5E5E5',
+            fontSize: 14,
+            height: 40,
+            color: '#212121',
+            padding: 0,
+            paddingLeft: 10,
+            lineHeight: '40px',
+        },
+        modeForm: {
+            flex: 1,
+            marginRight: 10,
+        },
+        shareInput: {
+            background: '#F8F8F8',
+            border: '1px solid #E5E5E5',
+            fontSize: 14,
+            height: 40,
+            color: '#212121',
+            paddingLeft: 10,
+        },
     }),
 )
+
+const InputTitle = styled(Typography)`
+    font-weight: 400;
+    color: rgba(33, 33, 33, 0.4);
+    line-height: 14px;
+    font-size: 12px;
+    margin-bottom: 8px;
+`
 
 export interface RedPacketFormProps extends withClasses<KeysInferFromUseStyles<typeof useStyles>> {
     onCreate?(payload: RedPacketJSONPayload): void
@@ -254,9 +303,9 @@ export function RedPacketForm(props: RedPacketFormProps) {
         if (!account) return t('plugin_wallet_connect_a_wallet')
         if (new BigNumber(shares || '0').isZero()) return 'Enter shares'
         if (new BigNumber(shares || '0').isGreaterThan(255)) return 'At most 255 recipients'
-        if (new BigNumber(amount).isZero()) return 'Enter an amount'
+        if (new BigNumber(amount).isZero()) return t('plugin_ito_error_enter_amount')
         if (tokenBalance === null || new BigNumber(totalAmount).isGreaterThan(new BigNumber(tokenBalance))) {
-            return `Insufficient ${token.symbol} balance`
+            return t('plugin_ito_error_balance', { symbol: token.symbol })
         }
         return ''
     }, [account, amount, t, totalAmount, shares, token, tokenBalance])
@@ -265,9 +314,12 @@ export function RedPacketForm(props: RedPacketFormProps) {
     return (
         <>
             <div className={classes.line}>
-                <FormControl className={classes.input} variant="outlined">
-                    <InputLabel className={classes.selectShrinkLabel}>{t('plugin_red_packet_split_mode')}</InputLabel>
+                <FormControl className={classes.modeForm} variant="outlined">
+                    <InputTitle>{t('plugin_red_packet_split_mode')}</InputTitle>
+                    {/* <InputLabel className={classes.selectShrinkLabel}>{t('plugin_red_packet_split_mode')}</InputLabel> */}
                     <Select
+                        className={classes.modeSelect}
+                        classes={{ root: classes.modeInput }}
                         value={isRandom ? 1 : 0}
                         onChange={(e) => {
                             // foolproof, reset amount since the meaning of amount changed:
@@ -280,28 +332,23 @@ export function RedPacketForm(props: RedPacketFormProps) {
                         <MenuItem value={1}>{t('plugin_red_packet_random')}</MenuItem>
                     </Select>
                 </FormControl>
-                <TextField
-                    className={classes.input}
-                    InputProps={{
-                        inputProps: {
+                <div style={{ flex: 1, marginLeft: 10 }}>
+                    <InputTitle>{t('plugin_red_packet_shares')}</InputTitle>
+                    <InputBase
+                        fullWidth
+                        classes={{ root: classes.shareInput }}
+                        inputProps={{
                             autoComplete: 'off',
                             autoCorrect: 'off',
                             inputMode: 'decimal',
                             placeholder: '0',
                             pattern: '^[0-9]$',
                             spellCheck: false,
-                        },
-                    }}
-                    InputLabelProps={{
-                        shrink: true,
-                        classes: {
-                            shrink: classes.inputShrinkLabel,
-                        },
-                    }}
-                    label={t('plugin_red_packet_shares')}
-                    value={shares}
-                    onChange={onShareChange}
-                />
+                        }}
+                        value={shares}
+                        onChange={onShareChange}
+                    />
+                </div>
             </div>
             <div className={classes.line}>
                 <TokenAmountPanel
@@ -319,24 +366,21 @@ export function RedPacketForm(props: RedPacketFormProps) {
                     }}
                 />
             </div>
-            <div className={classes.line}>
-                <TextField
-                    className={classes.input}
+            <div>
+                <InputTitle>{t('plugin_red_packet_attached_message')}</InputTitle>
+                <InputBase
+                    fullWidth
+                    classes={{ root: classes.wishesInput }}
                     onChange={(e) => setMessage(e.target.value)}
-                    InputLabelProps={{
-                        shrink: true,
-                        classes: {
-                            shrink: classes.inputShrinkLabel,
-                        },
-                    }}
                     inputProps={{ placeholder: t('plugin_red_packet_best_wishes') }}
-                    label={t('plugin_red_packet_attached_message')}
                     defaultValue={t('plugin_red_packet_best_wishes')}
+                    multiline
+                    rows={2}
                 />
             </div>
             <SubdaoWalletConnectedBoundary>
                 {network === SubstrateNetwork.Polkadot || network === SubstrateNetwork.Kusama ? (
-                    <ActionButton className={classes.button} fullWidth onClick={createCallback}>
+                    <ActionButton variant="contained" className={classes.button} onClick={createCallback}>
                         {validationMessage || `Send ${formatBalance(totalAmount, token.decimals)} ${token.symbol}`}
                     </ActionButton>
                 ) : (
@@ -344,7 +388,7 @@ export function RedPacketForm(props: RedPacketFormProps) {
                         amount={totalAmount.toFixed()}
                         token={token as any}
                         spender={HAPPY_RED_PACKET_ADDRESS}>
-                        <ActionButton className={classes.button} fullWidth onClick={createCallback}>
+                        <ActionButton variant="contained" className={classes.button} onClick={createCallback}>
                             {validationMessage || `Send ${formatBalance(totalAmount, token.decimals)} ${token.symbol}`}
                         </ActionButton>
                     </SubERC20TokenApprovedBoundary>
