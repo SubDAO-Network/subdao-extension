@@ -44,7 +44,8 @@ const useStyles = makeStyles((theme) =>
     createStyles({
         line: {
             display: 'flex',
-            margin: theme.spacing(1),
+            marginTop: theme.spacing(1),
+            marginBottom: theme.spacing(1),
         },
         input: {
             flex: 1,

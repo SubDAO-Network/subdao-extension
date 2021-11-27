@@ -22,9 +22,6 @@ const useStyles = makeStyles((theme) => {
     return createStyles({
         root: {
             flex: 3,
-            '&:first-child': {
-                marginTop: theme.spacing(1.25),
-            },
             '& label': {
                 transform: 'translate(-0, -6px) scale(0.75) !important',
                 textAlign: 'left',
@@ -37,9 +34,10 @@ const useStyles = makeStyles((theme) => {
                 top: 0,
             },
             '& .MuiInputBase-input': {
-                paddingTop: '12px',
-                paddingBottom: '12px',
-                height: 44,
+                paddingTop: theme.spacing(1),
+                paddingBottom: theme.spacing(1),
+                height: 48,
+                boxSizing: 'border-box',
             },
             '& legend': {
                 display: 'none',
@@ -75,19 +73,21 @@ const useStyles = makeStyles((theme) => {
             width: 18,
             height: 18,
         },
-
         panel: {
             width: '100%',
         },
         panelContent: {
+            marginTop: theme.spacing(1),
             display: 'flex',
-            alignItems: 'flex-end',
+            alignItems: 'center',
+            justifyContent: 'center',
         },
         balanceBox: {
             flex: 2,
             marginLeft: 10,
             backgroundColor: '#F7F8FB',
-            height: 68,
+            height: 48,
+            boxSizing: 'border-box',
             border: '1px solid #F7F8FB',
             borderRadius: 4,
             display: 'flex',
@@ -96,6 +96,7 @@ const useStyles = makeStyles((theme) => {
         balanceUnit: {
             fontSize: 14,
             marginLeft: 2,
+            paddingRight: theme.spacing(1),
         },
         title: {
             textAlign: 'left',
@@ -146,7 +147,6 @@ export function TokenAmountPanel(props: TokenAmountPanelProps) {
         [onAmountChange, RE_MATCH_WHOLE_AMOUNT],
     )
     //#endregion
-    console.log('Z******** ', token)
 
     return (
         <div className={classes.panel}>
