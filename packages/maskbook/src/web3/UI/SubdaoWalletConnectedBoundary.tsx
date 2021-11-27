@@ -14,6 +14,9 @@ const useStyles = makeStyles((theme) =>
         button: {
             marginTop: theme.spacing(1.5),
         },
+        grid: {
+            justifyContent: 'flex-end',
+        },
     }),
 )
 
@@ -44,7 +47,7 @@ export function SubdaoWalletConnectedBoundary(props: SubdaoWalletConnectedBounda
 
     if (!account)
         return (
-            <Grid container>
+            <Grid container className={classes.grid}>
                 <ActionButton className={classes.button} fullWidth variant="contained" size="large" onClick={onConnect}>
                     {t('plugin_wallet_connect_a_wallet')}
                 </ActionButton>
@@ -52,8 +55,9 @@ export function SubdaoWalletConnectedBoundary(props: SubdaoWalletConnectedBounda
         )
     if (subdaoBalance === null || new BigNumber(subdaoBalance).isZero())
         return (
-            <Grid container>
+            <Grid container className={classes.grid}>
                 <ActionButton
+                    color="primary"
                     className={classes.button}
                     disabled={!subdaoBalanceError}
                     variant="contained"
@@ -66,7 +70,7 @@ export function SubdaoWalletConnectedBoundary(props: SubdaoWalletConnectedBounda
 
     if (!chainIdValid)
         return (
-            <Grid container>
+            <Grid container className={classes.grid}>
                 <ActionButton className={classes.button} disabled fullWidth variant="contained" size="large">
                     {t('plugin_wallet_invalid_network')}
                 </ActionButton>
