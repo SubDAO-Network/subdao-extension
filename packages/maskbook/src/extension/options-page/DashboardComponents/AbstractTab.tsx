@@ -21,6 +21,9 @@ const useStyles = makeStyles((theme: Theme) => {
             height: 230,
             overflowY: 'auto',
             // background: '#F7F8FB',
+            '&::-webkit-scrollbar': {
+                display: 'none',
+            },
         },
     })
 })

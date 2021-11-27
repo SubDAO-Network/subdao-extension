@@ -170,7 +170,7 @@ const useNewPollStyles = makeStyles((theme) =>
             padding: 0,
         },
         accordArea: {
-            marginBottom: 15,
+            margin: '15px 0',
         },
         accord: {
             padding: 0,
@@ -180,8 +180,10 @@ const useNewPollStyles = makeStyles((theme) =>
         },
         accordInput: {
             height: 40,
+            lineHeight: '40px',
             background: ' #F8F8F8',
             border: '1px solid #E5E5E5',
+            paddingLeft: 10,
         },
     }),
 )
@@ -316,6 +318,7 @@ function NewPollUI(props: PollsDialogProps & NewPollProps) {
                             },
                         },
                     }}
+                    className={classes.selectBox}
                     classes={{ root: classes.daoSelect }}
                     labelId="demo-customized-select-label"
                     id="demo-customized-select"
@@ -391,10 +394,9 @@ function NewPollUI(props: PollsDialogProps & NewPollProps) {
                 <AccordionDetails classes={{ root: classes.accord }}>
                     <div className={classes.accordItem}>
                         <InputTitle>{t('plugin_poll_vote_number')}</InputTitle>
-                        <TextField
+                        <InputBase
                             classes={{ root: classes.accordInput }}
                             fullWidth
-                            variant="filled"
                             type="number"
                             onChange={(e) => {
                                 setVoteNumber(Number(e.target?.value))
@@ -403,10 +405,9 @@ function NewPollUI(props: PollsDialogProps & NewPollProps) {
                     </div>
                     <div className={classes.accordItem}>
                         <InputTitle>{t('plugin_poll_vote_min_number')}</InputTitle>
-                        <TextField
+                        <InputBase
                             classes={{ root: classes.accordInput }}
                             fullWidth
-                            variant="filled"
                             type="number"
                             onChange={(e) => {
                                 setMinVoteNumber(Number(e.target?.value))
