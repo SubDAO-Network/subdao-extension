@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
             fontWeight: 300,
         },
         '& label': {
-            fontSize: 14,
+            fontSize: 18,
             transform: 'translate(-0, -6px) scale(0.75) !important',
             textAlign: 'left',
             position: 'inherit',

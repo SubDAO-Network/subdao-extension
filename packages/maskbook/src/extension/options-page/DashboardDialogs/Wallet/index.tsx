@@ -184,10 +184,8 @@ export function DashboardWalletRenameDialog(props: WrappedDialogProps<WalletProp
                 }
                 footer={
                     <SpacedButtonGroup>
-                        <Button variant="outlined" color="inherit" onClick={props.onClose}>
-                            {t('cancel')}
-                        </Button>
                         <DebounceButton
+                            fullWidth
                             variant="contained"
                             onClick={renameWallet}
                             disabled={name.length === 0 || checkInputLengthExceed(name)}>
@@ -514,7 +512,7 @@ export function ERC20PredefinedTokenSelector(props: ERC20PredefinedTokenSelector
                 blacklist={excludeTokens}
                 onSubmit={(token) => token.type === EthereumTokenType.ERC20 && onTokenChange?.(token)}
                 FixedSizeListProps={{
-                    height: 192,
+                    height: 102,
                     itemSize: 52,
                     overscanCount: 2,
                 }}
