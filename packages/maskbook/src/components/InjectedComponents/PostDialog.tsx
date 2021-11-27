@@ -165,8 +165,8 @@ export function PostDialogUI(props: PostDialogUIProps) {
                         <ClickableChip
                             label={
                                 <>
-                                    {opt.label}(Beta)
-                                    {/* {plugin.stage === PluginStage.Beta && <sup className={classes.sup}>(Beta)</sup>} */}
+                                    {opt.label}
+                                    {plugin.stage === PluginStage.Beta && <sup className={classes.sup}>(Beta)</sup>}
                                 </>
                             }
                             onClick={opt.onClick}
@@ -472,7 +472,7 @@ export function PostDialog({ reason: props_reason = 'timeline', ...props }: Post
             currentShareTarget={currentShareTarget}
             postContent={postBoxContent}
             postBoxButtonDisabled={isPostButtonDisabled}
-            maxLength={560}
+            maxLength={500}
             onSetSelected={setCurrentShareTarget}
             onPostContentChanged={setPostBoxContent}
             onShareToEveryoneChanged={onShareToEveryoneChanged}

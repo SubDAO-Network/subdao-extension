@@ -1,5 +1,4 @@
 import { makeStyles, IconButton } from '@material-ui/core'
-import DoubleArrowIcon from '@material-ui/icons/DoubleArrow'
 import { useMemo, useState } from 'react'
 import classNames from 'classnames'
 import { useEffectOnce, useWindowScroll, useWindowSize, useLocation } from 'react-use'

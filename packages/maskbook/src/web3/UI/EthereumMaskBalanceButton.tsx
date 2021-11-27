@@ -1,8 +1,7 @@
-import { useState, useCallback, useMemo } from 'react'
 import { createStyles, makeStyles, Typography } from '@material-ui/core'
 import { useStylesExtends } from '../../components/custom-ui-helper'
 import ActionButton from '../../extension/options-page/DashboardComponents/ActionButton'
-import { MaskbookIcon } from '../../resources/MaskbookIcon'
+import { SubDAOIcon } from '../../resources/MaskbookIcon'
 import { useFormatPolkadotFreeBalance } from '../../polkadot/hooks/useFormatPolkadotFreeBalance'
 import { mainAddress } from '../../polkadot/constants'
 
@@ -43,7 +42,7 @@ export function EthereumMaskBalanceButton(props: EthereumMaskBalanceButtonProps)
     return (
         <>
             <ActionButton className={classes.root} variant="contained" loading={maskBalanceLoading}>
-                {process.env.architecture === 'web' && !maskBalanceLoading && <MaskbookIcon className={classes.icon} />}
+                {process.env.architecture === 'web' && !maskBalanceLoading && <SubDAOIcon className={classes.icon} />}
                 <Typography className={classes.text}>{maskBalance}</Typography>
             </ActionButton>
         </>

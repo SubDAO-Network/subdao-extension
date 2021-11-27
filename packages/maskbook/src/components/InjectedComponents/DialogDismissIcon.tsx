@@ -10,7 +10,7 @@ export interface DialogDismissIconUIProps {
 
 export function DialogDismissIconUI(props: DialogDismissIconUIProps) {
     return useMediaQuery(`(min-width: ${useTheme().breakpoints.width('sm')}px)`) || props.disableArrowBack ? (
-        <CloseIcon color={isTwitter(activatedSocialNetworkUI) ? 'primary' : 'inherit'} />
+        <CloseIcon />
     ) : (
         <ArrowBackRoundedIcon />
     )
