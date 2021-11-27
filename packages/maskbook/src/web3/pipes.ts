@@ -53,6 +53,12 @@ export function resolveChainColor(chainId: ChainId) {
     switch (chainId) {
         case ChainId.Mainnet:
             return 'rgb(41, 182, 175)'
+        case ChainId.SubDAO:
+            return '#D52473'
+        case ChainId.Kusama:
+            return '#000000'
+        case ChainId.Polkadot:
+            return '#FF8C00'
         default:
             return 'silver'
     }

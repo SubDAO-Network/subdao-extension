@@ -1,6 +1,6 @@
 import { SubDAOIcon } from '../../resources/MaskbookIcon'
-import { MetaMaskIcon } from '../../resources/MetaMaskIcon'
-import { WalletConnectIcon } from '../../resources/WalletConnectIcon'
+import { PolkadotIcon } from '../../resources/PolkadotIcon'
+import { KusamaIcon } from '../../resources/KusamaIcon'
 import { makeStyles, Theme } from '@material-ui/core'
 import { ProviderType } from '../../web3/types'
 import { useStylesExtends } from '../custom-ui-helper'
@@ -25,10 +25,10 @@ export function ProviderIcon(props: ProviderIconProps) {
     switch (providerType) {
         case ProviderType.SubDAO:
             return <SubDAOIcon classes={{ root: classes.icon }} viewBox={`0 0 ${size} ${size}`} />
-        case ProviderType.MetaMask:
-            return <MetaMaskIcon classes={{ root: classes.icon }} viewBox={`0 0 ${size} ${size}`} />
-        case ProviderType.WalletConnect:
-            return <WalletConnectIcon classes={{ root: classes.icon }} viewBox={`0 0 ${size} ${size}`} />
+        case ProviderType.Polkadot:
+            return <PolkadotIcon classes={{ root: classes.icon }} viewBox={`0 0 ${size} ${size}`} />
+        case ProviderType.Kusama:
+            return <KusamaIcon classes={{ root: classes.icon }} viewBox={`0 0 ${size} ${size}`} />
         default:
             return null
     }

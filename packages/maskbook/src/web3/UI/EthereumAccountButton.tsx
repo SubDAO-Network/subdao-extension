@@ -111,14 +111,14 @@ export function EthereumAccountButton(props: EthereumAccountButtonProps) {
                 {selectedWallet?.address
                     ? ` (${formatPolkadotAddress(selectedWallet.address, 10)})`
                     : t('plugin_wallet_on_connect')}
-                {/*{chainId !== ChainId.Mainnet && selectedWallet ? (*/}
-                {/*    <FiberManualRecordIcon*/}
-                {/*        className={classes.chainIcon}*/}
-                {/*        style={{*/}
-                {/*            color: resolveChainColor(chainId),*/}
-                {/*        }}*/}
-                {/*    />*/}
-                {/*) : null}*/}
+                {chainId !== ChainId.Mainnet && selectedWallet ? (
+                    <FiberManualRecordIcon
+                        className={classes.chainIcon}
+                        style={{
+                            color: resolveChainColor(chainId),
+                        }}
+                    />
+                ) : null}
             </Button>
         </div>
     )

@@ -140,7 +140,7 @@ const useWizardDialogStyles = makeStyles((theme) =>
             fontWeight: 400,
             wordBreak: 'keep-all',
             '&:hover': {
-                background: '#D52473',
+                background: 'rgb(161, 0, 85)',
             },
         },
         back: {
@@ -159,7 +159,7 @@ const useWizardDialogStyles = makeStyles((theme) =>
             fontSize: 24,
             fontWeight: 400,
             lineHeight: '29px',
-            color: '#10164B',
+            color: theme.palette.text.primary,
             fontFamily: 'Chirp-Regular, Chirp',
         },
         secondary: {
@@ -175,7 +175,7 @@ const useWizardDialogStyles = makeStyles((theme) =>
             fontSize: 16,
             marginBottom: 24,
             fontWeight: 400,
-            color: 'rgba(16, 22, 75, 0.6)',
+            color: theme.palette.text.secondary,
             lineHeight: '19px',
         },
         textButton: {
@@ -215,7 +215,7 @@ const useStyles = makeStyles((theme: Theme) => {
             fontSize: 16,
             marginBottom: 24,
             fontWeight: 400,
-            color: 'rgba(16, 22, 75, 0.6)',
+            color: theme.palette.text.secondary,
             lineHeight: '19px',
         },
     }

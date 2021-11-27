@@ -9,17 +9,19 @@ import { mainAddress } from '../../polkadot/constants'
 const useStyles = makeStyles((theme) => {
     return createStyles({
         root: {
-            borderRadius: 16,
             fontWeight: 300,
-            backgroundColor: theme.palette.primary.main,
+            backgroundColor: theme.palette.common.white,
             '&:hover, &:active': {
-                backgroundColor: theme.palette.primary.main,
+                backgroundColor: theme.palette.common.white,
             },
         },
         icon: {
             border: `solid 1px ${theme.palette.common.white}`,
             borderRadius: '50%',
             marginRight: theme.spacing(0.5),
+        },
+        text: {
+            color: theme.palette.text.primary,
         },
     })
 })
@@ -40,9 +42,9 @@ export function EthereumMaskBalanceButton(props: EthereumMaskBalanceButtonProps)
 
     return (
         <>
-            <ActionButton className={classes.root} variant="contained" color="primary" loading={maskBalanceLoading}>
+            <ActionButton className={classes.root} variant="contained" loading={maskBalanceLoading}>
                 {process.env.architecture === 'web' && !maskBalanceLoading && <MaskbookIcon className={classes.icon} />}
-                <Typography>{maskBalance}</Typography>
+                <Typography className={classes.text}>{maskBalance}</Typography>
             </ActionButton>
         </>
     )

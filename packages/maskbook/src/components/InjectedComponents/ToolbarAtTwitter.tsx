@@ -36,6 +36,7 @@ const useStyles = makeStyles((theme) => {
             position: 'relative',
             display: 'flex',
             alignItems: 'center',
+            paddingLeft: 12,
         },
         left: {
             height: TOOLBAR_HEIGHT,
@@ -133,9 +134,6 @@ export function ToolbarAtTwitter(props: ToolbarAtTwitterProps) {
                         opacity: isSticky ? (y - TOOLBAR_STICKY_POSITION) / TOOLBAR_STICKY_ANIMATION_DISTANCE : 1,
                     }}>
                     <div className={classes.content} style={{ left, right, width }}>
-                        <div className={classes.left} style={{ width: menuWidth }}>
-                            <MaskbookIcon classes={{ root: classes.logo }} />
-                        </div>
                         <div className={classes.right} style={{ width: mainWidth }}>
                             <EthereumMaskBalanceButton classes={{ root: classes.maskBalanceButton }} />
                             <EthereumAccountButton classes={{ root: classes.accountButton }} />
