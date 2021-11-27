@@ -265,7 +265,7 @@
     "submit": "Submit",
     "transfer": "Transfer",
     "unknown_time": "Unknown time",
-    "username": "Username",
+    "username": "Name",
     "version_of_stable": "Version {{version}}",
     "version_of_unstable": "Version {{version}}-{{build}}-{{hash}}",
     "version_of_release": "https://github.com/remote-freeman/daowallet//releases/tag/{{tag}}",

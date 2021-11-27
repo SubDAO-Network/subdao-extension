@@ -14,6 +14,7 @@ import {
     Box,
     Hidden,
     Button,
+    experimentalStyled as styled,
 } from '@material-ui/core'
 import classNames from 'classnames'
 import { ArrowRight } from 'react-feather'
@@ -361,9 +362,18 @@ const useFindUsernameStyles = makeStyles((theme) =>
         },
         icon: {
             color: 'inherit',
+            width: 14,
         },
     }),
 )
+
+const InputTitle = styled(Typography)`
+    font-weight: 400;
+    color: rgba(33, 33, 33, 0.4);
+    line-height: 14px;
+    font-size: 14px;
+    margin-bottom: 8px;
+`
 
 interface FindUsernameProps extends Partial<WizardDialogProps> {
     username: string
@@ -401,37 +411,41 @@ function FindUsername({ username, onConnect, onDone, onClose, onUsernameChange =
             title={t('setup_guide_find_username_title')}
             content={
                 <form>
-                    <Box
-                        className={findUsernameClasses.input}
-                        sx={{
-                            display: 'flex',
-                            alignItems: 'center',
-                        }}>
-                        <TextField
-                            label={t('username')}
-                            value={username}
-                            disabled={!username}
-                            InputProps={{
-                                classes: {
-                                    root: findUsernameClasses.inputField,
-                                    focused: findUsernameClasses.inputFocus,
-                                },
-                                startAdornment: (
-                                    <InputAdornment position="start">
-                                        <AlternateEmailIcon className={findUsernameClasses.icon} />
-                                    </InputAdornment>
-                                ),
-                            }}
-                            onChange={(e) => onUsernameChange(e.target.value)}
-                            onKeyDown={onKeyDown}
-                            inputProps={{ 'data-testid': 'username_input' }}></TextField>
-                        {gotoProfilePageImpl ? (
-                            <Hidden only="xs">
-                                <Button className={findUsernameClasses.button} onClick={onJump} disabled={!username}>
-                                    {t('setup_guide_profile')}
-                                </Button>
-                            </Hidden>
-                        ) : null}
+                    <Box className={findUsernameClasses.input}>
+                        <InputTitle>{t('username')}</InputTitle>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                            }}>
+                            <TextField
+                                value={username}
+                                disabled={!username}
+                                InputProps={{
+                                    classes: {
+                                        root: findUsernameClasses.inputField,
+                                        focused: findUsernameClasses.inputFocus,
+                                    },
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            <AlternateEmailIcon className={findUsernameClasses.icon} />
+                                        </InputAdornment>
+                                    ),
+                                }}
+                                onChange={(e) => onUsernameChange(e.target.value)}
+                                onKeyDown={onKeyDown}
+                                inputProps={{ 'data-testid': 'username_input' }}></TextField>
+                            {gotoProfilePageImpl ? (
+                                <Hidden only="xs">
+                                    <Button
+                                        className={findUsernameClasses.button}
+                                        onClick={onJump}
+                                        disabled={!username}>
+                                        {t('setup_guide_profile')}
+                                    </Button>
+                                </Hidden>
+                            ) : null}
+                        </Box>
                     </Box>
                 </form>
             }
