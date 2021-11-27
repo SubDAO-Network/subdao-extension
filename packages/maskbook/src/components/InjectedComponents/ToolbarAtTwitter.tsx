@@ -73,7 +73,7 @@ const useStyles = makeStyles((theme) => {
         },
         rootStickyShrink: {
             zIndex: 1,
-            right: '0 !important',
+            left: '0 !important',
             position: 'fixed',
             backgroundColor: theme.palette.background.paper,
             height: TOOLBAR_HEIGHT,
