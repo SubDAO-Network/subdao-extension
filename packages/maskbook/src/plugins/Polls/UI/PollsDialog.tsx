@@ -15,6 +15,8 @@ import {
     Divider,
     CircularProgress,
     ThemeProvider,
+    experimentalStyled as styled,
+    InputBase,
 } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
 import { add as addDate } from 'date-fns'
@@ -40,6 +42,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import { useDaoPartners, DaoInfo } from '../../../polkadot/hooks/useDaoPartners'
 import type { DaoAddresses } from '../../../polkadot/types'
 import { useMaskbookTheme } from '../../../utils/theme'
+import classNames from 'classnames'
 
 const useNewPollStyles = makeStyles((theme) =>
     createStyles({
@@ -54,31 +57,67 @@ const useNewPollStyles = makeStyles((theme) =>
             textOverflow: 'ellipsis',
             whiteSpace: 'nowrap',
         },
+        content: {
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+        },
         line: {
             display: 'flex',
-            margin: theme.spacing(1),
-        },
-        item: {
-            flex: 1,
-            margin: theme.spacing(1),
+            marginBottom: 15,
         },
         pollWrap: {
-            border: '1px solid #ccd6dd',
-            borderRadius: '10px',
-            margin: theme.spacing(1),
-            padding: theme.spacing(1),
+            display: 'flex',
+        },
+        pollItem: {
+            flex: 1,
+            position: 'relative',
+        },
+        selectBox: {
+            width: '100%',
+            '&:before': {
+                borderBottom: 0,
+            },
+            '&:after': {
+                borderBottom: 0,
+            },
+        },
+        pollItemCenter: {
+            flex: 1,
+            margin: '0 10px',
+            position: 'relative',
+        },
+        pollSelect: {
+            background: ' #F8F8F8',
+            border: '1px solid #E5E5E5',
+            height: 40,
+            padding: 0,
+            lineHeight: '40px',
+        },
+        pollInput: {
+            textAlign: 'right',
+        },
+        pollLabel: {
+            position: 'absolute',
+            left: 8,
+            zIndex: 1,
+            height: '100%',
+            fontSize: 12,
+            fontWeight: 400,
+            lineHeight: '40px',
+            color: 'rgba(33, 33, 33, 0.4)',
         },
         optionsWrap: {
+            marginBottom: 15,
             position: 'relative',
-            '& >div': {
-                width: '80%',
-                margin: theme.spacing(2),
+            '& > div:first-child': {
+                marginBottom: theme.spacing(1),
             },
         },
         addButton: {
             position: 'absolute',
-            bottom: '0',
-            right: '10px',
+            bottom: 4,
+            right: -6,
         },
         loading: {
             position: 'absolute',
@@ -88,8 +127,72 @@ const useNewPollStyles = makeStyles((theme) =>
         whiteColor: {
             color: '#fff',
         },
+        inputBase: {
+            background: '#F8F8F8',
+            border: '1px solid #E5E5E5',
+        },
+        questionInput: {
+            height: 70,
+            padding: '12px 20px',
+            lineHight: '16px',
+            color: '#212121',
+            fontWeight: 400,
+            '& textarea': {
+                height: '100% !important',
+            },
+        },
+        optionInput: {
+            height: 40,
+            width: 368,
+            paddingLeft: 71,
+        },
+        optionItem: {
+            position: 'relative',
+            marginBottom: theme.spacing(1),
+
+            '& > div:last-child': {
+                marginBottom: 0,
+            },
+        },
+        optionHint: {
+            fontSize: 14,
+            height: '100%',
+            position: 'absolute',
+            left: 10,
+            lineHeight: '40px',
+            zIndex: 1,
+            color: 'rgba(33, 33, 33, 0.4)',
+        },
+        daoSelect: {
+            background: ' #F8F8F8',
+            border: '1px solid #E5E5E5',
+            height: 40,
+            padding: 0,
+        },
+        accordArea: {
+            marginBottom: 15,
+        },
+        accord: {
+            padding: 0,
+        },
+        accordItem: {
+            marginBottom: 8,
+        },
+        accordInput: {
+            height: 40,
+            background: ' #F8F8F8',
+            border: '1px solid #E5E5E5',
+        },
     }),
 )
+
+const InputTitle = styled(Typography)`
+    font-weight: 400;
+    color: rgba(33, 33, 33, 0.4);
+    line-height: 14px;
+    font-size: 12px;
+    margin-bottom: 8px;
+`
 
 interface NewPollProps {
     loading: [boolean, React.Dispatch<React.SetStateAction<boolean>>]
@@ -178,6 +281,7 @@ function NewPollUI(props: PollsDialogProps & NewPollProps) {
 
         return usePortalShadowRoot((container) => (
             <Select
+                className={classes.selectBox}
                 MenuProps={{
                     container: props.DialogProps?.container ?? container,
                     PaperProps: {
@@ -186,6 +290,7 @@ function NewPollUI(props: PollsDialogProps & NewPollProps) {
                         },
                     },
                 }}
+                classes={{ root: classes.pollSelect, select: classes.pollInput }}
                 value={defaultIndex}
                 onChange={(e) => fn(e.target.value as number)}>
                 {options.map((item, index) => (
@@ -211,6 +316,7 @@ function NewPollUI(props: PollsDialogProps & NewPollProps) {
                             },
                         },
                     }}
+                    classes={{ root: classes.daoSelect }}
                     labelId="demo-customized-select-label"
                     id="demo-customized-select"
                     value={baseAddress}
@@ -228,91 +334,90 @@ function NewPollUI(props: PollsDialogProps & NewPollProps) {
     return (
         <>
             <FormControl className={classes.line}>
-                <TextField
-                    label={t('plugin_poll_question_hint')}
-                    variant="filled"
+                <InputTitle>{t('plugin_poll_question_hint')}</InputTitle>
+                <InputBase
+                    className={classes.inputBase}
+                    classes={{ root: classes.questionInput }}
+                    multiline
+                    rows={3}
                     onChange={(e) => {
                         setQuestion((e.target as HTMLInputElement)?.value)
                     }}
                 />
             </FormControl>
-            <div className={classes.pollWrap}>
-                <div className={classes.optionsWrap}>
-                    {options.map((option, index) => (
-                        <FormControl className={classes.line} key={index}>
-                            <TextField
-                                label={`${t('plugin_poll_options_hint')}${index + 1}`}
-                                variant="filled"
-                                onChange={(e) => {
-                                    handleOptionsInput(index, (e.target as HTMLInputElement)?.value)
-                                }}
-                            />
-                        </FormControl>
-                    ))}
-                    <IconButton onClick={addNewOption} classes={{ root: classes.addButton }}>
-                        <AddIcon color="primary" />
-                    </IconButton>
-                </div>
-                <Divider light />
-                <Typography variant="h6" className={classes.line}>
-                    {t('plugin_poll_length')}
-                </Typography>
-                <div className={classes.line}>
-                    <FormControl variant="filled" className={classes.item}>
-                        <InputLabel>{t('plugin_poll_length_days')}</InputLabel>
-                        {useTimeSelect(31, setDays, days)}
-                    </FormControl>
-                    <FormControl variant="filled" className={classes.item}>
-                        <InputLabel>{t('plugin_poll_length_hours')}</InputLabel>
-                        {useTimeSelect(25, setHours, hours)}
-                    </FormControl>
-                    <FormControl variant="filled" className={classes.item}>
-                        <InputLabel>{t('plugin_poll_length_minutes')}</InputLabel>
-                        {useTimeSelect(61, setMinutes, minutes)}
-                    </FormControl>
-                </div>
-                <Divider light />
-                <Typography variant="h6" className={classes.line}>
-                    {t('plugin_poll_select_dao')}
-                </Typography>
-                <div className={classes.line}>
-                    <FormControl variant="filled" className={classes.item}>
-                        {useDaoSelect(loadingDao, daoData?.daoInfo)}
-                    </FormControl>
-                </div>
-                <Accordion>
-                    <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls="panel1a-content"
-                        id="panel1a-header">
-                        <Typography className={classes.heading}>{t('post_dialog__more_options_title')}</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <FormControl variant="filled" className={classes.item}>
-                            <TextField
-                                label={t('plugin_poll_vote_number')}
-                                variant="filled"
-                                type="number"
-                                onChange={(e) => {
-                                    setVoteNumber(Number(e.target?.value))
-                                }}
-                            />
-                        </FormControl>
-                        <FormControl variant="filled" className={classes.item}>
-                            <TextField
-                                label={t('plugin_poll_vote_min_number')}
-                                variant="filled"
-                                type="number"
-                                onChange={(e) => {
-                                    setMinVoteNumber(Number(e.target?.value))
-                                }}
-                            />
-                        </FormControl>
-                    </AccordionDetails>
-                </Accordion>
+            <div className={classes.optionsWrap}>
+                <InputTitle>{t('plugin_poll_options')}</InputTitle>
+                {options.map((option, index) => (
+                    <div key={index} className={classes.optionItem}>
+                        <div className={classes.optionHint}>
+                            {t('plugin_poll_options_hint')}
+                            {index + 1}
+                        </div>
+                        <InputBase
+                            className={classes.inputBase}
+                            classes={{ root: classes.optionInput }}
+                            // label={`${t('plugin_poll_options_hint')}${index + 1}`}
+                            onChange={(e) => {
+                                handleOptionsInput(index, (e.target as HTMLInputElement)?.value)
+                            }}
+                        />
+                    </div>
+                ))}
+                <IconButton onClick={addNewOption} classes={{ root: classes.addButton }}>
+                    <AddIcon color="primary" />
+                </IconButton>
             </div>
+            <InputTitle>{t('plugin_poll_length')}</InputTitle>
+            <div className={classNames(classes.line, classes.pollWrap)}>
+                <div className={classes.pollItem}>
+                    <span className={classes.pollLabel}>{t('plugin_poll_length_days')}</span>
+                    {useTimeSelect(31, setDays, days)}
+                </div>
+                <div className={classes.pollItemCenter}>
+                    <span className={classes.pollLabel}>{t('plugin_poll_length_hours')}</span>
+                    {useTimeSelect(25, setHours, hours)}
+                </div>
+                <div className={classes.pollItem}>
+                    <span className={classes.pollLabel}>{t('plugin_poll_length_minutes')}</span>
+                    {useTimeSelect(61, setMinutes, minutes)}
+                </div>
+            </div>
+            <InputTitle>{t('plugin_poll_select_dao')}</InputTitle>
+            <div>{useDaoSelect(loadingDao, daoData?.daoInfo)}</div>
+            <Accordion className={classes.accordArea}>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
+                    <Typography className={classes.heading}>{t('post_dialog__more_options_title')}</Typography>
+                </AccordionSummary>
+                <AccordionDetails classes={{ root: classes.accord }}>
+                    <div className={classes.accordItem}>
+                        <InputTitle>{t('plugin_poll_vote_number')}</InputTitle>
+                        <TextField
+                            classes={{ root: classes.accordInput }}
+                            fullWidth
+                            variant="filled"
+                            type="number"
+                            onChange={(e) => {
+                                setVoteNumber(Number(e.target?.value))
+                            }}
+                        />
+                    </div>
+                    <div className={classes.accordItem}>
+                        <InputTitle>{t('plugin_poll_vote_min_number')}</InputTitle>
+                        <TextField
+                            classes={{ root: classes.accordInput }}
+                            fullWidth
+                            variant="filled"
+                            type="number"
+                            onChange={(e) => {
+                                setMinVoteNumber(Number(e.target?.value))
+                            }}
+                        />
+                    </div>
+                </AccordionDetails>
+            </Accordion>
             <div className={classes.line} style={{ justifyContent: 'flex-end' }}>
                 <Button
+                    size="medium"
                     color="primary"
                     variant="contained"
                     disabled={loading || loadingDao || !voteAddress}
@@ -321,7 +426,7 @@ function NewPollUI(props: PollsDialogProps & NewPollProps) {
                             <CircularProgress classes={{ root: classes.whiteColor }} size={24} />
                         ) : null
                     }
-                    style={{ color: '#fff' }}
+                    style={{ color: '#fff', marginTop: 26 }}
                     onClick={sendPoll}>
                     {t('plugin_poll_send_poll')}
                 </Button>
@@ -459,7 +564,7 @@ export default function PollsDialog(props: PollsDialogProps) {
         <ThemeProvider theme={defaultTheme}>
             <InjectedDialog open={props.open} onClose={onClose} title={t('plugin_poll_display_name')}>
                 <DialogContent>
-                    <AbstractTab height={600} {...tabProps} />
+                    <AbstractTab height={480} {...tabProps} />
                 </DialogContent>
             </InjectedDialog>
         </ThemeProvider>
