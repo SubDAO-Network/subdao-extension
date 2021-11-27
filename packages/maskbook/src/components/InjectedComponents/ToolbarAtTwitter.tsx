@@ -3,7 +3,7 @@ import DoubleArrowIcon from '@material-ui/icons/DoubleArrow'
 import { useMemo, useState } from 'react'
 import classNames from 'classnames'
 import { useEffectOnce, useWindowScroll, useWindowSize, useLocation } from 'react-use'
-import { MaskbookIcon } from '../../resources/MaskbookIcon'
+import { LeftArrowIcon } from '../../resources/LeftArrowIcon'
 import { EthereumAccountButton } from '../../web3/UI/EthereumAccountButton'
 import { EthereumMaskBalanceButton } from '../../web3/UI/EthereumMaskBalanceButton'
 import { Toolbar } from './Toolbar'
@@ -141,7 +141,7 @@ export function ToolbarAtTwitter(props: ToolbarAtTwitterProps) {
                                 onClick={() => setIsExpand(false)}
                                 color="primary"
                                 className={classes.sizeButton}>
-                                <DoubleArrowIcon />
+                                <LeftArrowIcon />
                             </IconButton>
                         </div>
                     </div>
@@ -154,7 +154,7 @@ export function ToolbarAtTwitter(props: ToolbarAtTwitterProps) {
                                 onClick={() => setIsExpand(true)}
                                 color="primary"
                                 className={classNames(classes.sizeButton, classes.rotate)}>
-                                <DoubleArrowIcon />
+                                <LeftArrowIcon />
                             </IconButton>
                             <EthereumMaskBalanceButton classes={{ root: classes.maskBalanceButton }} />
                         </div>
