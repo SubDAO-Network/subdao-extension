@@ -104,7 +104,7 @@ const wizardTheme = extendsTheme((theme: Theme) => ({
 const useWizardDialogStyles = makeStyles((theme) =>
     createStyles({
         root: {
-            padding: '65px 20px 50px',
+            padding: '65px 20px 40px',
             position: 'relative',
             boxShadow: theme.palette.mode === 'dark' ? 'none' : '0px 0px 4px 4px #F1F3F4',
             borderRadius: 10,
@@ -121,6 +121,7 @@ const useWizardDialogStyles = makeStyles((theme) =>
             boxSizing: 'border-box',
             width: 325,
             overflow: 'hidden',
+            fontFamily: 'Chirp-Regular, Chirp',
         },
         button: {
             width: 285,
@@ -128,7 +129,7 @@ const useWizardDialogStyles = makeStyles((theme) =>
             background: '#D52473',
             borderRadius: 4,
             marginLeft: 0,
-            marginTop: 64,
+            marginTop: 40,
             [theme.breakpoints.down('sm')]: {
                 width: '100%',
                 height: '45px !important',
@@ -138,6 +139,9 @@ const useWizardDialogStyles = makeStyles((theme) =>
             fontSize: 14,
             fontWeight: 400,
             wordBreak: 'keep-all',
+            '&:hover': {
+                background: '#D52473',
+            },
         },
         back: {
             color: theme.palette.text.primary,
@@ -157,7 +161,6 @@ const useWizardDialogStyles = makeStyles((theme) =>
             lineHeight: '29px',
             color: '#10164B',
             fontFamily: 'Chirp-Regular, Chirp',
-            marginLeft: 10,
         },
         secondary: {
             fontSize: 14,
@@ -179,6 +182,7 @@ const useWizardDialogStyles = makeStyles((theme) =>
             fontSize: 14,
             marginTop: theme.spacing(1),
             marginBottom: theme.spacing(-2),
+            color: '#9D9FB6',
         },
         header: {
             marginBottom: 0,
@@ -207,7 +211,13 @@ const useStyles = makeStyles((theme: Theme) => {
             justifyContent: 'center',
             flexDirection: 'column',
         },
-        tip: {},
+        tip: {
+            fontSize: 16,
+            marginBottom: 24,
+            fontWeight: 400,
+            color: 'rgba(16, 22, 75, 0.6)',
+            lineHeight: '19px',
+        },
     }
 })
 
@@ -298,7 +308,7 @@ function WizardDialog(props: WizardDialogProps) {
                 }}>
                 <Paper className={classes.root}>
                     <header className={classes.header}>
-                        <SubDAOIcon />
+                        {dialogType === SetupGuideStep.FindUsername && <SubDAOIcon style={{ marginRight: 10 }} />}
                         <div className={classes.primary}>{title}</div>
                     </header>
                     <ContentUI dialogType={dialogType} content={content} tip={tip} footer={footer} />
@@ -460,9 +470,9 @@ const useSayHelloWorldStyles = makeStyles((theme) =>
         primary: {
             marginTop: 24,
             marginBottom: 16,
+            color: '#10164B',
         },
         secondary: {
-            color: theme.palette.text.secondary,
             fontSize: 14,
         },
     }),
