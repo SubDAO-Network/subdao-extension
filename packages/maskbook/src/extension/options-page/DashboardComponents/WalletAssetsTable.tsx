@@ -118,6 +118,15 @@ const useStyles = makeStyles((theme: Theme) => {
         },
         balanceName: {
             minWidth: '15rem',
+            '& .ui--FormatBalance-value': {
+                fontSize: '22px !important',
+            },
+            '& .ui--FormatBalance-postfix': {
+                fontSize: 14,
+            },
+            '& .ui--FormatBalance-unit': {
+                fontSize: 14,
+            },
         },
         actionButton: {
             '&:hover': {
