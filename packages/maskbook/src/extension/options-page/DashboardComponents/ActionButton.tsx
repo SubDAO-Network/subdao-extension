@@ -11,7 +11,6 @@ import { useErrorStyles } from '../../../utils/theme'
 const Btn = styled(Button)`
     color: #ffffff !important;
     border-radius: 4px !important;
-    width: 100% !important;
     &:disabled {
         background: rgba(213, 17, 114, 0.5) !important;
         border-radius: 4px !important;

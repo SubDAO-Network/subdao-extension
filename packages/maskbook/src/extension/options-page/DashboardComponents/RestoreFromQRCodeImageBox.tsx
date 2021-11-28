@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) =>
     createStyles({
         root: {
             width: '100%',
-            height: 230,
+            height: 250,
         },
         file: {
             display: 'none',
@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) =>
             background: '#F7F8FB',
             display: 'flex',
             justifyContent: 'center',
-            height: 230,
+            height: 250,
             marginBottom: 16,
             borderRadius: 4,
         },

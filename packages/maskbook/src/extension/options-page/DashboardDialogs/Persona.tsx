@@ -119,6 +119,7 @@ export function DashboardPersonaCreateDialog(props: WrappedDialogProps) {
                     <DebounceButton
                         type="submit"
                         variant="contained"
+                        fullWidth={true}
                         onClick={createPersonaAndNext}
                         disabled={name.length === 0 || checkInputLengthExceed(name)}>
                         {t('create')}
@@ -161,7 +162,7 @@ export function DashboardImportPersonaDialog(props: WrappedDialogProps) {
 
     const state = useState(0)
     const tabProps: AbstractTabProps = {
-        height: 232,
+        height: 252,
         tabs: [
             {
                 id: 'mnemonic',
@@ -207,7 +208,7 @@ export function DashboardImportPersonaDialog(props: WrappedDialogProps) {
                 label: 'Base64',
                 children: (
                     <TextField
-                        inputProps={{ style: { height: 200, caretColor: '#D52473' } }}
+                        inputProps={{ style: { height: 220, caretColor: '#D52473' } }}
                         multiline
                         minRows={1}
                         autoFocus
@@ -331,6 +332,7 @@ export function DashboardPersonaRenameDialog(props: WrappedDialogProps<PersonaPr
                         {/*<ButtonCancel onClose={props.onClose}></ButtonCancel>*/}
                         <DebounceButton
                             variant="contained"
+                            fullWidth={true}
                             onClick={renamePersona}
                             disabled={name.length === 0 || checkInputLengthExceed(name)}>
                             {t('ok')}
