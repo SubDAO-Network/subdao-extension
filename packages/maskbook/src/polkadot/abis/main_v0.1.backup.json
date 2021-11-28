@@ -1,14 +1,14 @@
 {
     "metadataVersion": "0.1.0",
     "source": {
-        "hash": "0xa1132884e0ad1ec22aad1a34288db060cc347206b6b8f08f35302893c447f439",
-        "language": "ink! 3.0.0-rc4",
-        "compiler": "rustc 1.56.0-nightly"
+        "hash": "0x17e3de425e1ea8261c51ae4b32feb12bf50a88ffa1c2289f1fc1c8f88fb87ef1",
+        "language": "ink! 3.0.0-rc3",
+        "compiler": "rustc 1.53.0-nightly"
     },
     "contract": {
         "name": "main",
         "version": "0.1.0",
-        "authors": ["SubDAO Labs <subdao.lab@gmail.com>"]
+        "authors": ["[your_name] <[your_email]>"]
     },
     "spec": {
         "constructors": [
@@ -46,7 +46,7 @@
                         "name": "owner",
                         "type": {
                             "displayName": ["Option"],
-                            "type": 26
+                            "type": 25
                         }
                     },
                     {
@@ -70,14 +70,14 @@
                         "name": "template_code_hash",
                         "type": {
                             "displayName": ["Hash"],
-                            "type": 16
+                            "type": 15
                         }
                     },
                     {
                         "name": "salt",
                         "type": {
                             "displayName": ["Vec"],
-                            "type": 17
+                            "type": 16
                         }
                     }
                 ],
@@ -87,7 +87,7 @@
                 "payable": false,
                 "returnType": {
                     "displayName": ["bool"],
-                    "type": 18
+                    "type": 17
                 },
                 "selector": "0x44d6441f"
             },
@@ -97,14 +97,14 @@
                         "name": "name",
                         "type": {
                             "displayName": ["String"],
-                            "type": 11
+                            "type": 18
                         }
                     },
                     {
                         "name": "dao_manager_code_hash",
                         "type": {
                             "displayName": ["Hash"],
-                            "type": 16
+                            "type": 15
                         }
                     },
                     {
@@ -121,7 +121,7 @@
                 "payable": false,
                 "returnType": {
                     "displayName": ["bool"],
-                    "type": 18
+                    "type": 17
                 },
                 "selector": "0xc39c7d18"
             },
@@ -189,7 +189,7 @@
                         "name": "salt",
                         "type": {
                             "displayName": ["Vec"],
-                            "type": 17
+                            "type": 16
                         }
                     }
                 ],
@@ -199,33 +199,18 @@
                 "payable": false,
                 "returnType": {
                     "displayName": ["bool"],
-                    "type": 18
+                    "type": 17
                 },
                 "selector": "0xb332bcd1"
             },
             {
-                "args": [
-                    {
-                        "name": "page",
-                        "type": {
-                            "displayName": ["u64"],
-                            "type": 4
-                        }
-                    },
-                    {
-                        "name": "size",
-                        "type": {
-                            "displayName": ["u64"],
-                            "type": 4
-                        }
-                    }
-                ],
+                "args": [],
                 "docs": [],
                 "mutates": true,
                 "name": ["list_dao_instances"],
                 "payable": false,
                 "returnType": {
-                    "displayName": ["PageResult"],
+                    "displayName": ["Vec"],
                     "type": 24
                 },
                 "selector": "0x1baed2cd"
@@ -233,64 +218,10 @@
             {
                 "args": [
                     {
-                        "name": "dao_addr",
-                        "type": {
-                            "displayName": ["AccountId"],
-                            "type": 1
-                        }
-                    }
-                ],
-                "docs": [],
-                "mutates": true,
-                "name": ["list_dao_info"],
-                "payable": false,
-                "returnType": {
-                    "displayName": ["DAOInstance"],
-                    "type": 10
-                },
-                "selector": "0x72766226"
-            },
-            {
-                "args": [
-                    {
                         "name": "owner",
                         "type": {
                             "displayName": ["AccountId"],
                             "type": 1
-                        }
-                    }
-                ],
-                "docs": [],
-                "mutates": true,
-                "name": ["list_last_dao_instances_by_owner"],
-                "payable": false,
-                "returnType": {
-                    "displayName": ["DAOInstance"],
-                    "type": 10
-                },
-                "selector": "0xe4c92f45"
-            },
-            {
-                "args": [
-                    {
-                        "name": "owner",
-                        "type": {
-                            "displayName": ["AccountId"],
-                            "type": 1
-                        }
-                    },
-                    {
-                        "name": "page",
-                        "type": {
-                            "displayName": ["u64"],
-                            "type": 4
-                        }
-                    },
-                    {
-                        "name": "size",
-                        "type": {
-                            "displayName": ["u64"],
-                            "type": 4
                         }
                     }
                 ],
@@ -299,44 +230,10 @@
                 "name": ["list_dao_instances_by_owner"],
                 "payable": false,
                 "returnType": {
-                    "displayName": ["PageResult"],
+                    "displayName": ["Vec"],
                     "type": 24
                 },
                 "selector": "0x21743714"
-            },
-            {
-                "args": [
-                    {
-                        "name": "user",
-                        "type": {
-                            "displayName": ["AccountId"],
-                            "type": 1
-                        }
-                    },
-                    {
-                        "name": "page",
-                        "type": {
-                            "displayName": ["u64"],
-                            "type": 4
-                        }
-                    },
-                    {
-                        "name": "size",
-                        "type": {
-                            "displayName": ["u64"],
-                            "type": 4
-                        }
-                    }
-                ],
-                "docs": [],
-                "mutates": true,
-                "name": ["list_dao_instances_by_account"],
-                "payable": false,
-                "returnType": {
-                    "displayName": ["PageResult"],
-                    "type": 24
-                },
-                "selector": "0x620120f8"
             }
         ]
     },
@@ -539,7 +436,7 @@
                                                                             "layout": {
                                                                                 "cell": {
                                                                                     "key": "0x0700000002000000000000000000000000000000000000000000000000000000",
-                                                                                    "ty": 13
+                                                                                    "ty": 12
                                                                                 }
                                                                             },
                                                                             "len": 4294967295,
@@ -564,7 +461,7 @@
                                             "layout": {
                                                 "cell": {
                                                     "key": "0x0800000002000000000000000000000000000000000000000000000000000000",
-                                                    "ty": 14
+                                                    "ty": 13
                                                 }
                                             },
                                             "offset": "0x0700000002000000000000000000000000000000000000000000000000000000",
@@ -728,28 +625,8 @@
                             "typeName": "AccountId"
                         },
                         {
-                            "name": "size",
-                            "type": 4,
-                            "typeName": "u64"
-                        },
-                        {
-                            "name": "name",
-                            "type": 11,
-                            "typeName": "String"
-                        },
-                        {
-                            "name": "logo",
-                            "type": 11,
-                            "typeName": "String"
-                        },
-                        {
-                            "name": "desc",
-                            "type": 11,
-                            "typeName": "String"
-                        },
-                        {
                             "name": "dao_manager",
-                            "type": 12,
+                            "type": 11,
                             "typeName": "DAOManager"
                         },
                         {
@@ -761,11 +638,6 @@
                 }
             },
             "path": ["main", "main", "DAOInstance"]
-        },
-        {
-            "def": {
-                "primitive": "str"
-            }
         },
         {
             "def": {
@@ -815,7 +687,7 @@
                     "fields": [
                         {
                             "name": "value",
-                            "type": 15,
+                            "type": 14,
                             "typeName": "V"
                         },
                         {
@@ -826,7 +698,7 @@
                     ]
                 }
             },
-            "params": [15],
+            "params": [14],
             "path": ["ink_storage", "collections", "hashmap", "ValueEntry"]
         },
         {
@@ -863,6 +735,11 @@
         },
         {
             "def": {
+                "primitive": "str"
+            }
+        },
+        {
+            "def": {
                 "composite": {
                     "fields": [
                         {
@@ -877,7 +754,7 @@
         },
         {
             "def": {
-                "tuple": [11, 16]
+                "tuple": [18, 15]
             }
         },
         {
@@ -910,12 +787,12 @@
                         },
                         {
                             "name": "name",
-                            "type": 11,
+                            "type": 18,
                             "typeName": "String"
                         },
                         {
                             "name": "dao_manager_code_hash",
-                            "type": 16,
+                            "type": 15,
                             "typeName": "Hash"
                         },
                         {
@@ -927,51 +804,6 @@
                 }
             },
             "path": ["template_manager", "template_manager", "DAOTemplate"]
-        },
-        {
-            "def": {
-                "composite": {
-                    "fields": [
-                        {
-                            "name": "success",
-                            "type": 18,
-                            "typeName": "bool"
-                        },
-                        {
-                            "name": "err",
-                            "type": 11,
-                            "typeName": "String"
-                        },
-                        {
-                            "name": "total",
-                            "type": 4,
-                            "typeName": "u64"
-                        },
-                        {
-                            "name": "pages",
-                            "type": 4,
-                            "typeName": "u64"
-                        },
-                        {
-                            "name": "page",
-                            "type": 4,
-                            "typeName": "u64"
-                        },
-                        {
-                            "name": "size",
-                            "type": 4,
-                            "typeName": "u64"
-                        },
-                        {
-                            "name": "data",
-                            "type": 25,
-                            "typeName": "Vec<T>"
-                        }
-                    ]
-                }
-            },
-            "params": [10],
-            "path": ["main", "main", "PageResult"]
         },
         {
             "def": {
