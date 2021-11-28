@@ -18,10 +18,20 @@ const useStyles = makeStyles((theme) => ({
         },
         '& fieldset': {
             top: 0,
+            border: 0,
         },
         '& .MuiInputBase-input': {
             paddingTop: '12px',
             paddingBottom: '12px',
+            background: '#F7F8FB',
+            border: '2px solid #F7F8FB',
+        },
+        '& .Mui-focused': {
+            '& .MuiInputBase-input': {
+                background: 'transparent!important',
+                border: '2px solid rgba(213, 17, 114, 0.2)',
+                borderRadius: 4,
+            },
         },
         '& legend': {
             display: 'none',

@@ -9,6 +9,8 @@ import SpacedButtonGroup from '../DashboardComponents/SpacedButtonGroup'
 import { useI18N } from '../../../utils/i18n-next-ui'
 import { UserMinus, Search } from 'react-feather'
 
+import TextInput from '../DashboardComponents/TextInput'
+
 interface ContactProps {
     contact: Profile
 }
@@ -82,19 +84,19 @@ export function DashboardContactDialog(props: WrappedDialogProps<ContactProps & 
                 primary={contact.nickname || contact.identifier.userId}
                 content={
                     <form>
-                        <TextField label={t('internal_id')} value={contact.identifier.toText()} disabled />
-                        <TextField
+                        <TextInput label={t('internal_id')} value={contact.identifier.toText()} disabled />
+                        <TextInput
                             label={t('nickname')}
                             value={nickname}
                             onChange={(e) => setNickname(e.target.value)}
                         />
-                        <TextField
+                        <TextInput
                             label={t('new_avatar_url')}
                             placeholder={t('new_avatar_url_placeholder')}
                             value={avatarURL}
                             onChange={(e) => setAvatarURL(e.target.value)}
                         />
-                        <TextField
+                        <TextInput
                             label={t('fingerprint')}
                             defaultValue={contact.linkedPersona?.fingerprint}
                             disabled
@@ -103,12 +105,12 @@ export function DashboardContactDialog(props: WrappedDialogProps<ContactProps & 
                 }
                 footer={
                     <SpacedButtonGroup>
-                        <DebounceButton variant="contained" onClick={onSubmit}>
-                            {t('save')}
-                        </DebounceButton>
                         <Button variant="outlined" color="inherit" onClick={props.onClose}>
                             {t('cancel')}
                         </Button>
+                        <DebounceButton variant="contained" onClick={onSubmit}>
+                            {t('save')}
+                        </DebounceButton>
                     </SpacedButtonGroup>
                 }></DashboardDialogWrapper>
         </DashboardDialogCore>
