@@ -96,21 +96,6 @@ const FirstBg = styled('div')`
     justify-content: space-between;
 `
 
-const FirstHeader = styled('div')`
-    background: #fff;
-    border-radius: 10px;
-    padding: 25px 70px;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    span {
-        font-size: 18px;
-        font-weight: 400;
-        color: #10164b;
-        margin-left: 10px;
-    }
-`
-
 const FirstMain = styled('div')`
     background: #fff;
     border-radius: 10px;
@@ -121,7 +106,7 @@ const FirstMain = styled('div')`
     justify-content: center;
     align-items: center;
     .maincontent {
-        width: 400px;
+        width: 812px;
         text-align: left;
     }
 `
@@ -133,6 +118,14 @@ const FirstFoot = styled('div')`
     padding: 26px 0;
     text-align: center;
 `
+
+const Titles = styled('div')`
+    text-align: center;
+    font-size: 34px;
+    font-weight: 300;
+    color: #1c2254;
+    margin-bottom: 20px;
+`
 const Contents = styled('div')`
     font-size: 18px;
     font-weight: 300;
@@ -142,11 +135,13 @@ const Contents = styled('div')`
 `
 
 const BtnBrdr = styled('div')`
-    width: 100%;
+    width: 160px;
+    //border-radius: 10px!important;
+    margin: 0 auto;
 `
 const ActionButtonBg = styled(ActionButton)`
     background: #d51172 !important;
-    border-radius: 4px !important;
+    border-radius: 10px !important;
     width: 100% !important;
     color: #ffffff !important;
 `
@@ -206,6 +201,14 @@ const useSetupFormStyles = makeStyles((theme) => {
             display: 'flex',
             justifyContent: 'flex-start',
             boxShadow: '0px 0px 10px 0px rgba(23, 23, 23, 0.1)',
+        },
+        imgContainer3: {
+            textAlign: 'center',
+            marginBottom: 54,
+            img: {
+                width: 200,
+                height: 200,
+            },
         },
         logoText: {
             marginLeft: 10,
@@ -327,13 +330,12 @@ function WelcomeWarp(props: SetupFormProps) {
         <Fade in>
             <div className={classNames(classes.wrapper2)}>
                 <FirstBg>
-                    <FirstHeader>
-                        <Image src={LogoIconURLs.subdao.image} width={40} height={40} />
-                        <span>SubDAO</span>
-                    </FirstHeader>
                     <FirstMain>
                         <div className="maincontent">
-                            <div className={classNames(classes.primary, classes.primary2)}>{props.primary}</div>
+                            <div className={classes.imgContainer3}>
+                                <img src={LogoIconURLs.logo.image} />
+                            </div>
+                            <Titles>{props.primary}</Titles>
                             <Contents>{props.content}</Contents>
                             <BtnBrdr>{props.actions}</BtnBrdr>
                         </div>
