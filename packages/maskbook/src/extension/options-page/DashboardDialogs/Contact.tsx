@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { DashboardDialogCore, DashboardDialogWrapper, WrappedDialogProps, useSnackbarCallback } from './Base'
-import { TextField, makeStyles, createStyles, Button } from '@material-ui/core'
+import { experimentalStyled as styled, TextField, makeStyles, createStyles, Button } from '@material-ui/core'
 import type { Profile } from '../../../database'
 import { Avatar } from '../../../utils/components/Avatar'
 import Services from '../../service'
@@ -10,6 +10,20 @@ import { useI18N } from '../../../utils/i18n-next-ui'
 import { UserMinus, Search } from 'react-feather'
 
 import TextInput from '../DashboardComponents/TextInput'
+
+const GroupBtn = styled(SpacedButtonGroup)`
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    button {
+        width: 48%;
+        border-radius: 4px !important;
+        height: 40px;
+    }
+`
+const BtnCancel = styled(Button)`
+    color: #d52473;
+`
 
 interface ContactProps {
     contact: Profile
@@ -104,14 +118,14 @@ export function DashboardContactDialog(props: WrappedDialogProps<ContactProps & 
                     </form>
                 }
                 footer={
-                    <SpacedButtonGroup>
-                        <Button variant="outlined" color="inherit" onClick={props.onClose}>
+                    <GroupBtn>
+                        <BtnCancel variant="outlined" color="inherit" onClick={props.onClose}>
                             {t('cancel')}
-                        </Button>
+                        </BtnCancel>
                         <DebounceButton variant="contained" onClick={onSubmit}>
                             {t('save')}
                         </DebounceButton>
-                    </SpacedButtonGroup>
+                    </GroupBtn>
                 }></DashboardDialogWrapper>
         </DashboardDialogCore>
     )
