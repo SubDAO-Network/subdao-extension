@@ -88,7 +88,7 @@ export default function ActionButton<T extends React.ComponentType<any> = React.
             disabled={loading}
             startIcon={loading && circle}
             className={'actionButton ' + className}
-            style={{ width, ...style }}
+            style={{ width, height: 40, borderRadius: 4, ...style }}
             children={children}
             {...p}></Button>
     )

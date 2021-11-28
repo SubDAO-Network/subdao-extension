@@ -19,14 +19,6 @@ import { useMatchXS } from '../../../utils/hooks/useMatchXS'
 import { IconsURLs } from '../../../resources/icons'
 import ActionButton from './ActionButton'
 
-const ListBrdr = styled(ListItem)`
-    padding: 0 !important;
-    border-bottom: 0 !important;
-    &:hover {
-        background: transparent !important;
-    }
-`
-
 const ListBg = styled(`div`)`
     background: rgba(241, 242, 248, 0.5);
     border-radius: 12px;
@@ -56,8 +48,13 @@ const useStyles = makeStyles((theme) =>
             display: 'flex',
             alignItems: 'center',
             width: '100%',
-            padding: theme.spacing(2),
-            borderBottom: `1px solid ${theme.palette.divider}`,
+            // padding: theme.spacing(2),
+            // borderBottom: `1px solid ${theme.palette.divider}`,
+            padding: 0,
+            margin: 0,
+            '&:hover': {
+                background: 'transparent !important',
+            },
         },
         avatar: {
             width: '32px',
@@ -117,7 +114,7 @@ export function ContactLine(props: ContactLineProps) {
     return (
         <>
             {/* // TODO: Use standard ListItemAvatar, ListItemText and ListItemSecondaryAction instead of custom one. */}
-            <ListBrdr
+            <ListItem
                 button
                 disableRipple={true}
                 selected={false}
@@ -151,7 +148,7 @@ export function ContactLine(props: ContactLineProps) {
                     {/*    /!*<MoreHorizIcon />*!/*/}
                     {/*</IconButton>*/}
                 </ListBg>
-            </ListBrdr>
+            </ListItem>
             {menu}
             {contactDialog}
             {deleteContactConfirmDialog}

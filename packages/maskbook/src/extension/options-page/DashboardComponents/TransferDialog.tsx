@@ -57,6 +57,12 @@ const useTransferTabStyles = makeStyles((theme) =>
         },
         button: {
             marginTop: theme.spacing(3),
+            borderRadius: 4,
+            height: 40,
+            '&:disabled': {
+                background: 'rgba(213, 36, 115, 0.6)',
+                color: '#fff',
+            },
         },
         maxChipRoot: {
             fontSize: 11,
@@ -321,7 +327,7 @@ export function DashboardWalletTransferDialog(props: WrappedDialogProps<Transfer
                 primary={t('wallet_transfer_title')}
                 iconColor="#4EE0BC"
                 size="medium"
-                content={<AbstractTab height={300} {...tabProps} />}
+                content={<AbstractTab height={270} {...tabProps} />}
             />
         </DashboardDialogCore>
     )
