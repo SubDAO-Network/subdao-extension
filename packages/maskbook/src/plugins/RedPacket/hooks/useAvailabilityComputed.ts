@@ -46,23 +46,18 @@ export function useAvailabilityComputed(account: string, payload: RedPacketJSONP
             }
         }
     } else {
-        const {
-            is_refund,
-            claim_list,
-            remaining_tokens,
-            start_time,
-            end_time,
-            claimed_number,
-            total_number,
-        } = JSON.parse(availability)
+        const { redPacket } = availability
+        if (!redPacket) {
+            const { is_refund, claim_list, remaining_tokens, end_time } = JSON.parse(availability)
 
-        balance = remaining_tokens.toString()
-        isEmpty = balance === '0'
-        isExpired = Date.now() > end_time
-        isClaimed = claim_list.filter((el: any) => el.includes(account)).length > 0
-        isRefunded = is_refund
-        isCreator = isSameAddress(payload?.sender.address ?? '', account)
-        parsedChainId = resolveChainId(payload.network ?? '') ?? ChainId.Mainnet
+            balance = remaining_tokens.toString()
+            isEmpty = balance === '0'
+            isExpired = Date.now() > end_time
+            isClaimed = claim_list.filter((el: any) => el.includes(account)).length > 0
+            isRefunded = is_refund
+            isCreator = isSameAddress(payload?.sender.address ?? '', account)
+            parsedChainId = resolveChainId(payload.network ?? '') ?? ChainId.Mainnet
+        }
     }
     return {
         ...asyncResult,
