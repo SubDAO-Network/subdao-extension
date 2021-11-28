@@ -56,6 +56,7 @@ const useStyles = makeStyles((theme) =>
                 background: 'transparent !important',
             },
         },
+        listBg: {},
         avatar: {
             width: '32px',
             height: '32px',
@@ -121,7 +122,7 @@ export function ContactLine(props: ContactLineProps) {
                 onClick={openContactDialog}
                 className={classes.line}
                 {...rest}>
-                <ListBg>
+                <ListBg className={classes.listBg}>
                     <Avatar className={classes.avatar} person={contact} />
                     <Typography className={classes.user}>{contact.nickname || contact.identifier.userId}</Typography>
                     <Typography className={classes.provider}>@{contact.identifier.network}</Typography>
