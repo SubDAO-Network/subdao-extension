@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react'
-import { makeStyles, createStyles, Theme, DialogContent, TextField } from '@material-ui/core'
+import { makeStyles, createStyles, Theme, DialogContent, TextField, InputAdornment } from '@material-ui/core'
 import { InjectedDialog } from '../../../components/shared/InjectedDialog'
 import { useI18N } from '../../../utils/i18n-next-ui'
 import { useStylesExtends } from '../../../components/custom-ui-helper'
@@ -8,12 +8,15 @@ import type { ERC20TokenDetailed, EtherTokenDetailed } from '../../../web3/types
 import { useRemoteControlledDialog } from '../../../utils/hooks/useRemoteControlledDialog'
 import { WalletMessages } from '../../Wallet/messages'
 import { useEtherTokenDetailed } from '../../../web3/hooks/useEtherTokenDetailed'
+import SearchIcon from '@material-ui/icons/Search'
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         search: {
             width: '100%',
             margin: theme.spacing(1, 0, 2),
+            fontSize: 14,
+            color: '#212121',
         },
         list: {
             scrollbarWidth: 'none',
@@ -91,11 +94,18 @@ export function SelectTokenDialog(props: SelectTokenDialogProps) {
             <DialogContent>
                 {!disableSearchBar ? (
                     <TextField
+                        size="small"
                         className={classes.search}
-                        label={t('add_token_search_hint')}
-                        autoFocus
+                        placeholder={t('add_token_search_hint')}
                         fullWidth
                         value={keyword}
+                        InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <SearchIcon style={{ width: 16, height: 16, fill: '#A1A1A1' }} />
+                                </InputAdornment>
+                            ),
+                        }}
                         onChange={(e) => setKeyword(e.target.value)}
                     />
                 ) : null}
