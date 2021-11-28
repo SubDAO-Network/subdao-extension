@@ -22,7 +22,7 @@ import AddIcon from '@material-ui/icons/Add'
 import { add as addDate } from 'date-fns'
 import { usePortalShadowRoot } from '@subdao/maskbook-shared'
 import { useStylesExtends } from '../../../components/custom-ui-helper'
-import AbstractTab, { AbstractTabProps } from '../../../extension/options-page/DashboardComponents/AbstractTab'
+import { AbstractTabProps, InjectAbstractTab } from '../../../extension/options-page/DashboardComponents/AbstractTab'
 import { editActivatedPostMetadata } from '../../../protocols/typed-message/global-state'
 import { useCurrentIdentity } from '../../../components/DataSource/useActivatedUI'
 import type { PollGunDB } from '../Services'
@@ -569,7 +569,7 @@ export default function PollsDialog(props: PollsDialogProps) {
         <ThemeProvider theme={defaultTheme}>
             <InjectedDialog open={props.open} onClose={onClose} title={t('plugin_poll_display_name')}>
                 <DialogContent>
-                    <AbstractTab height={480} {...tabProps} />
+                    <InjectAbstractTab height={480} {...tabProps} />
                 </DialogContent>
             </InjectedDialog>
         </ThemeProvider>
