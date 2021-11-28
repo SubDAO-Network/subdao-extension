@@ -30,11 +30,12 @@ const useStyles = makeStyles((theme: Theme) =>
             flexDirection: 'column',
             alignItems: 'center',
             padding: theme.spacing(5, 3),
+            paddingBottom: 24,
         },
         icon: {
-            fontSize: 64,
-            width: 64,
-            height: 64,
+            fontSize: 32,
+            width: 32,
+            height: 32,
         },
         link: {
             marginTop: theme.spacing(0.5),
@@ -45,6 +46,10 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         secondary: {
             fontSize: 14,
+        },
+        actions: {
+            justifyContent: 'center',
+            paddingBottom: 32,
         },
     }),
 )
@@ -152,10 +157,10 @@ function TransactionDialogUI(props: TransactionDialogUIProps) {
                 ) : null}
             </DialogContent>
             {state.type !== TransactionStateType.UNKNOWN && state.type !== TransactionStateType.WAIT_FOR_CONFIRMING ? (
-                <DialogActions>
+                <DialogActions className={classes.actions}>
                     <Button
                         color="primary"
-                        style={{ width: 180, height: 30 }}
+                        style={{ width: 180, height: 30, borderRadius: 4 }}
                         variant="contained"
                         onClick={state.type === TransactionStateType.FAILED || !shareLink ? onClose : onShare}>
                         {state.type === TransactionStateType.FAILED || !shareLink ? t('dismiss') : t('share')}

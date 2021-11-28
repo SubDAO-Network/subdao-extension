@@ -40,6 +40,12 @@ const useStyles = makeStyles((theme) =>
             height: 136,
             boxSizing: 'border-box',
         },
+        actionButton: {
+            backgroundColor: '#D52473',
+            '&:hover': {
+                background: 'rgb(161, 0, 85)',
+            },
+        },
         header: {
             display: 'flex',
             justifyContent: 'space-between',
@@ -329,7 +335,11 @@ export function RedPacket(props: RedPacketProps) {
                             {t('plugin_wallet_invalid_network')}
                         </ActionButton>
                     ) : (
-                        <ActionButton variant="contained" size="large" onClick={onClaimOrRefund}>
+                        <ActionButton
+                            className={classes.actionButton}
+                            variant="contained"
+                            size="large"
+                            onClick={onClaimOrRefund}>
                             {canClaim ? t('plugin_red_packet_claim') : t('plugin_red_packet_refund')}
                         </ActionButton>
                     )}

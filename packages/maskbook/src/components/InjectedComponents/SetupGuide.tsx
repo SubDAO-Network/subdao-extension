@@ -17,7 +17,6 @@ import {
     experimentalStyled as styled,
 } from '@material-ui/core'
 import classNames from 'classnames'
-import { ArrowRight } from 'react-feather'
 import AlternateEmailIcon from '@material-ui/icons/AlternateEmail'
 import CloseIcon from '@material-ui/icons/Close'
 import ArrowBackIosOutlinedIcon from '@material-ui/icons/ArrowBackIosOutlined'
