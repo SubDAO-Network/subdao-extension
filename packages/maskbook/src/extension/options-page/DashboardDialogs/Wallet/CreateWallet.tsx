@@ -280,7 +280,6 @@ export function WalletCreateDialog(props: WrappedDialogProps<object>) {
                         <InputBase
                             classes={{ root: classes.privateInput }}
                             fullWidth
-                            readOnly
                             required
                             value={seed}
                             onChange={(e) => onChangeSeed(e.target.value)}
