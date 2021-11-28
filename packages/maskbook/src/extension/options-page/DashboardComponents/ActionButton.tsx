@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react'
-import { Button, CircularProgress, makeStyles } from '@material-ui/core'
+import { experimentalStyled as styled, Button, CircularProgress, makeStyles } from '@material-ui/core'
 import type { ButtonProps } from '@material-ui/core/Button'
 import CheckIcon from '@material-ui/icons/Check'
 import ErrorIcon from '@material-ui/icons/Error'
@@ -7,6 +7,16 @@ import { red, green } from '@material-ui/core/colors'
 import classNames from 'classnames'
 import { useDebounce, useAsyncFn } from 'react-use'
 import { useErrorStyles } from '../../../utils/theme'
+
+const Btn = styled(Button)`
+    color: #ffffff !important;
+    border-radius: 4px !important;
+    width: 100% !important;
+    &:disabled {
+        background: rgba(213, 17, 114, 0.5) !important;
+        border-radius: 4px !important;
+    }
+`
 
 const circle = <CircularProgress color="inherit" size={18} />
 
@@ -52,7 +62,7 @@ export function DebounceButton(_props: DebounceButtonProps) {
     const classes = useErrorStyles()
     const { f, loading } = useDebounceAsync(onClick)
     return (
-        <Button
+        <Btn
             startIcon={loading ? circle : undefined}
             disabled={loading}
             onClick={f}

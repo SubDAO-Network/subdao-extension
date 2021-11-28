@@ -32,16 +32,6 @@ import { SetupStep } from '../SetupStep'
 import { useMyPersonas } from '../../../components/DataSource/useMyPersonas'
 import TextInput from '../DashboardComponents/TextInput'
 
-const Btn = styled(DebounceButton)`
-    color: #ffffff !important;
-    border-radius: 4px !important;
-    width: 100% !important;
-    &:disabled {
-        background: rgba(213, 17, 114, 0.5) !important;
-        border-radius: 4px !important;
-    }
-`
-
 const BtnGroup = styled(SpacedButtonGroup)`
     display: flex;
     justify-content: flex-end;
@@ -126,13 +116,13 @@ export function DashboardPersonaCreateDialog(props: WrappedDialogProps) {
                     </>
                 }
                 footer={
-                    <Btn
+                    <DebounceButton
                         type="submit"
                         variant="contained"
                         onClick={createPersonaAndNext}
                         disabled={name.length === 0 || checkInputLengthExceed(name)}>
                         {t('create')}
-                    </Btn>
+                    </DebounceButton>
                 }></DashboardDialogWrapper>
         </DashboardDialogCore>
     )
@@ -268,7 +258,7 @@ export function DashboardImportPersonaDialog(props: WrappedDialogProps) {
                 secondary={t('dashboard_persona_import_dialog_hint')}
                 content={<AbstractTab {...tabProps}></AbstractTab>}
                 footer={
-                    <Btn
+                    <DebounceButton
                         fullWidth
                         variant="contained"
                         disabled={
@@ -293,7 +283,7 @@ export function DashboardImportPersonaDialog(props: WrappedDialogProps) {
                         }}
                         data-testid="import_button">
                         {t('import')}
-                    </Btn>
+                    </DebounceButton>
                 }></DashboardDialogWrapper>
         </DashboardDialogCore>
     )
@@ -339,12 +329,12 @@ export function DashboardPersonaRenameDialog(props: WrappedDialogProps<PersonaPr
                 footer={
                     <SpacedButtonGroup>
                         {/*<ButtonCancel onClose={props.onClose}></ButtonCancel>*/}
-                        <Btn
+                        <DebounceButton
                             variant="contained"
                             onClick={renamePersona}
                             disabled={name.length === 0 || checkInputLengthExceed(name)}>
                             {t('ok')}
-                        </Btn>
+                        </DebounceButton>
                     </SpacedButtonGroup>
                 }
             />
