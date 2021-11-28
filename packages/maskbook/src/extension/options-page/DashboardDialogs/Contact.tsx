@@ -1,5 +1,11 @@
 import { useState } from 'react'
-import { DashboardDialogCore, DashboardDialogWrapper, WrappedDialogProps, useSnackbarCallback } from './Base'
+import {
+    DashboardDialogCore,
+    DashboardDialogWrapper,
+    WrappedDialogProps,
+    useSnackbarCallback,
+    DashboardDialogWrapperAlert,
+} from './Base'
 import { experimentalStyled as styled, TextField, makeStyles, createStyles, Button } from '@material-ui/core'
 import type { Profile } from '../../../database'
 import { Avatar } from '../../../utils/components/Avatar'
@@ -56,22 +62,20 @@ export function DashboardContactDeleteConfirmDialog(
     )
     return (
         <DashboardDialogCore fullScreen={false} {...props}>
-            <DashboardDialogWrapper
-                size="small"
-                icon={<UserMinus />}
-                iconColor="#F4637D"
+            <DashboardDialogWrapperAlert
+                alert
                 primary={t('delete_contact')}
                 secondary={t('delete_contact_confirmation', { contact: contact.nickname ?? contact.identifier.userId })}
                 footer={
-                    <SpacedButtonGroup>
-                        <DebounceButton variant="contained" color="danger" onClick={onDelete}>
+                    <GroupBtn>
+                        <BtnCancel variant="outlined" color="inherit" onClick={props.onClose}>
+                            {t('cancel')}
+                        </BtnCancel>
+                        <DebounceButton variant="contained" onClick={onDelete}>
                             {t('ok')}
                         </DebounceButton>
-                        <Button variant="outlined" color="inherit" onClick={props.onClose}>
-                            {t('cancel')}
-                        </Button>
-                    </SpacedButtonGroup>
-                }></DashboardDialogWrapper>
+                    </GroupBtn>
+                }></DashboardDialogWrapperAlert>
         </DashboardDialogCore>
     )
 }
