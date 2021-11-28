@@ -37,11 +37,17 @@ import { format } from 'date-fns'
 const useStyles = makeStyles((theme) =>
     createStyles({
         title: {
+            fontWeight: 300,
             margin: theme.spacing(3, 0),
             color: theme.palette.text.secondary,
             [theme.breakpoints.down('sm')]: {
                 margin: theme.spacing(2, 0),
             },
+        },
+        titleBox: {
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
         },
         caption: {
             padding: theme.spacing(2, 0),
@@ -57,6 +63,7 @@ const useStyles = makeStyles((theme) =>
                 marginLeft: theme.spacing(-2),
                 marginRight: theme.spacing(-2),
             },
+            marginTop: theme.spacing(1.25),
         },
         empty: {
             display: 'flex',
@@ -319,9 +326,16 @@ export default function DashboardDaoRouter() {
     return (
         <DashboardRouterContainer navHeight={150} title={t('dao')}>
             <ContainerLoading loading={loading}>
-                <Typography className={classes.title} variant="body2">
-                    {t('dao_in_org')}
-                </Typography>
+                <div className={classes.titleBox}>
+                    <Typography className={classes.title} variant="body2">
+                        {t('dao_in_org')}
+                    </Typography>
+                    {!loading && !isEmpty ? (
+                        <Button size="medium" variant="contained" href={t('create_dao_href')}>
+                            {t('create_dao')}
+                        </Button>
+                    ) : null}
+                </div>
                 <section className={classes.list}>
                     <AutoResize>
                         {(sizeProps) => (
