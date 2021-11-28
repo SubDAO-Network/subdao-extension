@@ -191,11 +191,6 @@ function DashboardUI() {
         return (
             <div className={classes.root}>
                 <div className={classes.container}>{children}</div>
-                {xsMatched ? null : (
-                    <footer className={classes.footer}>
-                        <FooterLine />
-                    </footer>
-                )}
             </div>
         )
     }
