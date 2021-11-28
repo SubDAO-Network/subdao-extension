@@ -13,8 +13,10 @@ import {
     CircularProgress,
     DialogContent,
     DialogActions,
+    IconButton,
     experimentalStyled as styled,
 } from '@material-ui/core'
+import CloseIcon from '@material-ui/icons/Close'
 import { CompositionEvent, MaskMessage } from '../../utils/messages'
 import { useStylesExtends, or } from '../custom-ui-helper'
 import type { Profile, Group } from '../../database'
@@ -34,7 +36,7 @@ import {
 } from '../../protocols/typed-message'
 import { EthereumTokenType } from '../../web3/types'
 import { isDAI, isOKB } from '../../web3/helpers'
-import { PluginRedPacketTheme } from '../../plugins/RedPacket/theme'
+// import { PluginRedPacketTheme } from '../../plugins/RedPacket/theme'
 import { useI18N } from '../../utils/i18n-next-ui'
 import { RedPacketMetadataReader } from '../../plugins/RedPacket/helpers'
 import { PluginUI } from '../../plugins/PluginUI'
@@ -48,6 +50,7 @@ import { editActivatedPostMetadata, globalTypedMessageMetadata } from '../../pro
 import { isTwitter } from '../../social-network-adaptor/twitter.com/base'
 import { SteganographyTextPayload } from './SteganographyTextPayload'
 import { useMaskbookTheme } from '../../utils/theme'
+import { RedEnvelopIcon } from '../../resources/RedEnvelopIcon'
 
 const useStyles = makeStyles({
     inputBox: {
@@ -59,6 +62,7 @@ const useStyles = makeStyles({
         paddingBottom: 6,
         boxSizing: 'border-box',
         marginBottom: 15,
+        marginTop: 10,
     },
     MUIInputRoot: {
         flexDirection: 'column',
@@ -72,6 +76,21 @@ const useStyles = makeStyles({
     MUIInputInput: {},
     sup: {
         paddingLeft: 2,
+    },
+    tooltip: {
+        backgroundColor: '#FFEFDC',
+        height: 33,
+        display: 'flex',
+        alignItems: 'center',
+        padding: '0 8px',
+        borderRadius: 17,
+    },
+    tooltipText: {
+        paddingLeft: 4,
+        paddingRight: 16,
+        fontSize: 14,
+        color: '#212121',
+        lineHeight: '23px',
     },
 })
 
@@ -131,6 +150,7 @@ export function PostDialogUI(props: PostDialogUIProps) {
     }
 
     if (!isTypedMessageText(props.postContent)) return <>Unsupported type to edit</>
+
     const metadataBadge = [...PluginUI].flatMap((plugin) =>
         Result.wrap(() => {
             const knownMeta = plugin.postDialogMetadataBadge
@@ -145,10 +165,15 @@ export function PostDialogUI(props: PostDialogUIProps) {
                             display: 'inline-block',
                         }}>
                         <Tooltip title={`Provided by plugin "${plugin.pluginName}"`}>
-                            <Chip
-                                onDelete={() => editActivatedPostMetadata((meta) => meta.delete(metadataKey))}
-                                label={tag(r)}
-                            />
+                            <div className={classes.tooltip}>
+                                <RedEnvelopIcon />
+                                <span className={classes.tooltipText}>{tag(r)}</span>
+                                <IconButton
+                                    size="small"
+                                    onClick={() => editActivatedPostMetadata((meta) => meta.delete(metadataKey))}>
+                                    <CloseIcon cursor="pointer" />
+                                </IconButton>
+                            </div>
                         </Tooltip>
                     </Box>
                 ))
@@ -447,7 +472,7 @@ export function PostDialog({ reason: props_reason = 'timeline', ...props }: Post
     //#region Red Packet
     // TODO: move into the plugin system
     const hasRedPacket = RedPacketMetadataReader(postBoxContent.meta).ok
-    const theme = hasRedPacket ? PluginRedPacketTheme : undefined
+    // const theme = hasRedPacket ? PluginRedPacketTheme : undefined
     const mustSelectShareToEveryone = hasRedPacket && shareToEveryone
 
     useEffect(() => {
@@ -456,13 +481,13 @@ export function PostDialog({ reason: props_reason = 'timeline', ...props }: Post
     //#endregion
     const isPostButtonDisabled = !(() => {
         const text = extractTextFromTypedMessage(postBoxContent)
-        if (text.ok && text.val.length > 560) return false
+        if (text.ok && text.val.length > 500) return false
         return onlyMyself || shareToEveryoneLocal ? text.val : currentShareTarget.length && text
     })()
 
     return (
         <PostDialogUI
-            theme={theme}
+            // theme={theme}
             shareToEveryone={shareToEveryoneLocal}
             onlyMyself={onlyMyself}
             availableShareTarget={availableShareTarget}
