@@ -86,6 +86,7 @@ const useInjectStyles = makeStyles((theme: Theme) => {
             minWidth: 'unset',
             marginRight: 30,
             fontSize: 16,
+            color: '#212121',
         },
         tabSelected: {
             fontSize: 20,
