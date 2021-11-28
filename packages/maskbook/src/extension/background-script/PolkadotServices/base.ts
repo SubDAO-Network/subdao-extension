@@ -1,6 +1,6 @@
 import { ApiPromise, WsProvider } from '@polkadot/api'
 import ConnectContract from '../../../polkadot/connect'
-import { SubstrateNetworkWsProvider } from '../../../polkadot/constants'
+import { SubstrateNetworkWsProvider, SubstrateNetworkPrefix } from '../../../polkadot/constants'
 import { ContractType } from '../../../polkadot/types'
 import { currentSelectedWalletAddressSettings } from '../../../plugins/Wallet/settings'
 import { formatResult } from './helper'
@@ -13,14 +13,19 @@ const gasLimit = -1
 let API: ApiPromise | undefined
 
 export async function getApi(): Promise<ApiPromise> {
-    if (!API) await initApi()
-
+    API = await initApi()
     return API || ({} as ApiPromise)
 }
 
 export async function initApi() {
-    if (API) return API
     const network = currentSubstrateNetworkSettings.value
+    if (API && API.isConnected) {
+        const networkPrefix = API.consts.system.ss58Prefix.toNumber()
+        if (networkPrefix === SubstrateNetworkPrefix[network]) {
+            return API
+        }
+    }
+
     const provider = SubstrateNetworkWsProvider[network]
     const wsProvider = new WsProvider(provider)
     const api = await ApiPromise.create({
@@ -30,6 +35,7 @@ export async function initApi() {
             LookupSource: 'MultiAddress',
         },
     })
+
     if (api.isConnected) {
         API = api
     }
