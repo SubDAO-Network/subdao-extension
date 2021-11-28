@@ -327,7 +327,11 @@ export function RedPacket(props: RedPacketProps) {
             {canClaim || canRefund ? (
                 <Box className={classes.footer}>
                     {!account ? (
-                        <ActionButton variant="contained" size="large" onClick={onConnect}>
+                        <ActionButton
+                            variant="contained"
+                            size="large"
+                            className={classes.actionButton}
+                            onClick={onConnect}>
                             {t('plugin_wallet_connect_a_wallet')}
                         </ActionButton>
                     ) : !chainIdValid ? (
