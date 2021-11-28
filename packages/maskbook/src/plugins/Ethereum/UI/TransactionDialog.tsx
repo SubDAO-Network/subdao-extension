@@ -11,7 +11,7 @@ import {
     Link,
 } from '@material-ui/core'
 import WarningIcon from '@material-ui/icons/Warning'
-import DoneIcon from '@material-ui/icons/Done'
+import { DoneIcon } from '../../../resources/DoneIcon'
 import { useStylesExtends } from '../../../components/custom-ui-helper'
 import { useI18N } from '../../../utils/i18n-next-ui'
 import { useChainId } from '../../../web3/hooks/useBlockNumber'
@@ -155,9 +155,8 @@ function TransactionDialogUI(props: TransactionDialogUIProps) {
                 <DialogActions>
                     <Button
                         color="primary"
-                        size="large"
+                        style={{ width: 180, height: 30 }}
                         variant="contained"
-                        fullWidth
                         onClick={state.type === TransactionStateType.FAILED || !shareLink ? onClose : onShare}>
                         {state.type === TransactionStateType.FAILED || !shareLink ? t('dismiss') : t('share')}
                     </Button>

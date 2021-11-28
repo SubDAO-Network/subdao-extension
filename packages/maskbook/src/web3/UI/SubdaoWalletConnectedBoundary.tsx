@@ -76,5 +76,9 @@ export function SubdaoWalletConnectedBoundary(props: SubdaoWalletConnectedBounda
                 </ActionButton>
             </Grid>
         )
-    return <Grid container>{children}</Grid>
+    return (
+        <Grid container className={classes.grid}>
+            {children}
+        </Grid>
+    )
 }

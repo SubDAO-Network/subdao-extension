@@ -112,7 +112,7 @@ function TransferTab(props: TransferTabProps) {
     const tokenType = isERC20 ? PolkadotTokenType.ERC20 : PolkadotTokenType.DOT
 
     // balance
-    const { value: respon } = useTokenBalance(tokenType, tokenAddress)
+    const { value: respon, retry: getTokenBalance } = useTokenBalance(tokenType, tokenAddress)
     const tokenBalance: string = respon?.toString() || '0'
 
     //#region transfer tokens
