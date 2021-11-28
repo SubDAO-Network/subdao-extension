@@ -23,7 +23,7 @@ import { RED_PACKET_MIN_SHARES, RED_PACKET_MAX_SHARES, RED_PACKET_DEFAULT_SHARES
 import { useI18N } from '../../../utils/i18n-next-ui'
 import { SubdaoTokenType, ERC20TokenDetailed, EtherTokenDetailed } from '../../../web3/types'
 import { useAccount } from '../../../web3/hooks/useAccount'
-import { TokenAmountPanel } from '../../../web3/UI/TokenAmountPanel'
+import { InjectTokenAmountPanel } from '../../../web3/UI/TokenAmountPanel'
 import { useCreateCallback } from '../hooks/useCreateCallback'
 import ActionButton from '../../../extension/options-page/DashboardComponents/ActionButton'
 import { TransactionStateType } from '../../../web3/hooks/useTransactionState'
@@ -71,12 +71,14 @@ const useStyles = makeStyles((theme) =>
             lineHeight: '16px',
             height: 60,
             padding: 10,
+            fontWeight: 400,
             '& textarea': {
                 height: '100%',
             },
         },
         modeSelect: {
             color: '#212121',
+            fontWeight: 400,
             '& fieldset': {
                 border: 'none !important',
             },
@@ -102,6 +104,7 @@ const useStyles = makeStyles((theme) =>
             height: 40,
             color: '#212121',
             paddingLeft: 10,
+            fontWeight: 400,
         },
     }),
 )
@@ -352,7 +355,7 @@ export function RedPacketForm(props: RedPacketFormProps) {
                 </div>
             </div>
             <div className={classes.line}>
-                <TokenAmountPanel
+                <InjectTokenAmountPanel
                     classes={{ root: classes.input }}
                     label={isRandom ? 'Total Amount' : 'Amount per Share'}
                     amount={rawAmount}
