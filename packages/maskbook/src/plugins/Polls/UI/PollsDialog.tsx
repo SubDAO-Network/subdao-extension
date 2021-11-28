@@ -93,6 +93,7 @@ const useNewPollStyles = makeStyles((theme) =>
             height: 40,
             padding: 0,
             lineHeight: '40px',
+            fontWeight: 400,
         },
         pollInput: {
             textAlign: 'right',
@@ -134,7 +135,7 @@ const useNewPollStyles = makeStyles((theme) =>
         questionInput: {
             height: 70,
             padding: '12px 20px',
-            lineHight: '16px',
+            lineHeight: '16px',
             color: '#212121',
             fontWeight: 400,
             '& textarea': {
@@ -145,6 +146,7 @@ const useNewPollStyles = makeStyles((theme) =>
             height: 40,
             width: 368,
             paddingLeft: 71,
+            fontWeight: 400,
         },
         optionItem: {
             position: 'relative',
@@ -168,6 +170,7 @@ const useNewPollStyles = makeStyles((theme) =>
             border: '1px solid #E5E5E5',
             height: 40,
             padding: 0,
+            fontWeight: 400,
         },
         accordArea: {
             margin: '15px 0',
@@ -184,6 +187,7 @@ const useNewPollStyles = makeStyles((theme) =>
             background: ' #F8F8F8',
             border: '1px solid #E5E5E5',
             paddingLeft: 10,
+            fontWeight: 400,
         },
     }),
 )
