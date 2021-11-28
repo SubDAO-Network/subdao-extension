@@ -15,7 +15,7 @@ export const mainAddress = {
     // mainnet
     // main: '5E28THM8Nde4ngcVQ2LGoUf5Hf7sLFyEBuuUXgRpPnbCoTRZ',
     // testnet
-    main: '5EU6UCmGPQLwMbyodLjDwBwbmc3EHinkiAs4Qo9KHwiBBhmu',
+    main: '5EGEtJ71fHtmMtSXAHAsBJrFNbkLt5VvJFzAXwFRb4D4X3XM',
 }
 export const ERC20_TOKEN_LISTS = ['https://raw.githubusercontent.com/SubDAO-Network/token-list/main/subdao.json']
 
