@@ -9,9 +9,18 @@ import { useMenu } from '../../../utils/hooks/useMenu'
 import { useI18N } from '../../../utils/i18n-next-ui'
 import type { DefaultComponentProps } from '@material-ui/core/OverridableComponent'
 import { useMatchXS } from '../../../utils/hooks/useMatchXS'
+import { Link } from 'react-router-dom'
+import { DashboardRoute } from '../Route'
 
 const useStyles = makeStyles((theme) =>
     createStyles({
+        item: {
+            padding: 0,
+            height: 104,
+            '&:hover': {
+                background: 'none',
+            },
+        },
         line: {
             display: 'flex',
             alignItems: 'center',
@@ -21,7 +30,7 @@ const useStyles = makeStyles((theme) =>
             background: 'rgba(241, 242, 248, 0.5)',
             borderRadius: 12,
             border: '1px solid #E7EAF3',
-            marginTop: 14,
+            textDecorationLine: 'none',
         },
         avatar: {
             width: '40px',
@@ -76,17 +85,20 @@ export function DaoLine(props: DaoLineProps) {
         identifier: {
             toText: () => 'ffffff',
         },
+        address: daoInfo.address,
     }
     return (
         <>
-            <ListItem button selected={false} className={classes.line} {...rest}>
-                <Avatar className={classes.avatar} person={person} />
-                <Typography className={classes.user}>{daoInfo.name}</Typography>
-                {xsMatched ? null : (
-                    <Typography className={classes.fingerprint} component="code">
-                        {daoInfo.desc}
-                    </Typography>
-                )}
+            <ListItem button selected={false} {...rest} classes={{ root: classes.item }}>
+                <Link to={`${DashboardRoute.Dao}/${person.address}`} className={classes.line}>
+                    <Avatar className={classes.avatar} person={person} />
+                    <Typography className={classes.user}>{daoInfo.name}</Typography>
+                    {xsMatched ? null : (
+                        <Typography className={classes.fingerprint} component="code">
+                            {daoInfo.desc}
+                        </Typography>
+                    )}
+                </Link>
             </ListItem>
         </>
     )

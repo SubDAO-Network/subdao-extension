@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) =>
             marginRight: '0.75em',
         },
         list: {
-            flex: 1,
+            height: '100%',
             [theme.breakpoints.down('sm')]: {
                 marginLeft: theme.spacing(-2),
                 marginRight: theme.spacing(-2),
@@ -344,14 +344,12 @@ export default function DashboardDaoRouter() {
                                 onItemsRendered={(data) => {
                                     if (isEmpty) return
                                 }}
-                                itemSize={64}
+                                itemSize={104}
                                 itemCount={items.length}
                                 {...sizeProps}>
                                 {({ index, style }) =>
                                     items[index] ? (
-                                        <Link to={`${DashboardRoute.Dao}/${items[index].address}`}>
-                                            <DaoLine style={style as any} key={index} daoInfo={items[index]} />
-                                        </Link>
+                                        <DaoLine style={style as any} key={index} daoInfo={items[index]} />
                                     ) : null
                                 }
                             </FixedSizeList>
