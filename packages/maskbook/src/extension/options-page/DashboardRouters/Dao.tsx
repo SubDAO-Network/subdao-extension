@@ -336,26 +336,7 @@ export default function DashboardDaoRouter() {
                         </Button>
                     ) : null}
                 </div>
-                <section className={classes.list}>
-                    <AutoResize>
-                        {(sizeProps) => (
-                            <FixedSizeList
-                                overscanCount={5}
-                                onItemsRendered={(data) => {
-                                    if (isEmpty) return
-                                }}
-                                itemSize={104}
-                                itemCount={items.length}
-                                {...sizeProps}>
-                                {({ index, style }) =>
-                                    items[index] ? (
-                                        <DaoLine style={style as any} key={index} daoInfo={items[index]} />
-                                    ) : null
-                                }
-                            </FixedSizeList>
-                        )}
-                    </AutoResize>
-                </section>
+
                 {!loading && isEmpty ? (
                     <div className={classes.empty}>
                         <img src={new URL('./dashboard-placeholder.png', import.meta.url).toString()}></img>
@@ -367,7 +348,28 @@ export default function DashboardDaoRouter() {
                             {t('create_dao')}
                         </Button>
                     </div>
-                ) : null}
+                ) : (
+                    <section className={classes.list}>
+                        <AutoResize>
+                            {(sizeProps) => (
+                                <FixedSizeList
+                                    overscanCount={5}
+                                    onItemsRendered={(data) => {
+                                        if (isEmpty) return
+                                    }}
+                                    itemSize={104}
+                                    itemCount={items.length}
+                                    {...sizeProps}>
+                                    {({ index, style }) =>
+                                        items[index] ? (
+                                            <DaoLine style={style as any} key={index} daoInfo={items[index]} />
+                                        ) : null
+                                    }
+                                </FixedSizeList>
+                            )}
+                        </AutoResize>
+                    </section>
+                )}
             </ContainerLoading>
         </DashboardRouterContainer>
     )
