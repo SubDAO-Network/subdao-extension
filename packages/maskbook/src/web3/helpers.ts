@@ -34,7 +34,7 @@ export function addGasMargin(value: BigNumber) {
 
 //#region constants
 export interface Web3Constants {
-    [K: string]: EnumRecord<ChainId, Primitive | Primitive[]>
+    [K: string]: any
 }
 
 export function getConstant<T extends Web3Constants, K extends keyof T>(

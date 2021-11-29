@@ -430,7 +430,7 @@ export function ConsentDataCollection() {
             content={t('set_up_consent_data_collection_hint')}
             actions={
                 <>
-                    <ActionButtonBg<typeof Link>
+                    <ActionButtonBg
                         className={consentDataCollection.whiteButton}
                         variant="contained"
                         component={Link}
@@ -510,7 +510,7 @@ export function CreatePersona() {
                         data-testid="next_button">
                         {t('set_up_button_next')}
                     </NextBtn>
-                    <RestoreBtn<typeof Link>
+                    <RestoreBtn
                         disableRipple={true}
                         width="100%"
                         component={Link}
