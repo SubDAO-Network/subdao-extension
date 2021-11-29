@@ -42,11 +42,6 @@ const useStyles = makeStyles((theme) =>
             verticalAlign: 'middle',
         },
         dialogBackdropRoot: {},
-        close: {
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'flex-end',
-        },
     }),
 )
 
@@ -116,7 +111,12 @@ export function InjectedDialog(props: InjectedDialogProps) {
                             <Typography className={dialogTitleTypography} display="inline" variant="h5">
                                 {props.title}
                             </Typography>
-                            <div className={classes.close}>
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    flexDirection: 'row',
+                                    justifyContent: 'flex-end',
+                                }}>
                                 <IconButton
                                     classes={{ root: dialogCloseButton }}
                                     aria-label={t('post_dialog__dismiss_aria')}
