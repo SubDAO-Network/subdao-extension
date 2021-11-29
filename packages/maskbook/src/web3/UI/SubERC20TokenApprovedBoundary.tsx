@@ -29,6 +29,9 @@ const useStyles = makeStyles((theme) =>
             bottom: theme.spacing(1),
             position: 'absolute',
         },
+        grid: {
+            justifyContent: 'flex-end',
+        },
     }),
 )
 
@@ -138,7 +141,11 @@ export function SubERC20TokenApprovedBoundary(props: SubERC20TokenApprovedBounda
             </Grid>
         )
     if (approveStateType === ApproveStateType.APPROVED)
-        return <Grid container>{typeof children === 'function' ? children(allowance) : children}</Grid>
+        return (
+            <Grid container className={classes.grid}>
+                {typeof children === 'function' ? children(allowance) : children}
+            </Grid>
+        )
 
     unreachable(approveStateType)
 }
