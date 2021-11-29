@@ -63,9 +63,9 @@ export function createEtherToken(chainId: ChainId) {
         type: EthereumTokenType.Ether,
         chainId,
         address: getConstant(CONSTANTS, 'ETH_ADDRESS'),
-        decimals: 15,
+        decimals: 12,
         name: '',
-        symbol: 'Unit',
+        symbol: 'GOV',
     } as EtherTokenDetailed
 }
 

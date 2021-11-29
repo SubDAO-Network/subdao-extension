@@ -25,8 +25,8 @@ export interface EtherToken {
 
 export interface EtherTokenDetailed extends EtherToken {
     name: ''
-    symbol: 'Unit'
-    decimals: 15
+    symbol: 'GOV'
+    decimals: 12
 }
 //#endregion
 

@@ -39,8 +39,8 @@ export const erc20Address = {
 export const tokenDetail = {
     address: mainAddress.main,
     name: '',
-    decimals: 15,
-    symbol: 'unit',
+    decimals: 12,
+    symbol: 'GOV',
     type: 0,
     chainId: 1,
 }
@@ -70,8 +70,8 @@ export const networkNativeTokens: {
     [network: string]: any
 } = {
     SubDAO: {
-        symbol: 'UNIT',
-        decimals: 15,
+        symbol: 'GOV',
+        decimals: 12,
         name: '',
     },
     Polkadot: {

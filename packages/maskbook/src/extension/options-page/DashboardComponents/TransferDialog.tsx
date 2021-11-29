@@ -1,18 +1,5 @@
 import { useContext, ChangeEvent, useMemo, useState, useCallback, useEffect } from 'react'
-import { Send as SendIcon } from 'react-feather'
-import {
-    Box,
-    Button,
-    createStyles,
-    IconButton,
-    InputAdornment,
-    makeStyles,
-    TextField,
-    InputBase,
-    Theme,
-    Typography,
-    CircularProgress,
-} from '@material-ui/core'
+import { Button, createStyles, makeStyles, InputBase, Theme, Typography, CircularProgress } from '@material-ui/core'
 import type { WalletRecord } from '../../../plugins/Wallet/database/types'
 import type { DeriveBalancesAll } from '@polkadot/api-derive/types'
 import {
@@ -25,7 +12,6 @@ import AbstractTab, { AbstractTabProps } from './AbstractTab'
 import { useI18N } from '../../../utils/i18n-next-ui'
 import { TokenAmountPanel } from '../../../web3/UI/TokenAmountPanel'
 import { useCopyToClipboard } from 'react-use'
-import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined'
 import { QRCode } from '../../../components/shared/qrcode'
 import { isValidAddress } from '../../../plugins/Wallet/services/formatter'
 import { useTransferTokenCallback } from '../../../polkadot/hooks/useTransferTokenCallback'
@@ -36,7 +22,6 @@ import { PolkadotTokenType } from '../../../polkadot/types'
 import { useTokenBalance } from '../../../polkadot/hooks/useTokenBalance'
 import { formatAmount } from '../../../polkadot/utils/format'
 import { isSameAddress, isSubdaoAddress } from '../../../polkadot/utils/helpers'
-import TextInput from './TextInput'
 import { ToolIconURLs } from '../../../resources/tool-icon'
 
 const circleIcon = <CircularProgress color="inherit" size={12} />
@@ -113,14 +98,13 @@ function TransferTab(props: TransferTabProps) {
     const [amount, setAmount] = useState('')
     const [address, setAddress] = useState('')
     const tokenAddress = token.address ? token.address : wallet.address
-    const isERC20 = !isSubdaoAddress(tokenAddress)
+    // const isERC20 = !isSubdaoAddress(tokenAddress)
     const [validationMessage, setValidationMessage] = useState<string>('')
-    const tokenType = isERC20 ? PolkadotTokenType.ERC20 : PolkadotTokenType.DOT
-
+    // const tokenType = isERC20 ? PolkadotTokenType.ERC20 : PolkadotTokenType.DOT
+    const tokenType = token.address ? PolkadotTokenType.ERC20 : PolkadotTokenType.DOT
     // balance
-    const { value: respon, retry: getTokenBalance } = useTokenBalance(tokenType, tokenAddress)
+    const { value: respon } = useTokenBalance(tokenType, tokenAddress)
     const tokenBalance: string = respon?.toString() || '0'
-
     //#region transfer tokens
     const [transferState, transferCallback, resetTransferCallback] = useTransferTokenCallback(tokenType, token)
 

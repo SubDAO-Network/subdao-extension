@@ -233,7 +233,6 @@ export function TokenAmountPanel(props: TokenAmountPanelProps) {
                                 Balance:
                                 <Typography color="textPrimary" component="span" className={classes.balanceUnit}>
                                     {formatBalance(new BigNumber(balance), token.decimals, 6)}
-                                    {token.symbol}
                                 </Typography>
                             </Typography>
                         ) : null}
