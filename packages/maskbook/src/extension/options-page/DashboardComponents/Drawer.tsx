@@ -69,6 +69,7 @@ const useStyles = makeStyles((theme) => {
             '&:hover': {
                 backgroundColor: 'transparent!important',
             },
+            width: 'unset',
         },
         activeDrawer: {
             color: activeColor,
