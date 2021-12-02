@@ -11,5 +11,11 @@
     "browser_action": { "default_popup": "popup.html" },
     "homepage_url": "https://subdao.network",
     "description": "Participate DAO governance easily outside of dapps. Injects the accounts, allows signing transaction and send encrypted message.",
-    "web_accessible_resources": ["js/*"]
+    "web_accessible_resources": ["js/*"],
+    "cross_origin_embedder_policy": {
+        "value": "require-corp"
+    },
+    "cross_origin_opener_policy": {
+        "value": "same-origin"
+    }
 }
