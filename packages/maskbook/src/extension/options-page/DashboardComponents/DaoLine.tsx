@@ -68,6 +68,7 @@ const useStyles = makeStyles((theme) =>
             overflow: 'hidden',
             fontSize: 14,
             fontWeight: 300,
+            lineHeight: '16px',
         },
         more: {
             marginLeft: theme.spacing(1),
