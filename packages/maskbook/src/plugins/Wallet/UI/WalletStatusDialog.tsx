@@ -211,14 +211,14 @@ export function WalletStatusDialog(props: WalletStatusDialogProps) {
                     </section>
                 </section>
             </DialogContent>
-            {!chainIdValid ? (
+            {/* {!chainIdValid ? (
                 <DialogActions className={classes.footer}>
                     <ErrorIcon color="secondary" fontSize="small" />
                     <Typography color="secondary" variant="body2">
                         {t('plugin_wallet_wrong_network_tip')}
                     </Typography>
                 </DialogActions>
-            ) : null}
+            ) : null} */}
         </InjectedDialog>
     )
 }
