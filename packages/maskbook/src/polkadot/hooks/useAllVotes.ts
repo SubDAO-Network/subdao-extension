@@ -18,7 +18,6 @@ export interface VotingData {
 export function useAllVotes(voteAddress: string) {
     return useAsyncRetry(async () => {
         if (!voteAddress) return [] as VotingData[]
-
         return Services.Polkadot.queryAllVotes(voteAddress)
     }, [voteAddress])
 }

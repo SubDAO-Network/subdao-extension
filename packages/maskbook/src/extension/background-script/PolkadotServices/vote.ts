@@ -88,11 +88,12 @@ interface VoteResult {
 export const queryAllVotes = async (voteAddress: string) => {
     const voteContract = await getVoteContract(voteAddress)
     const _address = currentSelectedWalletAddressSettings.value
-
     if (!voteContract || !_address) return []
 
-    const data = await (voteContract as any)?.query?.queryAllVote(_address, { value, gasLimit })
-    return formatResult(data)?.map?.((vote: VoteResult) => {
+    const data = await (voteContract as any)?.query?.queryAllVote(_address, { value, gasLimit }, 0, 10000)
+    let result = formatResult(data)
+
+    return result.data?.map?.((vote: VoteResult) => {
         return {
             ...vote,
             min_require_num: Number(vote.min_require_num),

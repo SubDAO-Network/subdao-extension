@@ -78,7 +78,6 @@ export const useDaoPartners = (includeOrg?: boolean, onlyOrg: boolean = false): 
 
     const { value: daoInstances, loading: loadingDaoInstances } = useAsyncRetry(async () => {
         if (hasCache) return
-
         flag = 0
         flag = flag | LodingStaut.dao
 
@@ -150,15 +149,16 @@ export const useDaoPartners = (includeOrg?: boolean, onlyOrg: boolean = false): 
                 desc: daoBaseInfo.desc,
                 logo: daoBaseInfo.logo,
             }))
-            if (orgModerators?.length || orgMembers?.length) {
-                daos = daos?.filter(
-                    (o) =>
-                        some(orgModerators, (m) => m.base_addr === o.address) ||
-                        some(orgMembers, (m) => m.base_addr === o.address),
-                )
-            } else if (onlyOrg) {
-                daos = []
-            }
+
+            // if (orgModerators?.length || orgMembers?.length) {
+            //     daos = daos?.filter(
+            //         (o) =>
+            //             some(orgModerators, (m) => m.base_addr === o.address) ||
+            //             some(orgMembers, (m) => m.base_addr === o.address),
+            //     )
+            // } else if (onlyOrg) {
+            //     daos = []
+            // }
             dataResult.daoInfo = daos
             if (!loadingPartner) {
                 setCacheData(dataResult)

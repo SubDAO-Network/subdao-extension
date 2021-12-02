@@ -202,6 +202,7 @@ export function DashboardDaoRouterItem() {
     const classes = useStyles()
     const { daoInfo: items } = daoData
     const daoInfo = items.find((i) => i.address === address)
+
     const { value: votes, loading: loadingVotes } = useAllVotes(daoInfo?.daoAddresses?.vote_addr ?? '')
     const title = loading ? `${t('dao')}...` : `${t('dao')}: ${daoInfo?.name}`
 
