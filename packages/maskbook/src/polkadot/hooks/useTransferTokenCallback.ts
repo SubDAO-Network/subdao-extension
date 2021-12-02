@@ -69,9 +69,9 @@ export function useTransferTokenCallback(type: PolkadotTokenType = PolkadotToken
 
             if (type === PolkadotTokenType.DOT) {
                 const balanceAll = await api?.derive?.balances?.all(account?.address)
-                console.log(`availableBalance: ${balanceAll.availableBalance}`)
+                console.log(`availableBalance: ${(balanceAll as any).availableBalance}`)
                 console.log(`Transaction _amount: ${_amount}`)
-                const availableBalance = balanceAll.availableBalance
+                const availableBalance = (balanceAll as any).availableBalance
                 if (availableBalance.eq(amount)) {
                     try {
                         const { partialFee } = await api.tx.balances
@@ -120,7 +120,7 @@ export function useTransferTokenCallback(type: PolkadotTokenType = PolkadotToken
                     })
             } else {
                 const contract = await ConnectContract(api, ContractType.erc20, token.address)
-                const { nonce } = await api?.query?.system.account(account.address)
+                const { nonce }: any = await api?.query?.system.account(account.address)
                 const unsub = await (contract as any)
                     .exec('transfer', { value: 0, gasLimit: -1 }, recipient, amount)
                     .signAndSend(signSender, { nonce }, (result: any) => {

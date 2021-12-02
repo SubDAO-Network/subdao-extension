@@ -22,7 +22,7 @@ export const getFreeBalances = async (address?: string): Promise<string> => {
     if (!api) {
         return '0'
     }
-    const { freeBalance: balance } = await api?.derive?.balances?.all(ADDR)
+    const { freeBalance: balance }: any = await api?.derive?.balances?.all(ADDR)
     return balance.toString()
 }
 
@@ -32,7 +32,7 @@ export const getFormatFreeBalances = async (address?: string): Promise<string> =
     if (!api) {
         return '0'
     }
-    const { freeBalance: balance } = await api?.derive?.balances?.all(ADDR)
+    const { freeBalance: balance }: any = await api?.derive?.balances?.all(ADDR)
     if (!balance) {
         return '0'
     }

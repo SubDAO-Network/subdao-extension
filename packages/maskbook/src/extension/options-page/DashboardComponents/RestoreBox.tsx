@@ -83,6 +83,7 @@ export interface RestoreBoxProps extends withClasses<never> {
     lightPlaceholderImageURL: string
     children?: React.ReactNode
     onClick?: () => void
+    noButton?: () => void
 }
 
 export function RestoreBox(props: RestoreBoxProps) {

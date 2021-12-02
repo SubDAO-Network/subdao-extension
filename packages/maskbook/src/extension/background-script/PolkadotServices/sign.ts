@@ -36,7 +36,7 @@ export async function getBalance(address: string) {
         return null
     }
     const balanceAll = await api?.derive?.balances?.all(address)
-    return balanceAll?.availableBalance?.toString()
+    return (balanceAll as any)?.availableBalance?.toString()
 }
 
 export const getNonce = async (address?: string) => {
@@ -46,6 +46,6 @@ export const getNonce = async (address?: string) => {
         return null
     }
 
-    const { nonce } = await api?.query?.system.account(_address)
+    const { nonce }: any = await api?.query?.system.account(_address)
     return nonce
 }
