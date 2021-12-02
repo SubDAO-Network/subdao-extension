@@ -26,25 +26,30 @@ const useStyles = makeStyles((theme) =>
             alignItems: 'center',
             width: '100%',
             height: 90,
-            padding: theme.spacing(2),
+            padding: '25px 33px 25px 30px',
             background: 'rgba(241, 242, 248, 0.5)',
             borderRadius: 12,
             border: '1px solid #E7EAF3',
             textDecorationLine: 'none',
         },
+        content: {
+            flex: 1,
+        },
         avatar: {
             width: '40px',
             height: '40px',
             backgroundColor: 'white !important',
+            marginRight: 10,
         },
         user: {
             color: theme.palette.text.primary,
-            fontWeight: 500,
-            margin: theme.spacing(0, 2),
             flex: '0 1 auto',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
             whiteSpace: 'nowrap',
+            marginBottom: 6,
+            fontSize: 14,
+            fontWeight: 300,
         },
         provider: {
             color: theme.palette.text.secondary,
@@ -54,14 +59,15 @@ const useStyles = makeStyles((theme) =>
             },
         },
         fingerprint: {
-            color: theme.palette.text.secondary,
+            color: 'rgba(16, 22, 75, 0.7)',
             marginLeft: 'auto',
             marginRight: 0,
-            fontFamily: 'var(--monospace)',
             display: '-webkit-box',
             '-webkit-line-clamp': 2,
             '-webkit-box-orient': 'vertical',
             overflow: 'hidden',
+            fontSize: 14,
+            fontWeight: 300,
         },
         more: {
             marginLeft: theme.spacing(1),
@@ -92,12 +98,12 @@ export function DaoLine(props: DaoLineProps) {
             <ListItem button selected={false} {...rest} classes={{ root: classes.item }}>
                 <Link to={`${DashboardRoute.Dao}/${person.address}`} className={classes.line}>
                     <Avatar className={classes.avatar} person={person} />
-                    <Typography className={classes.user}>{daoInfo.name}</Typography>
-                    {xsMatched ? null : (
+                    <div className={classes.content}>
+                        <Typography className={classes.user}>{daoInfo.name}</Typography>
                         <Typography className={classes.fingerprint} component="code">
                             {daoInfo.desc}
                         </Typography>
-                    )}
+                    </div>
                 </Link>
             </ListItem>
         </>
