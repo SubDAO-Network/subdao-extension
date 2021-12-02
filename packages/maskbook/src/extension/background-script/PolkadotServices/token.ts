@@ -7,7 +7,7 @@ import type { DeriveBalancesAll } from '@polkadot/api-derive/types'
 import { formatBalance } from '@polkadot/util'
 import { networkNativeTokens } from '../../../polkadot/constants'
 
-export const getBalancesAll = async (address?: string): Promise<DeriveBalancesAll | undefined> => {
+export const getBalancesAll = async (address?: string): Promise<DeriveBalancesAll | unknown> => {
     const ADDR = address ?? currentSelectedWalletAddressSettings.value
     const api = await getApi()
     if (!api) {
