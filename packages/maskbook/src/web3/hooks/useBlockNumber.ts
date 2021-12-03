@@ -26,9 +26,7 @@ export function useUnsafeChainId() {
  */
 export function useChainId() {
     const unsafeChainId = useUnsafeChainId()
-    return unsafeChainId !== ChainId.Mainnet && Flags.wallet_network_strict_mode_enabled
-        ? ChainId.Mainnet
-        : unsafeChainId
+    return unsafeChainId
 }
 
 /**
@@ -37,7 +35,13 @@ export function useChainId() {
 export function useChainIdValid() {
     const unsafeChainId = useUnsafeChainId()
     const selectedWallet = useWallet()
-    return !Flags.wallet_network_strict_mode_enabled || unsafeChainId === ChainId.Mainnet || !selectedWallet
+    return (
+        !Flags.wallet_network_strict_mode_enabled ||
+        unsafeChainId === ChainId.SubDAO ||
+        unsafeChainId === ChainId.Polkadot ||
+        unsafeChainId === ChainId.Kusama ||
+        !selectedWallet
+    )
 }
 
 /**
