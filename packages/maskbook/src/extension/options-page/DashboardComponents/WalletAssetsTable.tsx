@@ -51,6 +51,8 @@ import { useColorStyles } from '../../../utils/theme'
 import { formatBalance } from '@polkadot/util'
 import { useSnackbarCallback } from '../DashboardDialogs/Base'
 import { WalletIconURLs } from '../../../resources/wallet-icon'
+import { currentSubstrateNetworkSettings } from '../../../settings/settings'
+import { SubstrateNetwork } from '../../../polkadot/constants'
 
 import { experimentalStyled as styled } from '@material-ui/core'
 
@@ -368,7 +370,7 @@ export function WalletAssetsTable(props: WalletAssetsTableProps) {
     const { t } = useI18N()
     const { wallet, state, dispatch } = props
     const { detailedToken, detailedTokensLoading, detailedTokensRetry } = useContext(DashboardWalletsContext)
-
+    const network = currentSubstrateNetworkSettings.value
     const classes = useStylesExtends(useStyles(), props)
     const LABELS = [t('wallet_assets'), t('wallet_balance'), ''] as const
 
@@ -489,15 +491,16 @@ export function WalletAssetsTable(props: WalletAssetsTableProps) {
                                 wallet={wallet}
                                 transferState={transferState}
                             />
-                            {erc20Tokens?.map((o, idx) => (
-                                <ViewDetailed
-                                    isERC20
-                                    key={idx}
-                                    token={o}
-                                    transferState={transferState}
-                                    wallet={wallet}
-                                />
-                            ))}
+                            {network === SubstrateNetwork.SubDAO &&
+                                erc20Tokens?.map((o, idx) => (
+                                    <ViewDetailed
+                                        isERC20
+                                        key={idx}
+                                        token={o}
+                                        transferState={transferState}
+                                        wallet={wallet}
+                                    />
+                                ))}
                         </>
                     )}
                 </List>
