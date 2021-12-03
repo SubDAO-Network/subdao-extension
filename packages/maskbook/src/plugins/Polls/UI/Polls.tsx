@@ -53,9 +53,16 @@ const useStyles = makeStyles((theme) =>
             borderRadius: theme.spacing(0.8),
         },
         text: {
+            fontFamily: 'Roboto',
             zIndex: 101,
             lineHeight: '28px',
             margin: '0 4px',
+        },
+        spanBg: {
+            fontFamily: 'Roboto',
+            opacity: 0.3,
+            fontSize: 12,
+            marginLeft: 20,
         },
         deadline: {
             display: 'flex',
@@ -163,7 +170,9 @@ export function PollCardUI(props: PollCardProps) {
                                     style={{
                                         width: `${(poll.results[index] / totalVotes) * 100}%`,
                                     }}></div>
-                                <div className={classes.text}>{option}</div>
+                                <div className={classes.text}>
+                                    {option} <span className={classes.spanBg}>Click to check vote result</span>
+                                </div>
                             </div>
                             {/* <div className={classes.text}>{poll.results[index]}</div> */}
                         </ListItem>

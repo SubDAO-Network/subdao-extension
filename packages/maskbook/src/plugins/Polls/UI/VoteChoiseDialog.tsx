@@ -182,6 +182,7 @@ export default function VoteChoiseDialog(props: VoteChoiseDialogProps) {
                                 classes={{
                                     label: classes.fullWidth,
                                 }}
+                                disabled={isVoted}
                                 value={String(index)}
                                 control={<Radio />}
                                 label={
