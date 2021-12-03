@@ -255,18 +255,22 @@ function NewPollUI(props: PollsDialogProps & NewPollProps) {
             minutes,
         })
         setLoading(true)
+
         const result: any = await Services.Polkadot.newVote({
             title: question,
             vote_time: String(end_time.getTime() - start_time.getTime()),
             support_require_num: voteNumber,
             min_require_num: minVoteNumber,
             choices: options.join('|'),
+            desc: question,
             vote_address: voteAddress,
         })
-        if (!result.status.finalized) {
+
+        if (!result.status.inBlock) {
             setLoading(false)
             return
         }
+
         PluginPollRPC.createNewPoll({
             question,
             options,

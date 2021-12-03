@@ -41,7 +41,7 @@ export const newVote = async (obj: VoteData) => {
         await (voteContract as any)?.tx
             .newVote({ value, gasLimit }, title, desc, vote_time, support_require_num, min_require_num, choices)
             .signAndSend(signer, { nonce }, (res: any) => {
-                if (res?.status?.isFinalized) {
+                if (res?.status?.isInBlock) {
                     resolve(res)
                 }
             })
