@@ -275,7 +275,6 @@ export function RedPacketForm(props: RedPacketFormProps) {
 
     // open the transaction dialog
     useEffect(() => {
-        console.log('createState.type: ', createState.type)
         if (!token || createState.type === TransactionStateType.UNKNOWN) return
         setTransactionDialogOpen({
             open: true,
@@ -306,7 +305,7 @@ export function RedPacketForm(props: RedPacketFormProps) {
         if (!token) return t('plugin_wallet_select_a_token')
         if (!account) return t('plugin_wallet_connect_a_wallet')
         if (new BigNumber(shares || '0').isZero()) return 'Enter shares'
-        if (new BigNumber(shares || '0').isGreaterThan(255)) return 'At most 255 recipients'
+        if (new BigNumber(shares || '0').isGreaterThan(100)) return 'At most 100 recipients'
         if (new BigNumber(amount).isZero()) return t('plugin_ito_error_enter_amount')
         if (tokenBalance === null || new BigNumber(totalAmount).isGreaterThan(new BigNumber(tokenBalance))) {
             return t('plugin_ito_error_balance', { symbol: token.symbol })
@@ -315,6 +314,18 @@ export function RedPacketForm(props: RedPacketFormProps) {
     }, [account, amount, t, totalAmount, shares, token, tokenBalance])
 
     if (!token) return null
+
+    const PolkadotAndKusamaActions =
+        validationMessage !== '' ? (
+            <ActionButton variant="contained" className={classes.button} disabled>
+                {validationMessage}
+            </ActionButton>
+        ) : (
+            <ActionButton variant="contained" className={classes.button} onClick={createCallback}>
+                {`Send ${formatBalance(totalAmount, token.decimals)} ${token.symbol}`}
+            </ActionButton>
+        )
+
     return (
         <>
             <div className={classes.line}>
@@ -384,9 +395,7 @@ export function RedPacketForm(props: RedPacketFormProps) {
             </div>
             <SubdaoWalletConnectedBoundary>
                 {network === SubstrateNetwork.Polkadot || network === SubstrateNetwork.Kusama ? (
-                    <ActionButton variant="contained" className={classes.button} onClick={createCallback}>
-                        {validationMessage || `Send ${formatBalance(totalAmount, token.decimals)} ${token.symbol}`}
-                    </ActionButton>
+                    PolkadotAndKusamaActions
                 ) : (
                     <SubERC20TokenApprovedBoundary
                         amount={totalAmount.toFixed()}
