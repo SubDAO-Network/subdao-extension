@@ -19,7 +19,9 @@ import { useMatchXS } from '../../../utils/hooks/useMatchXS'
 import type { WalletRecord } from '../../../plugins/Wallet/database/types'
 import { WalletAssetsTable } from './WalletAssetsTable'
 import { useSubstrate } from '../../../polkadot/provider'
-
+import { currentSubstrateNetworkSettings } from '../../../settings/settings'
+import { SubstrateNetwork } from '../../../polkadot/constants'
+import { useValueRef } from '../../../utils/hooks/useValueRef'
 import { experimentalStyled as styled } from '@material-ui/core'
 
 const TabBg = styled(Tab)`
@@ -113,6 +115,7 @@ export const WalletContent = forwardRef<HTMLDivElement, WalletContentProps>(func
     const [walletRedPacket, , openWalletRedPacket] = useModal(DashboardWalletRedPacketDetailDialog)
 
     const { state, dispatch } = useSubstrate()
+    const network = useValueRef(currentSubstrateNetworkSettings)
 
     const [menu, openMenu] = useMenu([
         <MenuItem onClick={() => openWalletRename({ wallet })} className={classes.menuItem}>
@@ -170,6 +173,7 @@ export const WalletContent = forwardRef<HTMLDivElement, WalletContentProps>(func
                             classes={{ root: classes.addButton }}
                             variant="contained"
                             size="medium"
+                            disabled={network !== SubstrateNetwork.SubDAO}
                             onClick={() => openAddToken({ wallet })}
                             startIcon={<AddIcon />}>
                             {t('add_token')}
