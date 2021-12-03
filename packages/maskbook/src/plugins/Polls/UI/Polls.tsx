@@ -60,9 +60,10 @@ const useStyles = makeStyles((theme) =>
         },
         spanBg: {
             fontFamily: 'Roboto',
-            opacity: 0.3,
+            // opacity: 0.3,
             fontSize: 12,
-            marginLeft: 20,
+            marginBottom: 20,
+            marginLeft: -16,
         },
         deadline: {
             display: 'flex',
@@ -158,25 +159,30 @@ export function PollCardUI(props: PollCardProps) {
                 )}
             </Typography>
             <List>
-                {hasData &&
-                    poll.options.map((option, index) => (
-                        <ListItem className={classes.option} key={index} onClick={onClickVote}>
-                            <div
-                                style={{
-                                    display: 'flex',
-                                }}>
-                                <div
-                                    className={classes.bar}
-                                    style={{
-                                        width: `${(poll.results[index] / totalVotes) * 100}%`,
-                                    }}></div>
-                                <div className={classes.text}>
-                                    {option} <span className={classes.spanBg}>Click to check vote result</span>
-                                </div>
-                            </div>
-                            {/* <div className={classes.text}>{poll.results[index]}</div> */}
-                        </ListItem>
-                    ))}
+                {/*{hasData &&*/}
+                {/*    poll.options.map((option, index) => (*/}
+                {/*        <ListItem className={classes.option} key={index} onClick={onClickVote}>*/}
+                {/*            <div*/}
+                {/*                style={{*/}
+                {/*                    display: 'flex',*/}
+                {/*                }}>*/}
+                {/*                <div*/}
+                {/*                    className={classes.bar}*/}
+                {/*                    style={{*/}
+                {/*                        width: `${(poll.results[index] / totalVotes) * 100}%`,*/}
+                {/*                    }}></div>*/}
+                {/*                <div className={classes.text}>*/}
+                {/*                    {option} <span className={classes.spanBg}>Click to check vote result</span>*/}
+                {/*                </div>*/}
+                {/*            </div>*/}
+                {/*            /!* <div className={classes.text}>{poll.results[index]}</div> *!/*/}
+                {/*        </ListItem>*/}
+                {/*    ))}*/}
+                <ListItem>
+                    <div>
+                        <span className={classes.spanBg}>Click to check vote result</span>
+                    </div>
+                </ListItem>
             </List>
             <Typography variant="body2" classes={{ root: classes.deadline }}>
                 {hasData && isClosed ? (
