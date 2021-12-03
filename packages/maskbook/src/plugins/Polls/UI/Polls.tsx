@@ -178,7 +178,7 @@ export function PollCardUI(props: PollCardProps) {
                 {/*            /!* <div className={classes.text}>{poll.results[index]}</div> *!/*/}
                 {/*        </ListItem>*/}
                 {/*    ))}*/}
-                <ListItem>
+                <ListItem onClick={onClickVote}>
                     <div>
                         <span className={classes.spanBg}>Click to check vote result</span>
                     </div>
