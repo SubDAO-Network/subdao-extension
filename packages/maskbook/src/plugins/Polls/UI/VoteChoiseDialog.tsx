@@ -26,6 +26,7 @@ import type { VoteData } from '../types'
 import Services from '../../../extension/service'
 import { formatChoices } from '../formatter'
 import { formatDateTime } from '../../../utils/date'
+import { useVoterVoteOne } from '../hooks/useVoterVoteOne'
 
 const CardUI = styled(Card)`
     margin: 0 auto;
@@ -121,6 +122,7 @@ function LabelVoteDate(props: LabelVoteDateProps) {
     const start = voteData?.start_date?.replace(/,/g, '')
     const voteTime = voteData?.vote_time?.replace(/,/g, '')
     const date = new Date(Number(start) + Number(voteTime))
+
     return (
         <Typography className={classes.line}>
             <TextFlexOne>{t('plugin_poll_vote_ending_time')}</TextFlexOne>
@@ -164,7 +166,7 @@ export default function VoteChoiseDialog(props: VoteChoiseDialogProps) {
         }
     }
     const { options: optionItems, total_number } = formatChoices(voteData?.choices)
-
+    const { value: isVoted } = useVoterVoteOne(poll.vote_address, voteData.vote_id)
     return (
         <InjectedDialog open={props.open} onClose={props.onDecline} title={t('plugin_poll_choise_dialog')}>
             <DialogContent>
@@ -221,7 +223,7 @@ export default function VoteChoiseDialog(props: VoteChoiseDialogProps) {
                     <Button
                         color="primary"
                         variant="contained"
-                        disabled={loading}
+                        disabled={loading || isVoted}
                         startIcon={
                             loading ? <CircularProgress classes={{ root: classes.whiteColor }} size={24} /> : null
                         }

@@ -126,7 +126,7 @@ export function PollCardUI(props: PollCardProps) {
     }
 
     const handleVote = async () => {
-        if (isVoted || status === PollStatus.Voted) return
+        // if (isVoted || status === PollStatus.Voted) return
         retry()
         setOpen(true)
     }
