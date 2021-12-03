@@ -200,9 +200,9 @@ function ViewDetailed(props: ViewDetailedProps) {
     const onCopy = useSnackbarCallback(
         async (ev: React.MouseEvent<HTMLDivElement>) => {
             ev.stopPropagation()
-            copyToClipboard(token.address ?? '')
+            copyToClipboard(token.address ?? address)
         },
-        [],
+        [token.address ?? address],
         undefined,
         undefined,
         undefined,
