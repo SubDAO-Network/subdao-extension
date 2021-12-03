@@ -397,14 +397,18 @@ export function RedPacketForm(props: RedPacketFormProps) {
                 {network === SubstrateNetwork.Polkadot || network === SubstrateNetwork.Kusama ? (
                     PolkadotAndKusamaActions
                 ) : (
-                    <SubERC20TokenApprovedBoundary
-                        amount={totalAmount.toFixed()}
-                        token={token as any}
-                        spender={HAPPY_RED_PACKET_ADDRESS}>
-                        <ActionButton variant="contained" className={classes.button} onClick={createCallback}>
-                            {validationMessage || `Send ${formatBalance(totalAmount, token.decimals)} ${token.symbol}`}
-                        </ActionButton>
-                    </SubERC20TokenApprovedBoundary>
+                    <ActionButton variant="contained" className={classes.button} disabled>
+                        Coming soon
+                    </ActionButton>
+                    // <SubERC20TokenApprovedBoundary
+                    //     amount={totalAmount.toFixed()}
+                    //     token={token as any}
+                    //     spender={HAPPY_RED_PACKET_ADDRESS}>
+                    //
+                    //     <ActionButton variant="contained" className={classes.button} onClick={createCallback}>
+                    //         {validationMessage || `Send ${formatBalance(totalAmount, token.decimals)} ${token.symbol}`}
+                    //     </ActionButton>
+                    // </SubERC20TokenApprovedBoundary>
                 )}
             </SubdaoWalletConnectedBoundary>
         </>
