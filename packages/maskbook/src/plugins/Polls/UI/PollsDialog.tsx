@@ -211,7 +211,7 @@ function NewPollUI(props: PollsDialogProps & NewPollProps) {
     const classes = useStylesExtends(useNewPollStyles(), props)
     const [loading, setLoading] = props.loading
     const [question, setQuestion] = useState('')
-    const [options, setOptions] = useState<string[]>(['', ''])
+    const [options, setOptions] = useState<string[]>(['Agree', 'Disagree'])
 
     const [days, setDays] = useState(1)
     const [hours, setHours] = useState(0)
@@ -240,9 +240,9 @@ function NewPollUI(props: PollsDialogProps & NewPollProps) {
         setOptions(options.map((option, i) => (i === index ? value : option)))
     }
 
-    const addNewOption = () => {
-        setOptions(options.concat(['']))
-    }
+    // const addNewOption = () => {
+    //     setOptions(options.concat(['']))
+    // }
 
     const sendPoll = async () => {
         const start_time = new Date()
@@ -367,16 +367,18 @@ function NewPollUI(props: PollsDialogProps & NewPollProps) {
                         <InputBase
                             className={classes.inputBase}
                             classes={{ root: classes.optionInput }}
+                            value={option}
+                            disabled={true}
                             // label={`${t('plugin_poll_options_hint')}${index + 1}`}
-                            onChange={(e) => {
-                                handleOptionsInput(index, (e.target as HTMLInputElement)?.value)
-                            }}
+                            // onChange={(e) => {
+                            //     handleOptionsInput(index, (e.target as HTMLInputElement)?.value)
+                            // }}
                         />
                     </div>
                 ))}
-                <IconButton onClick={addNewOption} classes={{ root: classes.addButton }}>
-                    <AddIcon color="primary" />
-                </IconButton>
+                {/*<IconButton onClick={addNewOption} classes={{ root: classes.addButton }}>*/}
+                {/*    <AddIcon color="primary" />*/}
+                {/*</IconButton>*/}
             </div>
             <InputTitle>{t('plugin_poll_length')}</InputTitle>
             <div className={classNames(classes.line, classes.pollWrap)}>

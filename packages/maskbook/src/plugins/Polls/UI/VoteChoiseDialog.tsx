@@ -156,7 +156,8 @@ export default function VoteChoiseDialog(props: VoteChoiseDialogProps) {
         setLoading(true)
         const res: any = await Services.Polkadot.voteChoice({ vote_address, voteId, choiseId })
         console.log(`vote choise ${choiseId}`)
-        if (res.status.finalized && res.contractEvents) {
+        // if (res.status.finalized && res.contractEvents) {
+        if (res.status.inBlock) {
             vote?.(poll, Number(choiseId))
             setLoading(false)
             props.onDecline()

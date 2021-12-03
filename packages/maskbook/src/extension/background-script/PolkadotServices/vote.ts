@@ -121,7 +121,7 @@ const queryWaitVote = async (voteAddress: string) => {
 
     if (!voteContract || !_address) return
 
-    const data = await (voteContract as any)?.query?.queryPendingVote(_address, { value, gasLimit })
+    const data = await (voteContract as any)?.query?.queryPendingVote(_address, { value, gasLimit }, 0, 100000)
     return formatResult(data)
 }
 

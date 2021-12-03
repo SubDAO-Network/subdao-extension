@@ -45,7 +45,13 @@ export async function fetchAllDaoInstance(address?: string): Promise<DaoInstance
     const _address = address ?? currentSelectedWalletAddressSettings.value
 
     if (!contract || !_address) return [] as DaoInstanceDataMeta[]
-    const res = await (contract as any)?.query?.listDaoInstances(_address, { value, gasLimit }, 0, 100000000)
+    const res = await (contract as any)?.query?.listDaoInstancesByAccount(
+        _address,
+        { value, gasLimit },
+        _address,
+        0,
+        100000000,
+    )
     const data = formatResult(res).data
     return data as DaoInstanceDataMeta[]
 }
