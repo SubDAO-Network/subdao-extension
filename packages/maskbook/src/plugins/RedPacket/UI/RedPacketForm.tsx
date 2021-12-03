@@ -188,7 +188,7 @@ export function RedPacketForm(props: RedPacketFormProps) {
 
     // balance
     const { value: tokenBalance = '0', loading: loadingTokenBalance } = useCoinBalance(
-        ((token?.type as unknown) as SubdaoTokenType) ?? SubdaoTokenType.SubDAO,
+        ((token?.type as unknown) as SubdaoTokenType) ?? SubdaoTokenType.ERC20,
         token?.address ?? '',
     )
     //#endregion

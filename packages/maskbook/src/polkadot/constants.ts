@@ -73,15 +73,18 @@ export const networkNativeTokens: {
         symbol: 'GOV',
         decimals: 12,
         name: '',
+        type: 0,
     },
     Polkadot: {
         symbol: 'DOT',
         decimals: 10,
         name: '',
+        type: 0,
     },
     Kusama: {
         symbol: 'KSM',
         decimals: 12,
         name: '',
+        type: 0,
     },
 }
