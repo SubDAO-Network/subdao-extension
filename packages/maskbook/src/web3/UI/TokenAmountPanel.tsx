@@ -391,7 +391,7 @@ export function InjectTokenAmountPanel(props: TokenAmountPanelProps) {
                                 color="textSecondary"
                                 variant="body2"
                                 component="span">
-                                Balance: {formatBalance(new BigNumber(balance), token.decimals, 6)}
+                                Balance: {formatBalance(new BigNumber(balance), token.address ? 0 : token.decimals, 6)}
                             </Typography>
                         ) : null}
                         <Box
@@ -412,7 +412,10 @@ export function InjectTokenAmountPanel(props: TokenAmountPanelProps) {
                                     variant="outlined"
                                     onClick={() => {
                                         onAmountChange(
-                                            formatBalance(new BigNumber(maxAmount ?? balance), token.decimals),
+                                            formatBalance(
+                                                new BigNumber(maxAmount ?? balance),
+                                                token.address ? 0 : token.decimals,
+                                            ),
                                         )
                                     }}
                                     {...MaxChipProps}
