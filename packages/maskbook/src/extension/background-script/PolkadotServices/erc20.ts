@@ -204,7 +204,7 @@ interface TokenList {
 
 const fetchTokenList = memoizePromise(
     async (url: string) => {
-        const response = await fetch(url, { cache: 'force-cache' })
+        const response = await fetch(url)
         return response.json() as Promise<TokenList>
     },
     (url) => url,
