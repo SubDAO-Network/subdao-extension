@@ -217,7 +217,7 @@ function ViewDetailed(props: ViewDetailedProps) {
             return formatBalance(String(balance), {
                 forceUnit: '-',
                 withUnit: token.symbol,
-                decimals: token.decimals,
+                decimals: token.address ? 0 : token.decimals,
             })
         }
         return 0
