@@ -296,7 +296,9 @@ function ViewDetailed(props: ViewDetailedProps) {
                             {/* <Collapse in={isPopupOpen} timeout="auto" unmountOnExit>
                                 {allItems}
                             </Collapse> */}
-                            <Typography color="textSecondary">{allItems}</Typography>
+                            <Typography color="textSecondary" component="div">
+                                {allItems}
+                            </Typography>
                         </>
                     ) : (
                         <Typography className={classes.balanceName} color="textPrimary" component="span">

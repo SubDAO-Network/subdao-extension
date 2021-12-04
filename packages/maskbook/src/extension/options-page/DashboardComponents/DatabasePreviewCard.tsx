@@ -92,7 +92,6 @@ export function DatabasePreviewCard(props: DatabasePreviewCardProps) {
     }))
 
     const resolveRecordImg = (type: DatabaseRecordType) => {
-        console.log('=type===', type)
         switch (type) {
             case DatabaseRecordType.Persona:
                 return IconsURLs.persona.image

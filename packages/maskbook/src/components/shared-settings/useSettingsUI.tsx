@@ -78,16 +78,16 @@ function SharedListItem(
 ) {
     const { onClick, icon, action, primary, secondary, button } = props
     const classes = useStylesExtends(useStyles(), props)
+
+    // {...((button ? { button: true } : { component: 'div' }) as any)}
     return (
         <ListItem
-            disableRipple={true}
             classes={{
                 root: classes.listItemRoot,
                 container: classes.container,
                 secondaryAction: classes.secondaryAction,
             }}
-            onClick={onClick}
-            {...((button ? { button: true } : { component: 'div' }) as any)}>
+            onClick={onClick}>
             {icon ? <ListItemIcon classes={{ root: classes.listItemIcon }}>{icon}</ListItemIcon> : null}
             <ListItemText classes={{ primary: classes.listItemText }} primary={primary} secondary={secondary} />
             {action}
