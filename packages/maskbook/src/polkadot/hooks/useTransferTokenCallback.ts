@@ -122,7 +122,7 @@ export function useTransferTokenCallback(type: PolkadotTokenType = PolkadotToken
                 const contract = await ConnectContract(api, ContractType.erc20, token.address)
                 const { nonce }: any = await api?.query?.system.account(account.address)
                 const unsub = await (contract as any).tx
-                    .transfer({ value: 0, gasLimit: -1 }, recipient, amount)
+                    .transfer({ value: 0, gasLimit: -1 }, recipient, _amount)
                     .signAndSend(signSender, { nonce }, (result: any) => {
                         console.log(`Current status is ${result.status}`)
                         if (result.status.isInBlock) {
