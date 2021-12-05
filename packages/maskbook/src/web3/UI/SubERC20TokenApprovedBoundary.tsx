@@ -44,7 +44,6 @@ export interface SubERC20TokenApprovedBoundaryProps {
 
 export function SubERC20TokenApprovedBoundary(props: SubERC20TokenApprovedBoundaryProps) {
     const { amount, spender, token, children = null } = props
-
     const { t } = useI18N()
     const classes = useStyles()
     const { enqueueSnackbar } = useSnackbar()
@@ -111,11 +110,7 @@ export function SubERC20TokenApprovedBoundary(props: SubERC20TokenApprovedBounda
                         size="large"
                         onClick={() => onApprove(true)}>
                         <span className={classes.buttonLabel}>{t('plugin_wallet_token_unlock')}</span>
-                        <span className={classes.buttonAmount}>{`${formatBalance(
-                            new BigNumber(amount),
-                            token.decimals,
-                            2,
-                        )} ${token?.symbol ?? 'Token'}`}</span>
+                        <span className={classes.buttonAmount}>{`${amount} ${token?.symbol ?? 'Token'}`}</span>
                     </ActionButton>
                 </Grid>
                 <Grid item xs={6}>

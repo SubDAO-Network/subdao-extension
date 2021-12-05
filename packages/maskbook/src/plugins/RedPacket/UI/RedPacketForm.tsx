@@ -165,7 +165,7 @@ export function RedPacketForm(props: RedPacketFormProps) {
     const [isRandom, setIsRandom] = useState(0)
     const [message, setMessage] = useState('Best Wishes!')
     const senderName = useCurrentIdentity()?.linkedPersona?.nickname ?? 'Unknown User'
-    console.log(`senderName`, senderName)
+
     // shares
     const [shares, setShares] = useState<number | ''>(RED_PACKET_DEFAULT_SHARES)
     const onShareChange = useCallback(
@@ -183,7 +183,9 @@ export function RedPacketForm(props: RedPacketFormProps) {
 
     // amount
     const [rawAmount, setRawAmount] = useState('0')
-    const amount = new BigNumber(rawAmount || '0').multipliedBy(new BigNumber(10).pow(token?.decimals ?? 0))
+    const amount = token?.address
+        ? new BigNumber(rawAmount || '0')
+        : new BigNumber(rawAmount || '0').multipliedBy(new BigNumber(10).pow(token?.decimals ?? 0))
     const totalAmount = !isRandom ? new BigNumber(amount).multipliedBy(shares || '0') : amount
 
     // balance
@@ -404,7 +406,6 @@ export function RedPacketForm(props: RedPacketFormProps) {
                     //     amount={totalAmount.toFixed()}
                     //     token={token as any}
                     //     spender={HAPPY_RED_PACKET_ADDRESS}>
-                    //
                     //     <ActionButton variant="contained" className={classes.button} onClick={createCallback}>
                     //         {validationMessage || `Send ${formatBalance(totalAmount, token.decimals)} ${token.symbol}`}
                     //     </ActionButton>
